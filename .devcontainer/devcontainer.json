@@ -1,0 +1,11 @@
+{
+  "name": "Agentic Game Studio v3",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": { "vscode": { "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "tauri-apps.tauri-vscode"] } },
+  "forwardPorts": [5173, 1420],
+  "postCreateCommand": "npm install && git lfs install"
+}

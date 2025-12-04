@@ -1,0 +1,42 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Sticker Book Feature', () => {
+    test.beforeEach(async ({ page }) => {
+        // Seed daily login to prevent modal from blocking UI
+        await page.addInitScript(() => {
+            localStorage.setItem('vocab_daily_login', JSON.stringify({
+                lastLogin: new Date().toISOString(),
+                streak: 1
+            }));
+        });
+        await page.goto('http://localhost:5173');
+        // Wait for hydration
+        await expect(page.locator('body')).toBeVisible();
+    });
+
+    test('should navigate to Sticker Book and view stickers', async ({ page }) => {
+        // 1. Navigate to Stickers (was Skills)
+        const stickersBtn = page.getByRole('button', { name: 'Stickers' });
+        await expect(stickersBtn).toBeVisible();
+        await stickersBtn.click();
+
+        // 2. Verify Sticker Book Loaded
+        await expect(page.getByRole('heading', { name: 'Sticker Book' })).toBeVisible();
+
+        // 3. Verify Stickers exist (locked or unlocked)
+        // We expect at least one sticker (First Victory)
+        await expect(page.getByText('First Victory')).toBeVisible();
+
+        // 4. Click a sticker to see details
+        await page.getByText('First Victory').click();
+        await expect(page.getByText('Win your first quiz.')).toBeVisible();
+
+        // 5. Close modal
+        await page.getByRole('button', { name: 'Close' }).click();
+        await expect(page.getByText('Win your first quiz.')).not.toBeVisible();
+
+        // 6. Back Navigation
+        await page.getByRole('button', { name: 'Back' }).click();
+        await expect(page.getByText('Home Base')).toBeVisible();
+    });
+});

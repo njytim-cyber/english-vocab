@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - heading "Home Base 🏠" [level=1] [ref=e7]
+      - generic [ref=e8]:
+        - generic [ref=e9]: 💎
+        - strong [ref=e10]: "0"
+    - generic [ref=e11]:
+      - generic [ref=e12]: 🦊
+      - heading "Ready for Adventure?" [level=2] [ref=e13]
+      - generic [ref=e14]:
+        - button "🦊" [ref=e15] [cursor=pointer]
+        - button "🐼" [ref=e16] [cursor=pointer]
+        - button "🦁" [ref=e17] [cursor=pointer]
+        - button "🐯" [ref=e18] [cursor=pointer]
+        - button "🐸" [ref=e19] [cursor=pointer]
+        - button "🦄" [ref=e20] [cursor=pointer]
+    - button "⚔️ Start Quiz" [ref=e22] [cursor=pointer]:
+      - generic [ref=e23]: ⚔️
+      - text: Start Quiz
+  - navigation [ref=e24]:
+    - generic [ref=e26] [cursor=pointer]: 🏠
+    - generic [ref=e27]:
+      - button "⚔️ Quiz" [ref=e28] [cursor=pointer]:
+        - generic [ref=e29]: ⚔️
+        - text: Quiz
+      - button "Games" [ref=e30] [cursor=pointer]:
+        - generic [ref=e31]: 🕹️
+        - text: Games
+      - button "🌱 Skills" [ref=e32] [cursor=pointer]:
+        - generic [ref=e33]: 🌱
+        - text: Skills
+      - button "🏆 Stickers" [ref=e34] [cursor=pointer]:
+        - generic [ref=e35]: 🏆
+        - text: Stickers
+      - button "🛒 Shop" [ref=e36] [cursor=pointer]:
+        - generic [ref=e37]: 🛒
+        - text: Shop
+```

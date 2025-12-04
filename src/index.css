@@ -1,0 +1,181 @@
+:root {
+  --primary: #FF6B6B;
+  --secondary: #4ECDC4;
+  --accent: #FFE66D;
+  --dark: #2C3E50;
+  --light: #F7F9FC;
+  --font-fun: 'Fredoka', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--light);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--font-fun);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+/* Quiz View Styles */
+.quiz-container {
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 1s ease;
+}
+
+.quiz-header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.stat-badge {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar-display {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s;
+}
+
+.question-card {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.question-text {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--dark);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.option-btn {
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  color: var(--dark);
+  background: #f0f0f0;
+}
+
+.option-btn.selected {
+  color: white;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.option-btn.correct {
+  background: var(--secondary);
+}
+
+.option-btn.incorrect {
+  background: var(--primary);
+}
+
+.progress-bar-container {
+  width: 100%;
+  max-width: 600px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--secondary);
+  transition: width 0.5s ease;
+}
+
+/* Animations */
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.animate-pop {
+  animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+  border-color: #ff6b6b !important;
+  background-color: #ffe3e3 !important;
+}
+
+.on-fire {
+  box-shadow: 0 0 20px #ff6b6b, 0 0 40px #feca57;
+  border: 2px solid #ff9ff3;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
