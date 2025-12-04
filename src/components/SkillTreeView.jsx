@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import DifficultyBadge from './common/DifficultyBadge';
+
 
 export default function SkillTreeView({ engine }) {
     const allQuestions = engine.allQuestions;
     const sr = engine.sr;
     const state = engine.getState(); // Get current state for streak
     const [filterLevel, setFilterLevel] = useState('All');
-    const [filterDifficulty, setFilterDifficulty] = useState([]); // Array of selected difficulties
+    const [filterDifficulty, setFilterDifficulty] = useState(0); // 0 = All, 1-10 = Specific
 
     // Level Definitions
     const LEVELS = {
@@ -27,7 +27,7 @@ export default function SkillTreeView({ engine }) {
         const box = sr.getBox(q.question_number || q.id);
 
         // Apply Difficulty Filter
-        if (filterDifficulty.length > 0 && !filterDifficulty.includes(q.difficulty)) {
+        if (filterDifficulty !== 0 && q.difficulty !== filterDifficulty) {
             return;
         }
 
@@ -38,15 +38,7 @@ export default function SkillTreeView({ engine }) {
         }
     });
 
-    const toggleDifficulty = (diff) => {
-        setFilterDifficulty(prev => {
-            if (prev.includes(diff)) {
-                return prev.filter(d => d !== diff);
-            } else {
-                return [...prev, diff];
-            }
-        });
-    };
+    const totalFilteredWords = Object.values(wordsByLevel).reduce((acc, curr) => acc + curr.length, 0);
 
     const levelsToShow = filterLevel === 'All' ? [0, 1, 2, 3, 4, 5] : [parseInt(filterLevel)];
 
@@ -72,8 +64,39 @@ export default function SkillTreeView({ engine }) {
                 borderRadius: '15px',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.05)'
             }}>
+                {/* All Filter */}
+                <div
+                    onClick={() => setFilterLevel('All')}
+                    style={{
+                        textAlign: 'center',
+                        minWidth: '60px',
+                        cursor: 'pointer',
+                        opacity: filterLevel === 'All' ? 1 : 0.5,
+                        transform: filterLevel === 'All' ? 'scale(1.1)' : 'scale(1)',
+                        transition: 'all 0.2s'
+                    }}
+                >
+                    <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2c3e50' }}>
+                        {totalFilteredWords}
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: '#7f8c8d' }}>
+                        All
+                    </div>
+                </div>
+
                 {[0, 1, 2, 3, 4, 5].map(lvl => (
-                    <div key={lvl} style={{ textAlign: 'center', minWidth: '60px' }}>
+                    <div
+                        key={lvl}
+                        onClick={() => setFilterLevel(lvl)}
+                        style={{
+                            textAlign: 'center',
+                            minWidth: '60px',
+                            cursor: 'pointer',
+                            opacity: parseInt(filterLevel) === lvl ? 1 : 0.5,
+                            transform: parseInt(filterLevel) === lvl ? 'scale(1.1)' : 'scale(1)',
+                            transition: 'all 0.2s'
+                        }}
+                    >
                         <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: LEVELS[lvl].color }}>
                             {wordsByLevel[lvl].length}
                         </div>
@@ -86,76 +109,26 @@ export default function SkillTreeView({ engine }) {
 
             {/* Filters Container */}
             <div style={{ marginBottom: '2rem', background: 'white', padding: '1rem', borderRadius: '15px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-
-                {/* Mastery Level Filter */}
-                <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
-                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#7f8c8d' }}>Mastery Level</h4>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                        <button
-                            onClick={() => setFilterLevel('All')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                borderRadius: '20px',
-                                border: 'none',
-                                background: filterLevel === 'All' ? '#2c3e50' : '#ecf0f1',
-                                color: filterLevel === 'All' ? 'white' : '#2c3e50',
-                                cursor: 'pointer',
-                                fontWeight: 'bold',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            All
-                        </button>
-                        {[0, 1, 2, 3, 4, 5].map(lvl => (
-                            <button
-                                key={lvl}
-                                onClick={() => setFilterLevel(lvl)}
-                                style={{
-                                    padding: '0.5rem 1rem',
-                                    borderRadius: '20px',
-                                    border: 'none',
-                                    background: parseInt(filterLevel) === lvl ? LEVELS[lvl].color : '#ecf0f1',
-                                    color: parseInt(filterLevel) === lvl ? 'white' : '#2c3e50',
-                                    cursor: 'pointer',
-                                    fontWeight: 'bold',
-                                    transition: 'all 0.2s'
-                                }}
-                            >
-                                {LEVELS[lvl].icon} {LEVELS[lvl].name}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
                 {/* Difficulty Filter */}
                 <div style={{ textAlign: 'center' }}>
-                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#7f8c8d' }}>Word Difficulty</h4>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(diff => (
-                            <button
-                                key={diff}
-                                onClick={() => toggleDifficulty(diff)}
-                                style={{
-                                    padding: '0.4rem 0.8rem',
-                                    borderRadius: '15px',
-                                    border: filterDifficulty.includes(diff) ? '2px solid #3498db' : '1px solid #ecf0f1',
-                                    background: filterDifficulty.includes(diff) ? '#e8f4fc' : 'white',
-                                    color: '#2c3e50',
-                                    cursor: 'pointer',
-                                    fontWeight: 'bold',
-                                    transition: 'all 0.2s',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '5px',
-                                    fontSize: '0.9rem'
-                                }}
-                            >
-                                <DifficultyBadge level={diff} showIcon={false} /> {diff}
-                            </button>
-                        ))}
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: '#95a5a6', marginTop: '0.5rem' }}>
-                        {filterDifficulty.length === 0 ? '(Showing All Difficulties)' : '(Filtered by Selection)'}
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#7f8c8d' }}>
+                        Word Difficulty: {filterDifficulty === 0 ? 'All' : filterDifficulty}
+                    </h4>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
+                        <span style={{ fontSize: '0.8rem', color: '#7f8c8d' }}>All</span>
+                        <input
+                            type="range"
+                            min="0"
+                            max="10"
+                            value={filterDifficulty}
+                            onChange={(e) => setFilterDifficulty(parseInt(e.target.value))}
+                            style={{
+                                width: '200px',
+                                accentColor: '#3498db',
+                                cursor: 'pointer'
+                            }}
+                        />
+                        <span style={{ fontSize: '0.8rem', color: '#7f8c8d' }}>10</span>
                     </div>
                 </div>
             </div>
@@ -203,7 +176,7 @@ export default function SkillTreeView({ engine }) {
                                     <span key={q.id || q.question_number} style={{
                                         fontSize: '0.9rem',
                                         padding: '6px 12px',
-                                        paddingRight: '24px', // Space for badge
+                                        paddingRight: '18px', // Space for number
                                         background: `${LEVELS[level].color}15`,
                                         color: LEVELS[level].color,
                                         borderRadius: '15px',
@@ -214,14 +187,17 @@ export default function SkillTreeView({ engine }) {
                                         fontWeight: '500'
                                     }}>
                                         {q.answer}
-                                        <div style={{
+                                        <span style={{
                                             position: 'absolute',
-                                            bottom: '-2px',
-                                            right: '-2px',
-                                            transform: 'scale(0.8)'
+                                            top: '2px',
+                                            right: '4px',
+                                            fontSize: '0.6rem',
+                                            color: 'black',
+                                            opacity: 0.4,
+                                            fontWeight: 'bold'
                                         }}>
-                                            <DifficultyBadge level={q.difficulty} showIcon={false} />
-                                        </div>
+                                            {q.difficulty}
+                                        </span>
                                     </span>
                                 ))
                             ) : (
