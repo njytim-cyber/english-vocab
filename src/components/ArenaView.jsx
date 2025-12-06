@@ -40,6 +40,15 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
     const cpuTimerRef = useRef(null);
     const questionTimerRef = useRef(null);
 
+    // Responsive Layout
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     // Start game after opponent selection
     const handleSelectOpponent = (difficulty) => {
         setSelectedDifficulty(difficulty);
@@ -371,14 +380,7 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
         );
     };
 
-    // Responsive Layout
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     return (
         <div style={{
