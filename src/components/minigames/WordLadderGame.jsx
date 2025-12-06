@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { triggerConfetti } from '../../utils/effects';
-import { speak } from '../../utils/audio';
 import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
+import balance from '../../data/balance.json';
 
 export default function WordLadderGame({ engine, onBack }) {
     const [currentLadder, setCurrentLadder] = useState(null);
@@ -17,24 +17,6 @@ export default function WordLadderGame({ engine, onBack }) {
 
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        startNewRound();
-
-        const hasSeenTutorial = localStorage.getItem('tutorial_wordladder');
-        if (!hasSeenTutorial) {
-            setShowTutorial(true);
-        }
-
-        // Keep focus
-        const handleClick = () => {
-            if (inputRef.current && gameStatus === 'playing') {
-                inputRef.current.focus();
-            }
-        };
-        window.addEventListener('click', handleClick);
-        return () => window.removeEventListener('click', handleClick);
-    }, []);
-
     const closeTutorial = () => {
         sfx.playClick();
         setShowTutorial(false);
@@ -42,7 +24,7 @@ export default function WordLadderGame({ engine, onBack }) {
         setTimeout(() => inputRef.current?.focus(), 100);
     };
 
-    const startNewRound = () => {
+    const startNewRound = useCallback(() => {
         // Mock ladder for now if engine doesn't have it, or use engine
         // Assuming engine.getWordLadder() returns { start: 'COLD', end: 'WARM', path: [...] }
         // If not available, I'll use a simple mock or try-catch
@@ -60,7 +42,28 @@ export default function WordLadderGame({ engine, onBack }) {
         setMessage('');
         setShowSummary(false);
         setTimeout(() => inputRef.current?.focus(), 100);
-    };
+    }, [engine]);
+
+    // Initialization Effect
+    useEffect(() => {
+        startNewRound();
+
+        const hasSeenTutorial = localStorage.getItem('tutorial_wordladder');
+        if (!hasSeenTutorial) {
+            setShowTutorial(true);
+        }
+    }, [startNewRound]);
+
+    // Focus Keeper Effect
+    useEffect(() => {
+        const handleClick = () => {
+            if (inputRef.current && gameStatus === 'playing') {
+                inputRef.current.focus();
+            }
+        };
+        window.addEventListener('click', handleClick);
+        return () => window.removeEventListener('click', handleClick);
+    }, [gameStatus]);
 
     const handleInputChange = (e) => {
         setCurrentInput(e.target.value.toUpperCase());
@@ -104,9 +107,8 @@ export default function WordLadderGame({ engine, onBack }) {
             setGameStatus('won');
             sfx.playWin();
             triggerConfetti();
-            const xpEarned = 50;
-            const coinsEarned = 25;
-            setRewards({ xp: xpEarned, coins: coinsEarned });
+            const { xp, stars } = balance.rewards.minigames.wordLadder;
+            setRewards({ xp, coins: stars });
             setTimeout(() => setShowSummary(true), 1000);
         }
     };

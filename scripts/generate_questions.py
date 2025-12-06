@@ -1243,7 +1243,7 @@ def generate_questions(original_questions):
     questions = []
     
     # Target: 2000 total
-    target_count = 2000
+    target_count = 5000
     generated_count = 0
     
     # Create an extended list to iterate through to ensure we get enough

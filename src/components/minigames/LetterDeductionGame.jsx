@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { speak } from '../../utils/audio';
 import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
+import balance from '../../data/balance.json';
 
 export default function LetterDeductionGame({ engine, onBack }) {
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -17,43 +18,22 @@ export default function LetterDeductionGame({ engine, onBack }) {
     const MAX_LIVES = 6;
     const keyboardLayout = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
-    useEffect(() => {
-        startNewRound();
-
-        const hasSeenTutorial = localStorage.getItem('tutorial_letterdeduction');
-        if (!hasSeenTutorial) {
-            setShowTutorial(true);
-        }
-
-        // Keyboard listener
-        const handleKeyDown = (e) => {
-            if (gameStatus !== 'playing') return;
-            const char = e.key.toUpperCase();
-            if (/^[A-Z]$/.test(char)) {
-                handleGuess(char);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
-
     const closeTutorial = () => {
         sfx.playClick();
         setShowTutorial(false);
         localStorage.setItem('tutorial_letterdeduction', 'true');
     };
 
-    const startNewRound = () => {
+    const startNewRound = useCallback(() => {
         const q = engine.getReinforcementQuestions(1)[0];
         setCurrentQuestion(q);
         setGuessedLetters(new Set());
         setWrongGuesses(0);
         setGameStatus('playing');
         setShowSummary(false);
-    };
+    }, [engine]);
 
-    const handleGuess = (char) => {
+    const handleGuess = useCallback((char) => {
         if (guessedLetters.has(char) || gameStatus !== 'playing') return;
 
         sfx.playClick();
@@ -71,9 +51,8 @@ export default function LetterDeductionGame({ engine, onBack }) {
                 sfx.playWin();
                 triggerConfetti();
                 speak(currentQuestion.answer);
-                const xpEarned = 20;
-                const coinsEarned = 10;
-                setRewards({ xp: xpEarned, coins: coinsEarned });
+                const { xp, stars } = balance.rewards.minigames.letterDeduction;
+                setRewards({ xp, coins: stars });
                 setTimeout(() => setShowSummary(true), 1000);
             }
         } else {
@@ -86,7 +65,31 @@ export default function LetterDeductionGame({ engine, onBack }) {
                 setTimeout(() => setShowSummary(true), 1000);
             }
         }
-    };
+    }, [guessedLetters, gameStatus, currentQuestion, wrongGuesses]);
+
+    // Initialization Effect
+    useEffect(() => {
+        startNewRound();
+
+        const hasSeenTutorial = localStorage.getItem('tutorial_letterdeduction');
+        if (!hasSeenTutorial) {
+            setShowTutorial(true);
+        }
+    }, [startNewRound]);
+
+    // Keyboard Listener Effect
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (gameStatus !== 'playing') return;
+            const char = e.key.toUpperCase();
+            if (/^[A-Z]$/.test(char)) {
+                handleGuess(char);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [gameStatus, handleGuess]);
 
     const getWordDisplay = () => {
         if (!currentQuestion) return [];

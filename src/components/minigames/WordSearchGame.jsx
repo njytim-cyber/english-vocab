@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { speak } from '../../utils/audio';
 import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
+import balance from '../../data/balance.json';
 
 export default function WordSearchGame({ engine, onBack }) {
     const [grid, setGrid] = useState([]);
     const [words, setWords] = useState([]);
     const [foundWords, setFoundWords] = useState(new Set());
+    const [foundWordCells, setFoundWordCells] = useState({}); // { word: { cells: [{r, c}], color: string } }
     const [selectedCells, setSelectedCells] = useState([]);
     const [isSelecting, setIsSelecting] = useState(false);
     const [showTutorial, setShowTutorial] = useState(false);
@@ -17,15 +19,17 @@ export default function WordSearchGame({ engine, onBack }) {
 
     const GRID_SIZE = 10;
 
-    useEffect(() => {
-        startNewRound();
-
-        // Check tutorial status
-        const hasSeenTutorial = localStorage.getItem('tutorial_wordsearch');
-        if (!hasSeenTutorial) {
-            setShowTutorial(true);
-        }
-    }, []);
+    // Color palette for found words
+    const WORD_COLORS = [
+        '#4ECDC4', // Teal
+        '#FF6B6B', // Coral
+        '#95E1D3', // Mint
+        '#F38181', // Salmon
+        '#AA96DA', // Lavender
+        '#FFE66D', // Yellow
+        '#A8E6CF', // Light green
+        '#DDA0DD'  // Plum
+    ];
 
     const closeTutorial = () => {
         sfx.playClick();
@@ -33,12 +37,13 @@ export default function WordSearchGame({ engine, onBack }) {
         localStorage.setItem('tutorial_wordsearch', 'true');
     };
 
-    const startNewRound = () => {
+    const startNewRound = useCallback(() => {
         // Get words
         const qs = engine.getReinforcementQuestions(5);
         const wordList = qs.map(q => q.answer.toUpperCase());
-        setWords(wordList);
+        // setWords(wordList); // Moved to after placement to ensure only placed words are listed
         setFoundWords(new Set());
+        setFoundWordCells({});
         setSelectedCells([]);
         setShowSummary(false);
 
@@ -46,21 +51,27 @@ export default function WordSearchGame({ engine, onBack }) {
         const newGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
 
         // Place words
+        // Place words
+        const placedWords = [];
         wordList.forEach(word => {
             let placed = false;
             let attempts = 0;
             while (!placed && attempts < 100) {
-                const dir = Math.random() > 0.5 ? 'H' : 'V';
+                const dirs = ['H', 'V', 'D'];
+                const dir = dirs[Math.floor(Math.random() * dirs.length)];
                 const r = Math.floor(Math.random() * GRID_SIZE);
                 const c = Math.floor(Math.random() * GRID_SIZE);
 
                 if (canPlace(newGrid, word, r, c, dir)) {
                     placeWord(newGrid, word, r, c, dir);
                     placed = true;
+                    placedWords.push(word);
                 }
                 attempts++;
             }
         });
+
+        setWords(placedWords);
 
         // Fill empty
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -72,7 +83,17 @@ export default function WordSearchGame({ engine, onBack }) {
             }
         }
         setGrid(newGrid);
-    };
+    }, [engine]);
+
+    useEffect(() => {
+        startNewRound();
+
+        // Check tutorial status
+        const hasSeenTutorial = localStorage.getItem('tutorial_wordsearch');
+        if (!hasSeenTutorial) {
+            setShowTutorial(true);
+        }
+    }, []); // Run ONCE on mount
 
     const canPlace = (g, word, r, c, dir) => {
         if (dir === 'H') {
@@ -80,10 +101,15 @@ export default function WordSearchGame({ engine, onBack }) {
             for (let i = 0; i < word.length; i++) {
                 if (g[r][c + i] !== '' && g[r][c + i] !== word[i]) return false;
             }
-        } else {
+        } else if (dir === 'V') {
             if (r + word.length > GRID_SIZE) return false;
             for (let i = 0; i < word.length; i++) {
                 if (g[r + i][c] !== '' && g[r + i][c] !== word[i]) return false;
+            }
+        } else if (dir === 'D') {
+            if (r + word.length > GRID_SIZE || c + word.length > GRID_SIZE) return false;
+            for (let i = 0; i < word.length; i++) {
+                if (g[r + i][c + i] !== '' && g[r + i][c + i] !== word[i]) return false;
             }
         }
         return true;
@@ -92,7 +118,8 @@ export default function WordSearchGame({ engine, onBack }) {
     const placeWord = (g, word, r, c, dir) => {
         for (let i = 0; i < word.length; i++) {
             if (dir === 'H') g[r][c + i] = word[i];
-            else g[r + i][c] = word[i];
+            else if (dir === 'V') g[r + i][c] = word[i];
+            else if (dir === 'D') g[r + i][c + i] = word[i];
         }
     };
 
@@ -133,15 +160,25 @@ export default function WordSearchGame({ engine, onBack }) {
             const newFound = new Set(foundWords);
             newFound.add(selectedWord);
             setFoundWords(newFound);
+
+            // Store the cells and assign a color
+            const colorIndex = Object.keys(foundWordCells).length % WORD_COLORS.length;
+            setFoundWordCells(prev => ({
+                ...prev,
+                [selectedWord]: {
+                    cells: [...selectedCells],
+                    color: WORD_COLORS[colorIndex]
+                }
+            }));
+
             triggerConfetti();
             sfx.playCorrect();
             speak(selectedWord);
 
             if (newFound.size === words.length) {
                 sfx.playWin();
-                const xpEarned = 50;
-                const coinsEarned = 25;
-                setRewards({ xp: xpEarned, coins: coinsEarned });
+                const { xp, stars } = balance.rewards.minigames.wordSearch;
+                setRewards({ xp, coins: stars });
                 setTimeout(() => setShowSummary(true), 1000);
             }
         } else {
@@ -199,7 +236,23 @@ export default function WordSearchGame({ engine, onBack }) {
                 }}>
                     {grid.map((row, r) => row.map((char, c) => {
                         const isSelected = selectedCells.some(cell => cell.r === r && cell.c === c);
-                        // Check if part of found word (would need more complex tracking, skipping for now)
+
+                        let cellBackground = 'white';
+                        let cellColor = 'var(--dark)';
+
+                        // Check found words
+                        for (const wordData of Object.values(foundWordCells)) {
+                            if (wordData.cells.some(cell => cell.r === r && cell.c === c)) {
+                                cellBackground = wordData.color;
+                                cellColor = 'white'; // White text on colored background
+                                break;
+                            }
+                        }
+
+                        if (isSelected) {
+                            cellBackground = 'var(--secondary)';
+                            cellColor = 'white';
+                        }
 
                         return (
                             <div
@@ -209,13 +262,15 @@ export default function WordSearchGame({ engine, onBack }) {
                                 style={{
                                     width: '40px',
                                     height: '40px',
-                                    background: isSelected ? 'var(--secondary)' : 'white',
+                                    background: cellBackground,
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     fontWeight: 'bold',
                                     fontSize: '1.2rem',
-                                    color: isSelected ? 'white' : 'var(--dark)'
+                                    color: cellColor,
+                                    transition: 'background 0.2s',
+                                    borderRadius: '4px'
                                 }}
                             >
                                 {char}
@@ -236,22 +291,17 @@ export default function WordSearchGame({ engine, onBack }) {
                                 fontSize: '1.2rem',
                                 textDecoration: foundWords.has(word) ? 'line-through' : 'none',
                                 color: foundWords.has(word) ? '#aaa' : 'var(--dark)',
-                                fontWeight: foundWords.has(word) ? 'normal' : 'bold',
+                                fontWeight: 'normal',
                                 position: 'relative',
                                 cursor: 'help',
                                 width: 'fit-content'
                             }}>
                                 {word}
-                                {question && (
+                                {question && question.example && (
                                     <div className="tooltip">
-                                        <div style={{ fontSize: '0.9rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>
-                                            "{question.question}"
+                                        <div style={{ fontSize: '0.9rem', fontStyle: 'italic' }}>
+                                            {question.example}
                                         </div>
-                                        {question.example && (
-                                            <div style={{ fontSize: '0.8rem', opacity: 0.9 }}>
-                                                Ex: {question.example}
-                                            </div>
-                                        )}
                                     </div>
                                 )}
                             </div>

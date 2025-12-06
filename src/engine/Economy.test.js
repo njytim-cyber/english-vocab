@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { Economy, SHOP_ITEMS } from './Economy';
+import { Economy } from './Economy';
 
 describe('Economy', () => {
     let economy;

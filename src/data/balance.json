@@ -1,8 +1,92 @@
 {
-    "version": "1.0",
+    "version": "1.2",
     "entities": {
         "player": {
             "baseSpeed": 10
+        }
+    },
+    "rewards": {
+        "quiz": {
+            "correctAnswer": 15,
+            "perfectBonus": 75,
+            "streakBonus": 5
+        },
+        "minigames": {
+            "wordSearch": {
+                "xp": 25,
+                "stars": 15,
+                "learningValue": "low"
+            },
+            "definitionMatch": {
+                "xp": 60,
+                "stars": 35,
+                "learningValue": "high"
+            },
+            "letterDeduction": {
+                "xp": 35,
+                "stars": 20,
+                "learningValue": "medium"
+            },
+            "wordScramble": {
+                "xp": 30,
+                "stars": 20,
+                "learningValue": "medium"
+            },
+            "wordLadder": {
+                "xp": 20,
+                "stars": 15,
+                "learningValue": "low"
+            }
+        },
+        "dailyLogin": [
+            50,
+            100,
+            150,
+            200,
+            300,
+            250,
+            500
+        ]
+    },
+    "arena": {
+        "questionTimeLimit": 20,
+        "maxQuestions": 10,
+        "opponents": {
+            "noob": {
+                "name": "Beginner Bot",
+                "emoji": "🐣",
+                "minResponseTime": 8000,
+                "maxResponseTime": 15000,
+                "accuracy": 0.5
+            },
+            "easy": {
+                "name": "Casual Player",
+                "emoji": "😊",
+                "minResponseTime": 5000,
+                "maxResponseTime": 10000,
+                "accuracy": 0.65
+            },
+            "medium": {
+                "name": "Word Warrior",
+                "emoji": "⚔️",
+                "minResponseTime": 3500,
+                "maxResponseTime": 7000,
+                "accuracy": 0.75
+            },
+            "hard": {
+                "name": "Vocab Ninja",
+                "emoji": "🥷",
+                "minResponseTime": 2500,
+                "maxResponseTime": 5000,
+                "accuracy": 0.85
+            },
+            "master": {
+                "name": "Lexicon Lord",
+                "emoji": "👑",
+                "minResponseTime": 1500,
+                "maxResponseTime": 3500,
+                "accuracy": 0.95
+            }
         }
     }
 }

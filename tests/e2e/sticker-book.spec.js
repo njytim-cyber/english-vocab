@@ -12,13 +12,16 @@ test.describe('Sticker Book Feature', () => {
         await page.goto('http://localhost:5173');
         // Wait for hydration
         await expect(page.locator('body')).toBeVisible();
+
+        // Verify Learn Hub loaded
+        await expect(page.getByRole('heading', { name: /Learn Hub/i })).toBeVisible();
     });
 
     test('should navigate to Sticker Book and view stickers', async ({ page }) => {
-        // 1. Navigate to Stickers (was Skills)
-        const stickersBtn = page.getByRole('button', { name: 'Stickers' });
-        await expect(stickersBtn).toBeVisible();
-        await stickersBtn.click();
+        // 1. Navigate to Progress tab in NavBar
+        const progressBtn = page.getByRole('button', { name: /Progress/i });
+        await expect(progressBtn).toBeVisible();
+        await progressBtn.click();
 
         // 2. Verify Sticker Book Loaded
         await expect(page.getByRole('heading', { name: 'Sticker Book' })).toBeVisible();
@@ -35,8 +38,10 @@ test.describe('Sticker Book Feature', () => {
         await page.getByRole('button', { name: 'Close' }).click();
         await expect(page.getByText('Win your first quiz.')).not.toBeVisible();
 
-        // 6. Back Navigation
-        await page.getByRole('button', { name: 'Back' }).click();
-        await expect(page.getByText('Home Base')).toBeVisible();
+        // 6. Back Navigation via Learn tab
+        const learnBtn = page.getByRole('button', { name: /Learn/i });
+        await expect(learnBtn).toBeVisible();
+        await learnBtn.click();
+        await expect(page.getByRole('heading', { name: /Learn Hub/i })).toBeVisible();
     });
 });

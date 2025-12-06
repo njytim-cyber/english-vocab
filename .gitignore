@@ -2,4 +2,20 @@ node_modules
 dist
 src-tauri/target
 .env
+.env.local
+.env.*.local
 .DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary Files
+*.txt
+test-results/
+playwright-report/

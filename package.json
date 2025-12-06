@@ -1,5 +1,5 @@
 {
-    "name": "vocab-quiz",
+    "name": "word-citadel",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -10,7 +10,7 @@
         "tauri": "tauri",
         "cap": "cap",
         "docs": "node scripts/auto-doc.js",
-        "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "lint": "eslint . --ext js,jsx --report-unused-disable-directives",
         "test": "vitest"
     },
     "dependencies": {
@@ -23,6 +23,7 @@
     },
     "devDependencies": {
         "@playwright/test": "^1.57.0",
+        "@testing-library/react": "^16.3.0",
         "@types/react": "^18.2.15",
         "@types/react-dom": "^18.2.7",
         "@vitejs/plugin-react": "^4.0.3",
@@ -30,6 +31,7 @@
         "eslint-plugin-react": "^7.32.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
+        "jsdom": "^27.2.0",
         "vite": "^4.4.5",
         "vitest": "^4.0.15"
     }

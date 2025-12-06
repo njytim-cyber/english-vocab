@@ -63,7 +63,21 @@ export class SpacedRepetition {
         };
 
         this.saveProgress();
+        this.saveProgress();
         return nextBox;
+    }
+
+    /**
+     * Manually set the box for a question.
+     * @param {number} questionId 
+     * @param {number} box 
+     */
+    setBox(questionId, box) {
+        this.progress[questionId] = {
+            box: Math.max(1, Math.min(5, box)),
+            lastReviewed: Date.now()
+        };
+        this.saveProgress();
     }
 
     /**

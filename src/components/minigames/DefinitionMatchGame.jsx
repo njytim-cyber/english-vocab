@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { speak } from '../../utils/audio';
 import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
+import balance from '../../data/balance.json';
 
 export default function DefinitionMatchGame({ engine, onBack }) {
     const [questions, setQuestions] = useState([]);
@@ -11,21 +12,11 @@ export default function DefinitionMatchGame({ engine, onBack }) {
     const [matchedPairs, setMatchedPairs] = useState(new Set());
     const [selectedWord, setSelectedWord] = useState(null);
     const [selectedDef, setSelectedDef] = useState(null);
-    const [wrongPair, setWrongPair] = useState(null);
+    const [_wrongPair, setWrongPair] = useState(null);
     const [gameStatus, setGameStatus] = useState('playing'); // 'playing' | 'won'
     const [showTutorial, setShowTutorial] = useState(false);
     const [showSummary, setShowSummary] = useState(false);
     const [rewards, setRewards] = useState({ xp: 0, coins: 0 });
-
-    useEffect(() => {
-        startNewRound();
-
-        // Check tutorial status
-        const hasSeenTutorial = localStorage.getItem('tutorial_definitionmatch');
-        if (!hasSeenTutorial) {
-            setShowTutorial(true);
-        }
-    }, []);
 
     const closeTutorial = () => {
         sfx.playClick();
@@ -33,7 +24,7 @@ export default function DefinitionMatchGame({ engine, onBack }) {
         localStorage.setItem('tutorial_definitionmatch', 'true');
     };
 
-    const startNewRound = () => {
+    const startNewRound = useCallback(() => {
         // Get 4 random questions
         const qs = engine.getReinforcementQuestions(4);
         setQuestions(qs);
@@ -52,7 +43,17 @@ export default function DefinitionMatchGame({ engine, onBack }) {
         setWrongPair(null);
         setGameStatus('playing');
         setShowSummary(false);
-    };
+    }, [engine]);
+
+    useEffect(() => {
+        startNewRound();
+
+        // Check tutorial status
+        const hasSeenTutorial = localStorage.getItem('tutorial_definitionmatch');
+        if (!hasSeenTutorial) {
+            setShowTutorial(true);
+        }
+    }, []); // Run ONCE on mount
 
     const handleWordClick = (q) => {
         if (matchedPairs.has(q.id) || gameStatus !== 'playing') return;
@@ -93,9 +94,8 @@ export default function DefinitionMatchGame({ engine, onBack }) {
             if (newMatched.size === questions.length) {
                 setGameStatus('won');
                 sfx.playWin();
-                const xpEarned = 40;
-                const coinsEarned = 20;
-                setRewards({ xp: xpEarned, coins: coinsEarned });
+                const { xp, stars } = balance.rewards.minigames.definitionMatch;
+                setRewards({ xp, coins: stars });
                 setTimeout(() => setShowSummary(true), 1000);
             }
         } else {
@@ -111,12 +111,7 @@ export default function DefinitionMatchGame({ engine, onBack }) {
         }
     };
 
-    const getLineColor = (wordId, defId) => {
-        if (matchedPairs.has(wordId) && wordId === defId) return '#4caf50'; // Green for match
-        if (wrongPair && wrongPair.wordId === wordId && wrongPair.defId === defId) return '#f44336'; // Red for wrong
-        if (selectedWord?.id === wordId && selectedDef?.id === defId) return '#2196f3'; // Blue for selection
-        return 'transparent';
-    };
+
 
     if (questions.length === 0) return <div>Loading...</div>;
 
@@ -135,7 +130,7 @@ export default function DefinitionMatchGame({ engine, onBack }) {
                 <button onClick={() => { sfx.playClick(); onBack(); }} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>
                     ← Back
                 </button>
-                <h2 style={{ margin: 0 }}>Definition Match 🧩</h2>
+                <h2 style={{ margin: 0 }}>Sentence Match 🧩</h2>
                 <button
                     onClick={() => { sfx.playClick(); setShowTutorial(true); }}
                     style={{

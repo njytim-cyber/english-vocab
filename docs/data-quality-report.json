@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-12-05T22:55:20.919Z",
+  "totalQuestions": 2002,
+  "duplicateAnswers": 147,
+  "missingDifficulty": 0,
+  "missingLevels": [
+    10
+  ],
+  "difficultyDistribution": {
+    "1": 57,
+    "2": 143,
+    "3": 473,
+    "4": 184,
+    "5": 324,
+    "6": 146,
+    "7": 318,
+    "8": 258,
+    "9": 99
+  },
+  "themeCount": 10,
+  "issues": [
+    "147 duplicate answers",
+    "Missing difficulty levels: 10"
+  ]
+}

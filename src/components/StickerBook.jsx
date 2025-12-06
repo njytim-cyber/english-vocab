@@ -1,36 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ACHIEVEMENTS } from '../engine/Achievements';
+import { useQuests } from '../contexts/QuestContext';
+import PageLayout from './common/PageLayout';
+import { colors, borderRadius, shadows } from '../styles/designTokens';
 
-export default function StickerBook({ achievements, onBack, onViewCertificate }) {
+export default function StickerBook({ achievements, onBack, onNavigate }) {
+    const { quests } = useQuests();
     const [unlocked, setUnlocked] = useState(new Set(achievements.getUnlocked()));
     const [selectedSticker, setSelectedSticker] = useState(null);
 
-    // Refresh on mount in case updates happened elsewhere
     useEffect(() => {
         setUnlocked(new Set(achievements.getUnlocked()));
     }, [achievements]);
 
-    return (
-        <div className="sticker-book" style={{
-            minHeight: '100vh',
-            padding: '2rem',
-            background: 'var(--light)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-        }}>
-            <div style={{ width: '100%', maxWidth: '800px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <button onClick={onBack} style={{ fontSize: '1.5rem', background: 'none', border: 'none', cursor: 'pointer' }}>⬅️ Back</button>
-                <h1 style={{ fontFamily: 'var(--font-fun)', color: 'var(--primary)', margin: 0 }}>Sticker Book 🏆</h1>
-                <button onClick={onViewCertificate} style={{ fontSize: '1.5rem', background: 'none', border: 'none', cursor: 'pointer' }} title="View Certificate">📜</button>
-            </div>
+    // Create quest stickers for completed quests
+    const questStickers = Object.values(quests)
+        .filter(q => q.isCompleted)
+        .map(q => ({
+            id: `quest_${q.id}`,
+            title: `${q.id} Master`,
+            description: `Mastered all ${q.id} vocabulary!`,
+            icon: '🏆',
+            isQuest: true
+        }));
 
+    return (
+        <PageLayout
+            title="Progress 🏆"
+            onBack={onBack}
+            rightContent={
+                <div style={{
+                    background: colors.white,
+                    padding: '0.5rem 1rem',
+                    borderRadius: borderRadius.pill,
+                    boxShadow: shadows.sm,
+                    fontSize: '0.9rem',
+                    color: colors.primary,
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                }}>
+                    <span>Level {Math.floor(achievements.stats.wins / 5) + 1}</span>
+                    <span style={{ fontSize: '0.7rem', color: colors.textMuted, fontWeight: 'normal' }}>
+                        ({achievements.stats.wins} wins)
+                    </span>
+                </div>
+            }
+        >
+
+
+            {/* Quest Achievements Section */}
+            {questStickers.length > 0 && (
+                <div style={{ marginBottom: '2rem' }}>
+                    <h2 style={{ color: colors.primary, marginBottom: '1rem', fontSize: '1.2rem' }}>
+                        🎯 Quest Achievements
+                    </h2>
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
+                        gap: '1rem'
+                    }}>
+                        {questStickers.map(sticker => (
+                            <div
+                                key={sticker.id}
+                                onClick={() => setSelectedSticker(sticker)}
+                                className="animate-pop"
+                                style={{
+                                    aspectRatio: '1/1',
+                                    background: colors.primaryGradient,
+                                    borderRadius: borderRadius.lg,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '0.5rem',
+                                    cursor: 'pointer',
+                                    boxShadow: shadows.primary
+                                }}
+                            >
+                                <div style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>🏆</div>
+                                <div style={{ fontSize: '0.65rem', color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+                                    {sticker.title}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Regular Achievements */}
+            <h2 style={{ color: colors.dark, marginBottom: '1rem', fontSize: '1.2rem' }}>
+                ⭐ Achievements
+            </h2>
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                gap: '1.5rem',
-                width: '100%',
-                maxWidth: '800px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
+                gap: '1rem'
             }}>
                 {ACHIEVEMENTS.map(ach => {
                     const isUnlocked = unlocked.has(ach.id);
@@ -42,32 +108,31 @@ export default function StickerBook({ achievements, onBack, onViewCertificate })
                             className={isUnlocked ? 'animate-pop' : ''}
                             style={{
                                 aspectRatio: '1/1',
-                                background: 'white',
-                                borderRadius: '15px',
+                                background: colors.white,
+                                borderRadius: borderRadius.lg,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                padding: '1rem',
+                                padding: '0.5rem',
                                 cursor: 'pointer',
-                                boxShadow: isUnlocked ? '0 4px 10px rgba(0,0,0,0.1)' : 'none',
-                                border: isUnlocked ? '2px solid var(--primary)' : '2px dashed #ccc',
-                                opacity: isUnlocked ? 1 : 0.6,
-                                transition: 'transform 0.2s'
+                                boxShadow: isUnlocked ? shadows.sm : 'none',
+                                border: isUnlocked ? `2px solid ${colors.primary}` : `2px dashed ${colors.border}`,
+                                opacity: isUnlocked ? 1 : 0.6
                             }}
                         >
                             <div style={{
-                                fontSize: '3rem',
-                                marginBottom: '0.5rem',
-                                filter: isUnlocked ? 'none' : 'grayscale(100%) contrast(0%) brightness(80%)' // Silhouette effect
+                                fontSize: '2rem',
+                                marginBottom: '0.2rem',
+                                filter: isUnlocked ? 'none' : 'grayscale(100%) contrast(0%) brightness(80%)'
                             }}>
                                 {ach.icon}
                             </div>
                             <div style={{
                                 fontWeight: 'bold',
-                                fontSize: '0.9rem',
+                                fontSize: '0.65rem',
                                 textAlign: 'center',
-                                color: isUnlocked ? 'var(--dark)' : '#999'
+                                color: isUnlocked ? colors.dark : colors.textMuted
                             }}>
                                 {ach.title}
                             </div>
@@ -87,45 +152,52 @@ export default function StickerBook({ achievements, onBack, onViewCertificate })
                     alignItems: 'center',
                     zIndex: 1000
                 }} onClick={() => setSelectedSticker(null)}>
-                    <div className="card animate-pop" style={{
-                        background: 'white',
+                    <div className="animate-pop" style={{
+                        background: colors.white,
                         padding: '2rem',
-                        borderRadius: '20px',
-                        maxWidth: '400px',
+                        borderRadius: borderRadius.xl,
+                        maxWidth: '350px',
                         width: '90%',
                         textAlign: 'center'
                     }} onClick={e => e.stopPropagation()}>
                         <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
-                            {unlocked.has(selectedSticker.id) ? selectedSticker.icon : '🔒'}
+                            {selectedSticker.isQuest || unlocked.has(selectedSticker.id) ? selectedSticker.icon : '🔒'}
                         </div>
-                        <h2 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>{selectedSticker.title}</h2>
-                        <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>{selectedSticker.description}</p>
+                        <h2 style={{ color: colors.primary, marginBottom: '0.5rem' }}>{selectedSticker.title}</h2>
+                        <p style={{ fontSize: '0.95rem', marginBottom: '1rem', color: colors.textMuted }}>{selectedSticker.description}</p>
 
                         <div style={{
                             padding: '0.5rem 1rem',
-                            background: unlocked.has(selectedSticker.id) ? '#e8f5e9' : '#ffebee',
-                            color: unlocked.has(selectedSticker.id) ? 'green' : 'red',
-                            borderRadius: '20px',
+                            background: (selectedSticker.isQuest || unlocked.has(selectedSticker.id))
+                                ? colors.primaryGradient
+                                : '#ffebee',
+                            color: (selectedSticker.isQuest || unlocked.has(selectedSticker.id))
+                                ? 'white'
+                                : colors.error,
+                            borderRadius: borderRadius.pill,
                             display: 'inline-block',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            fontSize: '0.9rem'
                         }}>
-                            {unlocked.has(selectedSticker.id) ? 'Unlocked!' : 'Locked'}
+                            {(selectedSticker.isQuest || unlocked.has(selectedSticker.id)) ? '✓ Unlocked!' : 'Locked'}
                         </div>
 
                         <button onClick={() => setSelectedSticker(null)} style={{
                             display: 'block',
-                            margin: '2rem auto 0',
+                            margin: '1.5rem auto 0',
                             padding: '0.5rem 2rem',
-                            background: '#eee',
+                            background: colors.light,
                             border: 'none',
-                            borderRadius: '20px',
-                            cursor: 'pointer'
+                            borderRadius: borderRadius.pill,
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            color: colors.dark
                         }}>
                             Close
                         </button>
                     </div>
                 </div>
             )}
-        </div>
+        </PageLayout>
     );
 }

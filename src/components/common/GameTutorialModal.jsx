@@ -1,4 +1,5 @@
 import React from 'react';
+import { colors, borderRadius, shadows } from '../../styles/designTokens';
 
 export default function GameTutorialModal({ title, instructions, onClose }) {
     return (
@@ -15,45 +16,44 @@ export default function GameTutorialModal({ title, instructions, onClose }) {
             zIndex: 2000,
             padding: '1rem'
         }}>
-            <div style={{
-                background: 'white',
-                borderRadius: '20px',
+            <div className="animate-pop" style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
                 padding: '2rem',
-                maxWidth: '500px',
+                maxWidth: '450px',
                 width: '100%',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-                animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                boxShadow: shadows.lg
             }}>
                 <h2 style={{
                     textAlign: 'center',
-                    color: '#2c3e50',
+                    color: colors.dark,
                     marginBottom: '1.5rem',
-                    fontSize: '2rem'
+                    fontSize: '1.6rem'
                 }}>
                     {title}
                 </h2>
 
-                <div style={{ marginBottom: '2rem' }}>
+                <div style={{ marginBottom: '1.5rem' }}>
                     {instructions.map((step, index) => (
                         <div key={index} style={{
                             display: 'flex',
                             alignItems: 'start',
-                            marginBottom: '1rem',
-                            fontSize: '1.1rem',
-                            color: '#34495e'
+                            marginBottom: '0.75rem',
+                            fontSize: '1rem',
+                            color: colors.dark
                         }}>
                             <span style={{
-                                background: '#3498db',
+                                background: colors.primaryGradient,
                                 color: 'white',
-                                width: '24px',
-                                height: '24px',
-                                borderRadius: '50%',
+                                width: '26px',
+                                height: '26px',
+                                borderRadius: borderRadius.round,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                marginRight: '10px',
+                                marginRight: '0.75rem',
                                 flexShrink: 0,
-                                fontSize: '0.9rem',
+                                fontSize: '0.85rem',
                                 fontWeight: 'bold'
                             }}>
                                 {index + 1}
@@ -68,29 +68,19 @@ export default function GameTutorialModal({ title, instructions, onClose }) {
                     style={{
                         width: '100%',
                         padding: '1rem',
-                        background: '#2ecc71',
+                        background: colors.primaryGradient,
                         color: 'white',
                         border: 'none',
-                        borderRadius: '15px',
-                        fontSize: '1.2rem',
+                        borderRadius: borderRadius.lg,
+                        fontSize: '1.1rem',
                         fontWeight: 'bold',
                         cursor: 'pointer',
-                        transition: 'transform 0.1s',
-                        boxShadow: '0 4px 0 #27ae60'
+                        boxShadow: shadows.primary
                     }}
-                    onMouseDown={e => e.currentTarget.style.transform = 'translateY(4px)'}
-                    onMouseUp={e => e.currentTarget.style.transform = 'translateY(0)'}
-                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                 >
-                    Got it!
+                    Got it! 👍
                 </button>
             </div>
-            <style>{`
-                @keyframes popIn {
-                    from { transform: scale(0.8); opacity: 0; }
-                    to { transform: scale(1); opacity: 1; }
-                }
-            `}</style>
         </div>
     );
 }

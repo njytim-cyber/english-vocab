@@ -11,13 +11,19 @@ test.describe('Certificate Feature', () => {
         });
         await page.goto('http://localhost:5173');
         await expect(page.locator('body')).toBeVisible();
+
+        // Verify Learn Hub loaded
+        await expect(page.getByRole('heading', { name: /Learn Hub/i })).toBeVisible();
     });
 
     test('should navigate to Certificate and view stats', async ({ page }) => {
-        // 1. Navigate to Sticker Book
-        await page.getByRole('button', { name: 'Stickers' }).click();
+        // 1. Navigate to Progress tab in NavBar
+        const progressBtn = page.getByRole('button', { name: /Progress/i });
+        await expect(progressBtn).toBeVisible();
+        await progressBtn.click();
 
-        // 2. Click Certificate Button (scroll icon)
+        // 2. Wait for Sticker Book to load, then click Certificate Button
+        await expect(page.getByRole('heading', { name: /Sticker Book/i })).toBeVisible();
         const certBtn = page.getByTitle('View Certificate');
         await expect(certBtn).toBeVisible();
         await certBtn.click();
@@ -25,10 +31,13 @@ test.describe('Certificate Feature', () => {
         // 3. Verify Certificate Loaded
         await expect(page.getByRole('heading', { name: 'Certificate' })).toBeVisible();
         await expect(page.getByText('Vocab Master')).toBeVisible();
-        await expect(page.getByText('Total Coins')).toBeVisible();
+        // Note: "Total Coins" changed to "Total Stars" per learning-focused design
+        await expect(page.getByText(/Total Stars|Total Coins/i)).toBeVisible();
 
-        // 4. Verify Back Navigation
-        await page.getByRole('button', { name: 'Back' }).click();
-        await expect(page.getByRole('heading', { name: 'Sticker Book' })).toBeVisible();
+        // 4. Verify Back Navigation (wait for visibility before clicking)
+        const backBtn = page.getByRole('button', { name: /Back/i });
+        await expect(backBtn).toBeVisible();
+        await backBtn.click();
+        await expect(page.getByRole('heading', { name: /Sticker Book/i })).toBeVisible();
     });
 });

@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { triggerConfetti } from '../utils/effects';
-import { speak } from '../utils/audio';
+import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 const REWARDS = [
-    { day: 1, reward: 50, icon: '💰' },
-    { day: 2, reward: 100, icon: '💰' },
-    { day: 3, reward: 150, icon: '💰' },
-    { day: 4, reward: 200, icon: '💰' },
-    { day: 5, reward: 300, icon: '🎁' }, // Big reward
-    { day: 6, reward: 250, icon: '💰' },
-    { day: 7, reward: 500, icon: '👑' }  // Huge reward
+    { day: 1, reward: 50, icon: '📚', message: 'Every expert was once a beginner!' },
+    { day: 2, reward: 100, icon: '🌱', message: 'Growth happens one word at a time.' },
+    { day: 3, reward: 150, icon: '💡', message: 'Your vocabulary is expanding!' },
+    { day: 4, reward: 200, icon: '⭐', message: 'Consistency is the key to mastery.' },
+    { day: 5, reward: 300, icon: '🚀', message: 'You\'re on fire! Keep learning!' },
+    { day: 6, reward: 250, icon: '🎯', message: 'Words are power. You\'re getting stronger!' },
+    { day: 7, reward: 500, icon: '🏆', message: 'A week of learning! You\'re amazing!' }
 ];
 
 export default function DailyLogin({ economy, onClose }) {
     const [streak, setStreak] = useState(0);
     const [claimedToday, setClaimedToday] = useState(false);
-    const [lastLogin, setLastLogin] = useState(null);
 
     useEffect(() => {
         loadLoginState();
@@ -28,27 +27,23 @@ export default function DailyLogin({ economy, onClose }) {
             const last = new Date(data.lastLogin);
             const today = new Date();
 
-            // Check if same day
             const isSameDay = last.getDate() === today.getDate() &&
                 last.getMonth() === today.getMonth() &&
                 last.getFullYear() === today.getFullYear();
 
-            // Check if consecutive day (simplified)
             const diffTime = Math.abs(today - last);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (isSameDay) {
                 setClaimedToday(true);
                 setStreak(data.streak);
-            } else if (diffDays <= 2) { // Allow 1 missed day grace or just strict next day? Let's say strict < 2 days diff means consecutive
+            } else if (diffDays <= 2) {
                 setClaimedToday(false);
                 setStreak(data.streak);
             } else {
-                // Streak broken
                 setClaimedToday(false);
                 setStreak(0);
             }
-            setLastLogin(last);
         } else {
             setStreak(0);
             setClaimedToday(false);
@@ -63,7 +58,6 @@ export default function DailyLogin({ economy, onClose }) {
 
         economy.addCoins(reward.reward);
         triggerConfetti();
-        // speak(`Claimed ${reward.reward} coins!`);
 
         const newStreak = streak + 1;
         setStreak(newStreak);
@@ -88,22 +82,30 @@ export default function DailyLogin({ economy, onClose }) {
             alignItems: 'center',
             zIndex: 1000
         }}>
-            <div className="card animate-pop" style={{
-                background: 'white',
+            <div className="animate-pop" style={{
+                background: colors.white,
                 padding: '2rem',
-                borderRadius: '20px',
-                maxWidth: '600px',
+                borderRadius: borderRadius.xl,
+                maxWidth: '500px',
                 width: '90%',
-                textAlign: 'center'
+                textAlign: 'center',
+                boxShadow: shadows.lg
             }}>
-                <h2 style={{ fontSize: '2rem', color: 'var(--primary)', marginBottom: '1rem' }}>Daily Rewards 📅</h2>
-                <p style={{ marginBottom: '2rem', color: '#666' }}>Come back every day for bigger rewards!</p>
+                <h2 style={{ fontSize: '1.8rem', color: colors.primary, marginBottom: '0.5rem' }}>
+                    Welcome Back! 🌟
+                </h2>
+                <p style={{ marginBottom: '0.5rem', color: colors.dark, fontSize: '1rem', fontWeight: '500' }}>
+                    {REWARDS[streak % 7].message}
+                </p>
+                <p style={{ marginBottom: '1.5rem', color: colors.textMuted, fontSize: '0.85rem' }}>
+                    Day {(streak % 7) + 1} of your learning journey
+                </p>
 
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(60px, 1fr))',
-                    gap: '0.5rem',
-                    marginBottom: '2rem'
+                    gridTemplateColumns: 'repeat(7, 1fr)',
+                    gap: '0.4rem',
+                    marginBottom: '1.5rem'
                 }}>
                     {REWARDS.map((r, idx) => {
                         const isCurrent = idx === (streak % 7);
@@ -111,17 +113,20 @@ export default function DailyLogin({ economy, onClose }) {
 
                         return (
                             <div key={r.day} style={{
-                                padding: '1rem 0.5rem',
-                                background: isCurrent ? 'var(--secondary)' : (isPast ? '#e0e0e0' : '#f5f5f5'),
-                                color: isCurrent ? 'white' : (isPast ? '#999' : 'var(--dark)'),
-                                borderRadius: '10px',
-                                border: isCurrent ? '2px solid var(--primary)' : 'none',
+                                padding: '0.75rem 0.25rem',
+                                background: isCurrent
+                                    ? colors.primaryGradient
+                                    : (isPast ? colors.light : colors.white),
+                                color: isCurrent ? 'white' : (isPast ? colors.textMuted : colors.dark),
+                                borderRadius: borderRadius.md,
+                                border: isCurrent ? `2px solid ${colors.primaryDark}` : `1px solid ${colors.border}`,
                                 opacity: isPast ? 0.6 : 1,
-                                transform: isCurrent ? 'scale(1.1)' : 'scale(1)'
+                                transform: isCurrent ? 'scale(1.08)' : 'scale(1)',
+                                transition: 'all 0.2s'
                             }}>
-                                <div style={{ fontSize: '0.8rem', marginBottom: '0.5rem' }}>Day {r.day}</div>
-                                <div style={{ fontSize: '1.5rem' }}>{r.icon}</div>
-                                <div style={{ fontWeight: 'bold' }}>{r.reward}</div>
+                                <div style={{ fontSize: '0.7rem', marginBottom: '0.3rem' }}>Day {r.day}</div>
+                                <div style={{ fontSize: '1.3rem' }}>{r.icon}</div>
+                                <div style={{ fontWeight: 'bold', fontSize: '0.85rem' }}>{r.reward}</div>
                             </div>
                         );
                     })}
@@ -129,28 +134,30 @@ export default function DailyLogin({ economy, onClose }) {
 
                 {claimedToday ? (
                     <button onClick={onClose} style={{
-                        padding: '1rem 2rem',
-                        fontSize: '1.2rem',
-                        background: '#ccc',
-                        color: 'white',
+                        padding: '0.9rem 2rem',
+                        fontSize: '1.1rem',
+                        background: colors.light,
+                        color: colors.textMuted,
                         border: 'none',
-                        borderRadius: '20px',
-                        cursor: 'pointer'
+                        borderRadius: borderRadius.pill,
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
                     }}>
                         Come Back Tomorrow
                     </button>
                 ) : (
                     <button onClick={handleClaim} style={{
-                        padding: '1rem 2rem',
-                        fontSize: '1.2rem',
-                        background: 'var(--primary)',
+                        padding: '0.9rem 2rem',
+                        fontSize: '1.1rem',
+                        background: colors.primaryGradient,
                         color: 'white',
                         border: 'none',
-                        borderRadius: '20px',
+                        borderRadius: borderRadius.pill,
                         cursor: 'pointer',
-                        boxShadow: '0 4px 10px rgba(102, 126, 234, 0.4)'
+                        fontWeight: 'bold',
+                        boxShadow: shadows.primary
                     }}>
-                        Claim Reward!
+                        Start Learning Today!
                     </button>
                 )}
             </div>

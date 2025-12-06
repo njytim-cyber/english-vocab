@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { speak } from '../../utils/audio';
 import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
+import balance from '../../data/balance.json';
 
 export default function WordScrambleGame({ engine, onBack }) {
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -14,6 +15,58 @@ export default function WordScrambleGame({ engine, onBack }) {
     const [showSummary, setShowSummary] = useState(false);
     const [rewards, setRewards] = useState({ xp: 0, coins: 0 });
 
+    const closeTutorial = () => {
+        sfx.playClick();
+        setShowTutorial(false);
+        localStorage.setItem('tutorial_wordscramble', 'true');
+    };
+
+    const startNewRound = useCallback(() => {
+        const q = engine.getReinforcementQuestions(1)[0];
+        setCurrentQuestion(q);
+
+        // Scramble
+        const letters = q.answer.toUpperCase().split('').map((char, i) => ({ id: i, char }));
+        for (let i = letters.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [letters[i], letters[j]] = [letters[j], letters[i]];
+        }
+
+        setScrambledWord(letters);
+        setUserGuess([]);
+        setGameStatus('playing');
+        setShowSummary(false);
+    }, [engine]);
+
+    const checkAnswer = useCallback(() => {
+        const guess = userGuess.map(l => l.char).join('');
+        if (guess === currentQuestion.answer.toUpperCase()) {
+            setGameStatus('won');
+            sfx.playWin();
+            triggerConfetti();
+            speak("Correct!");
+            const { xp, stars } = balance.rewards.minigames.wordScramble;
+            setRewards({ xp, coins: stars });
+            setTimeout(() => setShowSummary(true), 1000);
+        } else {
+            sfx.playWrong();
+            speak("Try again");
+            // Shake effect could be added here
+        }
+    }, [userGuess, currentQuestion]);
+
+    const handleLetterClick = useCallback((letterObj, isScrambled) => {
+        sfx.playClick();
+        if (isScrambled) {
+            setScrambledWord(prev => prev.filter(l => l.id !== letterObj.id));
+            setUserGuess(prev => [...prev, letterObj]);
+        } else {
+            setUserGuess(prev => prev.filter(l => l.id !== letterObj.id));
+            setScrambledWord(prev => [...prev, letterObj]);
+        }
+    }, []);
+
+    // Initialization Effect - ONLY run on mount
     useEffect(() => {
         startNewRound();
 
@@ -21,7 +74,10 @@ export default function WordScrambleGame({ engine, onBack }) {
         if (!hasSeenTutorial) {
             setShowTutorial(true);
         }
+    }, [startNewRound]);
 
+    // Keyboard Handler Effect
+    useEffect(() => {
         const handleKeyDown = (e) => {
             if (gameStatus !== 'playing') return;
 
@@ -44,59 +100,9 @@ export default function WordScrambleGame({ engine, onBack }) {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [scrambledWord, userGuess, gameStatus]);
+    }, [gameStatus, userGuess, scrambledWord, checkAnswer, handleLetterClick]);
 
-    const closeTutorial = () => {
-        sfx.playClick();
-        setShowTutorial(false);
-        localStorage.setItem('tutorial_wordscramble', 'true');
-    };
 
-    const startNewRound = () => {
-        const q = engine.getReinforcementQuestions(1)[0];
-        setCurrentQuestion(q);
-
-        // Scramble
-        const letters = q.answer.toUpperCase().split('').map((char, i) => ({ id: i, char }));
-        for (let i = letters.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [letters[i], letters[j]] = [letters[j], letters[i]];
-        }
-
-        setScrambledWord(letters);
-        setUserGuess([]);
-        setGameStatus('playing');
-        setShowSummary(false);
-    };
-
-    const handleLetterClick = (letterObj, isScrambled) => {
-        sfx.playClick();
-        if (isScrambled) {
-            setScrambledWord(prev => prev.filter(l => l.id !== letterObj.id));
-            setUserGuess(prev => [...prev, letterObj]);
-        } else {
-            setUserGuess(prev => prev.filter(l => l.id !== letterObj.id));
-            setScrambledWord(prev => [...prev, letterObj]);
-        }
-    };
-
-    const checkAnswer = () => {
-        const guess = userGuess.map(l => l.char).join('');
-        if (guess === currentQuestion.answer.toUpperCase()) {
-            setGameStatus('won');
-            sfx.playWin();
-            triggerConfetti();
-            speak("Correct!");
-            const xpEarned = 30;
-            const coinsEarned = 15;
-            setRewards({ xp: xpEarned, coins: coinsEarned });
-            setTimeout(() => setShowSummary(true), 1000);
-        } else {
-            sfx.playWrong();
-            speak("Try again");
-            // Shake effect could be added here
-        }
-    };
 
     if (!currentQuestion) return <div>Loading...</div>;
 

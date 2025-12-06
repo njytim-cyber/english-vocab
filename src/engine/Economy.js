@@ -10,8 +10,7 @@ export const SHOP_ITEMS = [
     { id: 'avatar_alien', name: 'Alien', cost: 400, icon: '👽', type: 'avatar' },
     { id: 'avatar_ghost', name: 'Ghost', cost: 500, icon: '👻', type: 'avatar' },
     { id: 'avatar_ninja', name: 'Ninja', cost: 600, icon: '🥷', type: 'avatar' },
-    // Themes
-    { id: 'theme_dark', name: 'Dark Mode', cost: 500, icon: '🌙', type: 'theme' },
+    // Themes (Dark Mode is free - accessible in settings)
     { id: 'theme_ocean', name: 'Ocean', cost: 750, icon: '🌊', type: 'theme' },
     { id: 'theme_forest', name: 'Forest', cost: 750, icon: '🌲', type: 'theme' }
 ];
@@ -24,9 +23,9 @@ export class Economy {
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : { coins: 0, inventory: [] };
+            return data ? JSON.parse(data) : { coins: 0, eventTokens: 0, inventory: [] };
         } catch (e) {
-            return { coins: 0, inventory: [] };
+            return { coins: 0, eventTokens: 0, inventory: [] };
         }
     }
 
@@ -42,8 +41,17 @@ export class Economy {
         return this.state.coins;
     }
 
+    getEventTokens() {
+        return this.state.eventTokens || 0;
+    }
+
     addCoins(amount) {
         this.state.coins += amount;
+        this.save();
+    }
+
+    addEventTokens(amount) {
+        this.state.eventTokens = (this.state.eventTokens || 0) + amount;
         this.save();
     }
 
@@ -64,7 +72,7 @@ export class Economy {
     }
 
     reset() {
-        this.state = { coins: 0, inventory: [] };
+        this.state = { coins: 0, eventTokens: 0, inventory: [] };
         this.save();
     }
 }

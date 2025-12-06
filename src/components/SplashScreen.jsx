@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function SplashScreen({ onEnter }) {
     const [visible, setVisible] = useState(true);

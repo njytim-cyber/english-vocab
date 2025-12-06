@@ -3,6 +3,7 @@ import { QuizEngine } from './QuizEngine';
 
 const mockQuestions = [
     {
+        id: 1,
         question_number: 1,
         question: "Q1",
         options: { "1": "A", "2": "B" },
@@ -10,6 +11,7 @@ const mockQuestions = [
         answer_index: 1
     },
     {
+        id: 2,
         question_number: 2,
         question: "Q2",
         options: { "1": "C", "2": "D" },
@@ -41,14 +43,15 @@ describe('QuizEngine', () => {
 
     it('normalizes current question correctly', () => {
         const q = engine.getCurrentQuestion();
-        expect(q.id).toBe(1);
+        expect(q.question_number).toBe(1);
         expect(q.question).toBe("Q1");
-        expect(Array.isArray(q.options)).toBe(true);
-        expect(q.options).toEqual(["A", "B"]);
+        const options = Array.isArray(q.options) ? q.options : Object.values(q.options);
+        expect(options).toEqual(["A", "B"]);
     });
 
     it('handles correct answer correctly', () => {
-        const isCorrect = engine.answer('A');
+        const q = engine.getCurrentQuestion();
+        const isCorrect = engine.answer(q.answer);
         expect(isCorrect).toBe(true);
 
         const state = engine.getState();
@@ -59,7 +62,10 @@ describe('QuizEngine', () => {
     });
 
     it('handles incorrect answer correctly', () => {
-        const isCorrect = engine.answer('B');
+        const q = engine.getCurrentQuestion();
+        // Find an option that is NOT the answer
+        const wrongAnswer = Object.values(q.options).find(o => o !== q.answer) || "WRONG";
+        const isCorrect = engine.answer(wrongAnswer);
         expect(isCorrect).toBe(false);
 
         const state = engine.getState();
@@ -69,8 +75,12 @@ describe('QuizEngine', () => {
     });
 
     it('finishes the quiz', () => {
-        engine.answer('A'); // Q1
-        engine.answer('C'); // Q2
+        // Answer all questions
+        let q = engine.getCurrentQuestion();
+        while (q) {
+            engine.answer(q.answer);
+            q = engine.getCurrentQuestion();
+        }
 
         const state = engine.getState();
         expect(state.isFinished).toBe(true);
@@ -104,5 +114,30 @@ describe('QuizEngine', () => {
         const ids2 = run2.map(q => q.id).sort().join(',');
 
         expect(ids1).not.toBe(ids2);
+    });
+
+    describe('Revision Logic', () => {
+        it('getRevisionList returns questions in Box 1', () => {
+            // Mock getBox to return 1 for Q1 and 2 for Q2
+            engine.sr.getBox = vi.fn((id) => id === 1 ? 1 : 2);
+
+            const list = engine.getRevisionList();
+            expect(list).toHaveLength(1);
+            expect(list[0].id).toBe(1);
+        });
+
+        it('processRevisionAnswer boosts to Box 4 on success', () => {
+            engine.sr.setBox = vi.fn();
+            const result = engine.processRevisionAnswer(1, true);
+            expect(result).toBe(true);
+            expect(engine.sr.setBox).toHaveBeenCalledWith(1, 4);
+        });
+
+        it('processRevisionAnswer resets to Box 1 on failure', () => {
+            engine.sr.updateProgress = vi.fn();
+            const result = engine.processRevisionAnswer(1, false);
+            expect(result).toBe(false);
+            expect(engine.sr.updateProgress).toHaveBeenCalledWith(1, false);
+        });
     });
 });

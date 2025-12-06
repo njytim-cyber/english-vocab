@@ -1,30 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { triggerConfetti } from '../utils/effects';
 import { speak } from '../utils/audio';
+import balance from '../data/balance.json';
 
 export default function QuizView({ engine, economy, onFinish }) {
+    console.log('QuizView rendered', { state: engine.getState() });
     const [currentQuestion, setCurrentQuestion] = useState(engine.getCurrentQuestion());
     const [state, setState] = useState(engine.getState());
     const [selectedOption, setSelectedOption] = useState(null);
     const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect'
     const [shakeOption, setShakeOption] = useState(null); // Option to shake
-    const [avatarState, setAvatarState] = useState('idle'); // 'idle' | 'happy' | 'sad'
+
+    const options = useMemo(() => {
+        if (!currentQuestion) return [];
+
+        let opts = [];
+        if (currentQuestion.type === 'ClozePassage') {
+            opts = [...(currentQuestion.word_bank || [])];
+        } else {
+            // Handle both array and object formats
+            opts = Array.isArray(currentQuestion.options)
+                ? [...currentQuestion.options]
+                : Object.values(currentQuestion.options || {});
+        }
+
+        // Shuffle options to prevent answer position bias
+        return opts.sort(() => Math.random() - 0.5);
+    }, [currentQuestion]);
+
+    const updateState = useCallback(() => {
+        setCurrentQuestion(engine.getCurrentQuestion());
+        setState(engine.getState());
+    }, [engine]);
 
     useEffect(() => {
         updateState();
-    }, []);
-
-    // Speak question when it changes
-    useEffect(() => {
-        if (currentQuestion?.question) {
-            // speak(currentQuestion.question);
-        }
-    }, [currentQuestion]);
-
-    const updateState = () => {
-        setCurrentQuestion(engine.getCurrentQuestion());
-        setState(engine.getState());
-    };
+    }, [updateState]);
 
     const handleAnswer = (option) => {
         if (selectedOption) return; // Prevent double clicks
@@ -36,14 +47,14 @@ export default function QuizView({ engine, economy, onFinish }) {
         if (isCorrect) {
             triggerConfetti();
             speak("Correct!");
-            setAvatarState('happy');
+
             if (economy) {
-                economy.addCoins(10); // Award 10 coins
+                economy.addCoins(balance.rewards.quiz.correctAnswer);
             }
         } else {
             speak("Oops, try again next time.");
             setShakeOption(option);
-            setAvatarState('sad');
+
         }
 
         setTimeout(() => {
@@ -54,7 +65,7 @@ export default function QuizView({ engine, economy, onFinish }) {
                 setSelectedOption(null);
                 setFeedback(null);
                 setShakeOption(null);
-                setAvatarState('idle');
+
             }
         }, 1500);
     };
@@ -69,12 +80,7 @@ export default function QuizView({ engine, economy, onFinish }) {
     // On Fire Mode
     const isOnFire = state.streak >= 3;
 
-    // Reactive Avatar Emojis
-    const getAvatarEmoji = () => {
-        if (avatarState === 'happy') return '😃';
-        if (avatarState === 'sad') return '😢';
-        return '🦊'; // Default
-    };
+
 
     if (!currentQuestion) {
         return (
@@ -98,41 +104,91 @@ export default function QuizView({ engine, economy, onFinish }) {
             background: getBackground(),
             color: 'var(--dark)'
         }}>
-            <div style={{ width: '100%', maxWidth: '600px', display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Score: {state.score}</div>
-                <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--primary)' }}>
-                    Question {state.currentQuestionIndex + 1} / {engine.questions.length}
+            {/* Clean minimal header - just essential info */}
+            <div style={{
+                width: '100%',
+                maxWidth: '600px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '1.5rem',
+                padding: '0 0.5rem'
+            }}>
+                {/* Streak indicator - only show when on fire */}
+                <div style={{
+                    minWidth: '60px',
+                    visibility: isOnFire ? 'visible' : 'hidden',
+                    background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '20px',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    boxShadow: '0 2px 8px rgba(255,107,53,0.3)'
+                }}>
+                    🔥 {state.streak}
                 </div>
-                <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Streak: {state.streak} 🔥</div>
-            </div>
 
-            {/* Header */}
-            <div className="quiz-header">
-                <div className={`card stat-badge ${isOnFire ? 'on-fire' : ''}`}>
-                    <span role="img" aria-label="Streak">🔥</span> <strong>{state.streak}</strong>
+                {/* Question counter - center */}
+                <div style={{
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    color: '#667eea',
+                    background: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '20px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                }}>
+                    {state.currentQuestionIndex + 1} / {engine.questions.length}
                 </div>
-                <div className="card stat-badge">
-                    <span role="img" aria-label="Score">⭐</span> <strong>{state.score}</strong>
-                </div>
-            </div>
 
-            {/* Avatar */}
-            <div className="avatar-display">
-                <span role="img" aria-label="Avatar">{getAvatarEmoji()}</span>
+                {/* Stars earned */}
+                <div style={{
+                    background: 'white',
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '20px',
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.3rem'
+                }}>
+                    <span>⭐</span> {state.score}
+                </div>
             </div>
 
             {/* Question Card */}
             <div className={`card question-card animate-pop ${isOnFire ? 'on-fire' : ''}`}>
                 <h2 className="question-text">
-                    {currentQuestion.question}
+                    {currentQuestion.type === 'ClozePassage' ? (
+                        <span>
+                            {currentQuestion.formatted_text.split('____').map((part, i, arr) => (
+                                <span key={i}>
+                                    {part}
+                                    {i < arr.length - 1 && (
+                                        <span style={{
+                                            display: 'inline-block',
+                                            width: '100px',
+                                            borderBottom: '2px solid var(--primary)',
+                                            margin: '0 5px',
+                                            textAlign: 'center',
+                                            color: 'var(--primary)',
+                                            fontWeight: 'bold'
+                                        }}>
+                                            {selectedOption && feedback === 'correct' ? currentQuestion.answer : '____'}
+                                        </span>
+                                    )}
+                                </span>
+                            ))}
+                        </span>
+                    ) : (
+                        currentQuestion.question
+                    )}
                 </h2>
 
                 <div className="options-grid">
-                    {/* Normalize options to array if it's an object */}
-                    {(Array.isArray(currentQuestion.options)
-                        ? currentQuestion.options
-                        : Object.values(currentQuestion.options)
-                    ).map((option, idx) => {
+                    {options.map((option, idx) => {
                         let btnClass = 'option-btn';
                         if (selectedOption === option) {
                             btnClass += ' selected';

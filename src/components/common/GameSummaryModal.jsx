@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { speak } from '../../utils/audio';
+import { colors, borderRadius, shadows } from '../../styles/designTokens';
+import { StarReward } from './StarDisplay';
 
 export default function GameSummaryModal({ score, xp, coins, onReplay, onBack }) {
     useEffect(() => {
         triggerConfetti();
-        speak(`Level Complete! You earned ${xp} XP and ${coins} coins.`);
+        speak(`Level Complete! You earned ${xp} XP and ${coins} Stars!`);
     }, [xp, coins]);
 
     return (
@@ -19,25 +21,22 @@ export default function GameSummaryModal({ score, xp, coins, onReplay, onBack })
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            zIndex: 1000,
-            animation: 'fadeIn 0.3s ease-out'
+            zIndex: 1000
         }}>
-            <div className="card animate-pop" style={{
-                background: 'white',
-                padding: '3rem',
-                borderRadius: '20px',
+            <div className="animate-pop" style={{
+                background: colors.white,
+                padding: '2.5rem',
+                borderRadius: borderRadius.xl,
                 textAlign: 'center',
                 maxWidth: '90%',
-                width: '400px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-                position: 'relative'
+                width: '380px',
+                boxShadow: shadows.lg
             }}>
-                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🏆</div>
+                <div style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>🏆</div>
                 <h2 style={{
-                    fontSize: '2.5rem',
-                    color: 'var(--primary)',
-                    margin: '0 0 1rem 0',
-                    textShadow: '2px 2px 0px rgba(0,0,0,0.1)'
+                    fontSize: '1.8rem',
+                    color: colors.primary,
+                    margin: '0 0 1rem 0'
                 }}>
                     Level Complete!
                 </h2>
@@ -46,38 +45,37 @@ export default function GameSummaryModal({ score, xp, coins, onReplay, onBack })
                     display: 'flex',
                     justifyContent: 'center',
                     gap: '2rem',
-                    marginBottom: '2rem'
+                    marginBottom: '1.5rem'
                 }}>
                     <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.2rem', color: '#666' }}>XP</div>
-                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#BB8FCE' }}>+{xp}</div>
+                        <div style={{ fontSize: '0.9rem', color: colors.textMuted }}>XP</div>
+                        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: colors.primary }}>+{xp}</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.2rem', color: '#666' }}>Coins</div>
-                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#F1C40F' }}>+{coins}</div>
+                        <div style={{ fontSize: '0.9rem', color: colors.textMuted }}>Stars</div>
+                        <StarReward amount={coins} />
                     </div>
                 </div>
 
-                {score !== undefined && (
-                    <div style={{ marginBottom: '2rem', fontSize: '1.2rem' }}>
+                {score !== undefined && score !== null && (
+                    <div style={{ marginBottom: '1.5rem', fontSize: '1rem', color: colors.dark }}>
                         Score: <strong>{score}</strong>
                     </div>
                 )}
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <button
                         onClick={onReplay}
                         style={{
-                            padding: '1rem 2rem',
-                            fontSize: '1.2rem',
-                            background: 'var(--primary)',
+                            padding: '0.9rem 1.5rem',
+                            fontSize: '1rem',
+                            background: colors.primaryGradient,
                             color: 'white',
                             border: 'none',
-                            borderRadius: '15px',
+                            borderRadius: borderRadius.lg,
                             cursor: 'pointer',
                             fontWeight: 'bold',
-                            boxShadow: '0 4px 0 #2c3e50',
-                            transition: 'transform 0.1s'
+                            boxShadow: shadows.primary
                         }}
                     >
                         Play Again 🔄
@@ -85,17 +83,17 @@ export default function GameSummaryModal({ score, xp, coins, onReplay, onBack })
                     <button
                         onClick={onBack}
                         style={{
-                            padding: '1rem 2rem',
-                            fontSize: '1.2rem',
-                            background: '#eee',
-                            color: '#666',
+                            padding: '0.9rem 1.5rem',
+                            fontSize: '1rem',
+                            background: colors.light,
+                            color: colors.textMuted,
                             border: 'none',
-                            borderRadius: '15px',
+                            borderRadius: borderRadius.lg,
                             cursor: 'pointer',
                             fontWeight: 'bold'
                         }}
                     >
-                        Back to Arcade 🏠
+                        Back to Games 🏠
                     </button>
                 </div>
             </div>

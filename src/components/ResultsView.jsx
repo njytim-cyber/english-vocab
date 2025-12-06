@@ -1,43 +1,99 @@
 import React from 'react';
+import PageLayout from './common/PageLayout';
+import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 export default function ResultsView({ engine, onRestart }) {
     const state = engine.getState();
     const history = engine.getSessionHistory();
     const incorrectItems = history.filter(item => !item.isCorrect);
+    const correctCount = history.filter(item => item.isCorrect).length;
+    const accuracy = history.length > 0 ? Math.round((correctCount / history.length) * 100) : 0;
 
     const handleRetry = () => {
         const questionsToRetry = incorrectItems.map(item => item.question);
         engine.startRetryGame(questionsToRetry);
-        onRestart(); // This will trigger the view switch to 'quiz' in App.jsx
+        onRestart();
+    };
+
+    const getEmoji = () => {
+        if (accuracy >= 90) return '🌟';
+        if (accuracy >= 70) return '🎉';
+        if (accuracy >= 50) return '👍';
+        return '💪';
+    };
+
+    const getMessage = () => {
+        if (accuracy >= 90) return 'Outstanding!';
+        if (accuracy >= 70) return 'Great Job!';
+        if (accuracy >= 50) return 'Good Effort!';
+        return 'Keep Practicing!';
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '2rem',
-            background: 'var(--light)',
-            color: 'var(--dark)'
-        }}>
-            <h1 className="animate-pop" style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-                {state.score > 50 ? '🎉 Amazing!' : '👍 Good Job!'}
-            </h1>
+        <PageLayout maxWidth="600px">
+            {/* Hero Section */}
+            <div style={{
+                textAlign: 'center',
+                marginBottom: '2rem'
+            }}>
+                <div className="animate-pop" style={{ fontSize: '4rem', marginBottom: '0.5rem' }}>
+                    {getEmoji()}
+                </div>
+                <h1 style={{
+                    fontSize: '2rem',
+                    color: colors.dark,
+                    marginBottom: '0.5rem'
+                }}>
+                    {getMessage()}
+                </h1>
+                <p style={{ color: colors.textMuted, fontSize: '1rem' }}>
+                    {accuracy}% Accuracy
+                </p>
+            </div>
 
-            <div className="card" style={{ padding: '2rem', textAlign: 'center', marginBottom: '2rem', width: '100%', maxWidth: '500px' }}>
-                <p style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Score: <strong>{state.score}</strong></p>
-                <p style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>XP Earned: <strong>{state.xp}</strong></p>
+            {/* Stats Card */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.lg,
+                padding: '1.5rem',
+                marginBottom: '1.5rem',
+                boxShadow: shadows.sm
+            }}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '1rem',
+                    textAlign: 'center',
+                    marginBottom: '1.5rem'
+                }}>
+                    <div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: colors.primary }}>{state.score}</div>
+                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>Score</div>
+                    </div>
+                    <div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: colors.success }}>{correctCount}</div>
+                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>Correct</div>
+                    </div>
+                    <div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: colors.error }}>{incorrectItems.length}</div>
+                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>To Review</div>
+                    </div>
+                </div>
 
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
                     <button
                         onClick={() => { engine.reset(); onRestart(); }}
                         style={{
-                            padding: '1rem 2rem',
-                            fontSize: '1.2rem',
-                            background: 'var(--secondary)',
+                            flex: 1,
+                            padding: '0.9rem',
+                            fontSize: '1rem',
+                            background: colors.primaryGradient,
                             color: 'white',
-                            borderRadius: '12px'
+                            borderRadius: borderRadius.md,
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            boxShadow: shadows.primary
                         }}
                     >
                         Play Again
@@ -47,43 +103,64 @@ export default function ResultsView({ engine, onRestart }) {
                         <button
                             onClick={handleRetry}
                             style={{
-                                padding: '1rem 2rem',
-                                fontSize: '1.2rem',
-                                background: 'var(--primary)',
-                                color: 'white',
-                                borderRadius: '12px'
+                                flex: 1,
+                                padding: '0.9rem',
+                                fontSize: '1rem',
+                                background: colors.white,
+                                color: colors.primary,
+                                borderRadius: borderRadius.md,
+                                border: `2px solid ${colors.primary}`,
+                                cursor: 'pointer',
+                                fontWeight: 'bold'
                             }}
                         >
-                            Retry Mistakes ({incorrectItems.length})
+                            Review ({incorrectItems.length})
                         </button>
                     )}
                 </div>
             </div>
 
-            <div style={{ width: '100%', maxWidth: '600px' }}>
-                <h3 style={{ marginBottom: '1rem' }}>Session Summary</h3>
-                {history.map((item, idx) => (
-                    <div key={idx} className="card" style={{
-                        marginBottom: '1rem',
-                        padding: '1rem',
-                        borderLeft: `5px solid ${item.isCorrect ? 'var(--secondary)' : 'var(--primary)'}`,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <div>
-                            <div style={{ fontWeight: 'bold' }}>{item.question.question}</div>
-                            <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                                Answer: {item.question.answer}
-                                {!item.isCorrect && <span style={{ color: 'var(--primary)' }}> (You said: {item.userAnswer})</span>}
+            {/* Session Summary */}
+            <div>
+                <h3 style={{
+                    marginBottom: '1rem',
+                    color: colors.dark,
+                    fontSize: '1.1rem'
+                }}>
+                    Session Summary
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {history.map((item, idx) => (
+                        <div key={idx} style={{
+                            background: colors.white,
+                            padding: '1rem',
+                            borderRadius: borderRadius.md,
+                            borderLeft: `4px solid ${item.isCorrect ? colors.success : colors.error}`,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            boxShadow: shadows.sm
+                        }}>
+                            <div>
+                                <div style={{ fontWeight: '600', color: colors.dark, fontSize: '0.95rem' }}>
+                                    {item.question.question}
+                                </div>
+                                <div style={{ fontSize: '0.85rem', color: colors.textMuted, marginTop: '0.2rem' }}>
+                                    {item.question.answer}
+                                    {!item.isCorrect && (
+                                        <span style={{ color: colors.error, marginLeft: '0.5rem' }}>
+                                            (You: {item.userAnswer})
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '1.3rem' }}>
+                                {item.isCorrect ? '✅' : '❌'}
                             </div>
                         </div>
-                        <div style={{ fontSize: '1.5rem' }}>
-                            {item.isCorrect ? '✅' : '❌'}
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
+        </PageLayout>
     );
 }

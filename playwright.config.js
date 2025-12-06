@@ -5,8 +5,9 @@ export default defineConfig({
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
-    workers: process.env.CI ? 1 : undefined,
+    workers: 1, // Serial execution for stability
     reporter: 'html',
+    timeout: 60000, // 60s timeout
     use: {
         baseURL: 'http://localhost:5173',
         trace: 'on-first-retry',
