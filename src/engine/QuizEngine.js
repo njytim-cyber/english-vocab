@@ -400,10 +400,10 @@ export class QuizEngine {
 
     /**
      * Get list of words that need revision (Box 1).
-     * @param {number} threshold - Not used in Leitner model, we use Box 1.
+     * @param {number} _threshold - Not used in Leitner model, we use Box 1.
      * @returns {Object[]} List of question objects
      */
-    getRevisionList(threshold = 1.8) {
+    getRevisionList(_threshold = 1.8) {
         // In Leitner, we consider Box 1 (and maybe 2) as needing revision.
         // For now, let's return all questions in Box 1.
         return this.allQuestions.filter(q => {

@@ -24,7 +24,7 @@ describe('QuizEngine Integration with Analytics', () => {
 
         // Fast forward time slightly to ensure timeTaken > 0
         const start = Date.now();
-        while (Date.now() - start < 10) { }
+        while (Date.now() - start < 10) { /* wait */ }
 
         engine.answer(q.answer);
 
