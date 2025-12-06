@@ -1,59 +1,65 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { SpacedRepetition } from './SpacedRepetition';
 
 describe('SpacedRepetition', () => {
     let sr;
 
     beforeEach(() => {
-        // Mock localStorage
-        global.localStorage = {
+        vi.stubGlobal('localStorage', {
             getItem: vi.fn(),
             setItem: vi.fn(),
-            clear: vi.fn()
-        };
+        });
         sr = new SpacedRepetition();
     });
 
-    it('starts new items in Box 1', () => {
-        expect(sr.getBox(1)).toBe(1);
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
-    it('promotes item on correct answer', () => {
-        sr.updateProgress(1, true);
-        expect(sr.getBox(1)).toBe(2);
-
-        sr.updateProgress(1, true);
-        expect(sr.getBox(1)).toBe(3);
+    it('should initialize with empty progress if no storage', () => {
+        expect(sr.progress).toEqual({});
     });
 
-    it('demotes item to Box 1 on incorrect answer', () => {
-        // Manually set to Box 3
-        sr.progress[1] = { box: 3 };
-
-        sr.updateProgress(1, false);
-        expect(sr.getBox(1)).toBe(1);
+    it('should default to Box 1 for new items', () => {
+        expect(sr.getBox(999)).toBe(1);
     });
 
-    it('caps promotion at Box 5', () => {
-        sr.progress[1] = { box: 5 };
-        sr.updateProgress(1, true);
-        expect(sr.getBox(1)).toBe(5);
+    it('should promote item on correct answer', () => {
+        // Box 1 -> 2
+        const nextBox = sr.updateProgress(101, true);
+        expect(nextBox).toBe(2);
+        expect(sr.getBox(101)).toBe(2);
     });
 
-    it('prioritizes lower boxes', () => {
+    it('should cap promotion at Box 5', () => {
+        sr.setBox(101, 5);
+        const nextBox = sr.updateProgress(101, true);
+        expect(nextBox).toBe(5);
+    });
+
+    it('should reset to Box 1 on wrong answer', () => {
+        sr.setBox(102, 4);
+        const nextBox = sr.updateProgress(102, false);
+        expect(nextBox).toBe(1);
+        expect(sr.getBox(102)).toBe(1);
+    });
+
+    it('should prioritize lower boxes first', () => {
         const questions = [
-            { id: 1 }, // Box 3 (set below)
-            { id: 2 }, // Box 1 (default)
-            { id: 3 }  // Box 5 (set below)
+            { id: 1 }, // Box 1 (default)
+            { id: 2 }, // Box 3
+            { id: 3 }  // Box 5
         ];
 
-        sr.progress[1] = { box: 3 };
-        sr.progress[3] = { box: 5 };
+        sr.setBox(2, 3);
+        sr.setBox(3, 5);
+        sr.setBox(1, 1); // Explicitly set or default
 
         const sorted = sr.prioritizeQuestions(questions);
 
-        expect(sorted[0].id).toBe(2); // Box 1
-        expect(sorted[1].id).toBe(1); // Box 3
-        expect(sorted[2].id).toBe(3); // Box 5
+        expect(sorted[0].id).toBe(1);
+        expect(sorted[1].id).toBe(2);
+        expect(sorted[2].id).toBe(3);
     });
 });

@@ -10,8 +10,8 @@ import { colors, borderRadius, shadows, icons } from '../styles/designTokens';
 
 const NAV_ITEMS = [
     { id: 'learn', label: 'Learn', icon: icons.learn, matchViews: ['learn', 'quiz-setup', 'quiz'] },
-    { id: 'minigames', label: 'Games', icon: '🎮', matchViews: ['minigames', 'game-'] },
     { id: 'practice', label: 'Revise', icon: '🔄', matchViews: ['practice'] },
+    { id: 'minigames', label: 'Games', icon: '🎮', matchViews: ['minigames', 'game-'] },
     { id: 'arena', label: 'Arena', icon: '⚔️', matchViews: ['arena'] },
     { id: 'skills', label: 'Progress', icon: icons.progress, matchViews: ['skills', 'stickers', 'certificate'] }
 ];

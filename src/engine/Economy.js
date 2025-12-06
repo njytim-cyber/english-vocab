@@ -37,8 +37,14 @@ export class Economy {
             if (!data) return defaultState;
 
             const parsed = JSON.parse(data);
-            // Merge with default to ensure new fields (xp, level) exist for old users
-            return { ...defaultState, ...parsed };
+            const state = { ...defaultState, ...parsed };
+
+            // Validate numbers to recover from NaN corruption
+            if (isNaN(state.coins)) state.coins = 0;
+            if (isNaN(state.xp)) state.xp = 0;
+            if (isNaN(state.level)) state.level = 1;
+
+            return state;
         } catch (e) {
             console.error('Economy load failed:', e);
             return { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
@@ -71,12 +77,18 @@ export class Economy {
     }
 
     addCoins(amount) {
-        this.state.coins += amount;
+        if (!amount || isNaN(amount)) {
+            console.warn('Economy: Attempted to add invalid coin amount:', amount);
+            return;
+        }
+        this.state.coins += Math.floor(amount); // Ensure integer
         this.save();
     }
 
     addXP(amount) {
-        this.state.xp = (this.state.xp || 0) + amount;
+        if (!amount || isNaN(amount)) return;
+
+        this.state.xp = (this.state.xp || 0) + Math.floor(amount);
         // Simple Level Formula: Level = 1 + floor(sqrt(XP / 100))
         // 100xp = lvl 2, 400xp = lvl 3, 900xp = lvl 4
         const newLevel = 1 + Math.floor(Math.sqrt(this.state.xp / 100));

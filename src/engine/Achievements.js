@@ -78,8 +78,10 @@ export class Achievements {
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
+            console.log('Achievements loaded:', data);
             return data ? new Set(JSON.parse(data)) : new Set();
         } catch (e) {
+            console.error('Achievements load error:', e);
             return new Set();
         }
     }
@@ -174,6 +176,11 @@ export class Achievements {
     }
 
     getUnlocked() {
-        return Array.from(this.unlocked);
+        // Return full achievement objects, not just IDs
+        return Array.from(this.unlocked).map(id => ACHIEVEMENTS.find(a => a.id === id)).filter(Boolean);
+    }
+
+    getAllAchievements() {
+        return ACHIEVEMENTS;
     }
 }

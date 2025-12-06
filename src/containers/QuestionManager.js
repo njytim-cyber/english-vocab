@@ -3,16 +3,18 @@
  * Extracted from QuizEngine for single responsibility
  */
 import questions from '../data/questions.json';
+import clozePassages from '../data/cloze_sample.json';
 import { EventService } from '../services/EventService';
 
 export class QuestionManager {
-    constructor(questionData = questions) {
+    constructor(questionData = questions, clozeData = clozePassages) {
         this.allQuestions = questionData;
+        this.clozePassages = clozeData;
         this.eventService = new EventService();
     }
 
     /**
-     * Get all questions
+     * Get all questions (MCQ only by default)
      * @returns {Object[]}
      */
     getAll() {
@@ -30,7 +32,10 @@ export class QuestionManager {
         let filtered = this.allQuestions;
 
         if (theme && theme !== 'All') {
-            filtered = filtered.filter(q => q.theme === theme);
+            const themes = Array.isArray(theme) ? theme : theme.split(',');
+            if (themes.length > 0 && !themes.includes('All')) {
+                filtered = filtered.filter(q => themes.includes(q.theme));
+            }
         }
 
         if (difficulty && difficulty !== 'All') {
@@ -61,6 +66,10 @@ export class QuestionManager {
         const seasonalThemes = this.eventService.events.map(e => e.theme);
 
         const themes = new Set(this.allQuestions.map(q => q.theme).filter(Boolean));
+        // Add cloze themes
+        this.clozePassages.forEach(p => {
+            if (p.theme) themes.add(p.theme);
+        });
 
         const availableThemes = Array.from(themes).filter(theme => {
             if (seasonalThemes.includes(theme)) {
@@ -70,6 +79,62 @@ export class QuestionManager {
         });
 
         return ['All', ...availableThemes.sort()];
+    }
+
+    /**
+     * Get flattened cloze questions based on filters
+     * @param {Object} filters
+     * @returns {Object[]} Array of individual blank questions
+     */
+    getClozeQuestions({ theme = null, difficulty = null } = {}) {
+        let filteredPassages = this.clozePassages;
+
+        if (theme && theme !== 'All') {
+            filteredPassages = filteredPassages.filter(p => p.theme === theme);
+        }
+
+        if (difficulty && difficulty !== 'All') {
+            const diff = parseInt(difficulty);
+            filteredPassages = filteredPassages.filter(p => p.difficulty === diff || (Math.abs(p.difficulty - diff) <= 1));
+        }
+
+        return this._flattenClozePassages(filteredPassages);
+    }
+
+    _flattenClozePassages(passages) {
+        let flattened = [];
+        passages.forEach(passage => {
+            passage.paragraphs.forEach((para, pIndex) => {
+                para.blanks.forEach((blank, bIndex) => {
+                    // Create a question object for each blank
+                    flattened.push({
+                        id: `cloze_${passage.id}_${blank.id}`,
+                        type: 'vocab-cloze',
+                        difficulty: passage.difficulty,
+                        theme: passage.theme,
+                        question: this._generateClozeQuestionText(para.text, blank.id),
+                        answer: blank.answer,
+                        options: blank.options,
+                        context: passage.title, // Extra context if needed
+                        passageId: passage.id
+                    });
+                });
+            });
+        });
+        return flattened;
+    }
+
+    _generateClozeQuestionText(text, blankId) {
+        // Replace the target blank with "_____" and others with "(...)" or kept as is?
+        // Simple approach: Replace target blank with [?] and others with [...]
+        // But the input text has markers like __1__, __2__
+        // We want to show the full text with the target blank highlighted/empty.
+
+        // Regex to replace __X__
+        return text.replace(/__(\d+)__/g, (match, id) => {
+            if (parseInt(id) === blankId) return "__________";
+            return `(${id})`;
+        });
     }
 
     /**

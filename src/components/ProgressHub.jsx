@@ -331,110 +331,20 @@ export default function ProgressHub({
                     </span>
                 </div>
 
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
-                    gap: '1rem'
-                }}>
-                    {allAchievementDefs.map(ach => {
-                        const isUnlocked = unlockedAchievements.some(u => u.id === ach.id);
-                        return (
-                            <div
-                                key={ach.id}
-                                onClick={() => setSelectedSticker(ach)}
-                                style={{
-                                    aspectRatio: '1/1',
-                                    background: isUnlocked ? '#f0fdf4' : colors.light,
-                                    borderRadius: borderRadius.lg,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '0.5rem',
-                                    cursor: 'pointer',
-                                    border: isUnlocked ? `2px solid ${colors.success}` : `2px dashed ${colors.border}`,
-                                    opacity: isUnlocked ? 1 : 0.7,
-                                    transition: 'all 0.2s',
-                                    transform: isUnlocked ? 'scale(1)' : 'scale(0.95)'
-                                }}
-                            >
-                                <div style={{
-                                    fontSize: '2rem',
-                                    marginBottom: '0.2rem',
-                                    filter: isUnlocked ? 'none' : 'grayscale(100%)'
-                                }}>
-                                    {isUnlocked ? ach.icon : '🔒'}
-                                </div>
-                                <div style={{
-                                    fontSize: '0.65rem',
-                                    textAlign: 'center',
-                                    color: isUnlocked ? colors.dark : colors.textMuted,
-                                    lineHeight: 1.2
-                                }}>
-                                    {ach.title}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                <AchievementGrid
+                    achievements={allAchievementDefs}
+                    unlocked={unlockedAchievements}
+                    onSelect={setSelectedSticker}
+                />
             </div>
 
             {/* Achievement Detail Modal */}
             {selectedSticker && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'rgba(0,0,0,0.8)',
-                    zIndex: 1000,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '2rem'
-                }} onClick={() => setSelectedSticker(null)}>
-                    <div onClick={e => e.stopPropagation()} style={{
-                        background: 'white',
-                        padding: '2rem',
-                        borderRadius: borderRadius.xl,
-                        maxWidth: '400px',
-                        width: '100%',
-                        textAlign: 'center',
-                        position: 'relative'
-                    }}>
-                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
-                            {unlockedAchievements.some(u => u.id === selectedSticker.id) ? selectedSticker.icon : '🔒'}
-                        </div>
-                        <h2 style={{ marginBottom: '0.5rem', color: colors.dark }}>{selectedSticker.title}</h2>
-                        <p style={{ color: colors.textMuted, marginBottom: '1.5rem' }}>
-                            {selectedSticker.description}
-                        </p>
-                        <div style={{
-                            padding: '0.5rem 1rem',
-                            background: unlockedAchievements.some(u => u.id === selectedSticker.id) ? '#dcfce7' : colors.light,
-                            color: unlockedAchievements.some(u => u.id === selectedSticker.id) ? '#166534' : colors.textMuted,
-                            borderRadius: borderRadius.round,
-                            display: 'inline-block',
-                            fontSize: '0.9rem',
-                            fontWeight: 'bold'
-                        }}>
-                            {unlockedAchievements.some(u => u.id === selectedSticker.id) ? 'Unlocked!' : 'Locked'}
-                        </div>
-                        <button
-                            onClick={() => setSelectedSticker(null)}
-                            style={{
-                                position: 'absolute',
-                                top: '1rem',
-                                right: '1rem',
-                                background: 'none',
-                                border: 'none',
-                                fontSize: '1.5rem',
-                                cursor: 'pointer',
-                                color: colors.textMuted
-                            }}
-                        >
-                            ×
-                        </button>
-                    </div>
-                </div>
+                <AchievementModal
+                    sticker={selectedSticker}
+                    isUnlocked={unlockedAchievements.some(u => u.id === selectedSticker.id)}
+                    onClose={() => setSelectedSticker(null)}
+                />
             )}
         </div>
     );
@@ -662,6 +572,116 @@ function SkillProgress({ title, icon, levels, total, color }) {
             }}>
                 <span>L0</span>
                 <span>L5</span>
+            </div>
+        </div>
+    );
+}
+
+function AchievementGrid({ achievements, unlocked, onSelect }) {
+    return (
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+            gap: '1rem'
+        }}>
+            {achievements.map(ach => {
+                const isUnlocked = unlocked.some(u => u.id === ach.id);
+                return (
+                    <div
+                        key={ach.id}
+                        onClick={() => onSelect(ach)}
+                        style={{
+                            aspectRatio: '1/1',
+                            background: isUnlocked ? '#f0fdf4' : colors.light,
+                            borderRadius: borderRadius.lg,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '0.5rem',
+                            cursor: 'pointer',
+                            border: isUnlocked ? `2px solid ${colors.success}` : `2px dashed ${colors.border}`,
+                            opacity: isUnlocked ? 1 : 0.7,
+                            transition: 'all 0.2s',
+                            transform: isUnlocked ? 'scale(1)' : 'scale(0.95)'
+                        }}
+                    >
+                        <div style={{
+                            fontSize: '2rem',
+                            marginBottom: '0.2rem',
+                            filter: isUnlocked ? 'none' : 'grayscale(100%)'
+                        }}>
+                            {isUnlocked ? ach.icon : '🔒'}
+                        </div>
+                        <div style={{
+                            fontSize: '0.65rem',
+                            textAlign: 'center',
+                            color: isUnlocked ? colors.dark : colors.textMuted,
+                            lineHeight: 1.2
+                        }}>
+                            {ach.title}
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+function AchievementModal({ sticker, isUnlocked, onClose }) {
+    return (
+        <div style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.8)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem'
+        }} onClick={onClose}>
+            <div onClick={e => e.stopPropagation()} style={{
+                background: 'white',
+                padding: '2rem',
+                borderRadius: borderRadius.xl,
+                maxWidth: '400px',
+                width: '100%',
+                textAlign: 'center',
+                position: 'relative'
+            }}>
+                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
+                    {isUnlocked ? sticker.icon : '🔒'}
+                </div>
+                <h2 style={{ marginBottom: '0.5rem', color: colors.dark }}>{sticker.title}</h2>
+                <p style={{ color: colors.textMuted, marginBottom: '1.5rem' }}>
+                    {sticker.description}
+                </p>
+                <div style={{
+                    padding: '0.5rem 1rem',
+                    background: isUnlocked ? '#dcfce7' : colors.light,
+                    color: isUnlocked ? '#166534' : colors.textMuted,
+                    borderRadius: borderRadius.round,
+                    display: 'inline-block',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
+                }}>
+                    {isUnlocked ? 'Unlocked!' : 'Locked'}
+                </div>
+                <button
+                    onClick={onClose}
+                    style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        right: '1rem',
+                        background: 'none',
+                        border: 'none',
+                        fontSize: '1.5rem',
+                        cursor: 'pointer',
+                        color: colors.textMuted
+                    }}
+                >
+                    ×
+                </button>
             </div>
         </div>
     );

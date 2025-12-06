@@ -11,7 +11,7 @@ import { colors, borderRadius, shadows, icons } from '../styles/designTokens';
  */
 export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mode = 'new' }) {
     console.log('QuizSetup rendered', { engineExists: !!engine, mode });
-    const [theme, setTheme] = useState('All');
+    const [theme, setTheme] = useState(['All']);
     const [minDifficulty, setMinDifficulty] = useState(1);
     const [maxDifficulty, setMaxDifficulty] = useState(9);
     const [themes, setThemes] = useState(['All']);
@@ -44,11 +44,39 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
         setMaxDifficulty(newMax);
     };
 
+    const handleThemeToggle = (clickedTheme) => {
+        setTheme(prev => {
+            let newThemes = Array.isArray(prev) ? [...prev] : [prev];
+
+            if (clickedTheme === 'All') {
+                return ['All'];
+            }
+
+            // If 'All' was selected, remove it when selecting specific
+            if (newThemes.includes('All')) {
+                newThemes = [];
+            }
+
+            if (newThemes.includes(clickedTheme)) {
+                newThemes = newThemes.filter(t => t !== clickedTheme);
+            } else {
+                newThemes.push(clickedTheme);
+            }
+
+            // If nothing selected, revert to All
+            if (newThemes.length === 0) return ['All'];
+
+            return newThemes;
+        });
+    };
+
     const handleStart = () => {
         // Pass difficulty range as "min-max" or "All"
         const difficultyRange = minDifficulty === 1 && maxDifficulty === 9
             ? 'All'
             : `${minDifficulty}-${maxDifficulty}`;
+
+        // Pass theme as array (router/engine handles it now)
         onStart(theme, difficultyRange);
     };
 
@@ -140,7 +168,7 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                 {/* Theme Selection */}
                 <div style={{ marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 'bold', fontSize: '1.1rem', color: colors.dark }}>
-                        Select Theme
+                        Select Themes (Multi-select)
                     </label>
                     <div style={{
                         display: 'grid',
@@ -150,25 +178,32 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                         overflowY: 'auto',
                         padding: '0.3rem'
                     }}>
-                        {themes.map(t => (
-                            <button
-                                key={t}
-                                onClick={() => setTheme(t)}
-                                style={{
-                                    padding: '0.8rem',
-                                    borderRadius: borderRadius.md,
-                                    border: theme === t ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
-                                    background: theme === t ? `${colors.primary}10` : colors.white,
-                                    cursor: 'pointer',
-                                    textAlign: 'left',
-                                    transition: 'all 0.2s',
-                                    transform: theme === t ? 'scale(1.02)' : 'scale(1)'
-                                }}
-                            >
-                                <div style={{ fontWeight: 'bold', marginBottom: '0.2rem', fontSize: '0.9rem', color: colors.dark }}>{t}</div>
-                                <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{getMasteryStars(t)}</div>
-                            </button>
-                        ))}
+                        {themes.map(t => {
+                            const isSelected = Array.isArray(theme) ? theme.includes(t) : theme === t;
+                            return (
+                                <button
+                                    key={t}
+                                    onClick={() => handleThemeToggle(t)}
+                                    style={{
+                                        padding: '0.8rem',
+                                        borderRadius: borderRadius.md,
+                                        border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
+                                        background: isSelected ? `${colors.primary}10` : colors.white,
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        transition: 'all 0.2s',
+                                        transform: isSelected ? 'scale(1.02)' : 'scale(1)',
+                                        position: 'relative'
+                                    }}
+                                >
+                                    <div style={{ fontWeight: 'bold', marginBottom: '0.2rem', fontSize: '0.9rem', color: colors.dark }}>
+                                        {t}
+                                        {isSelected && <span style={{ position: 'absolute', top: '5px', right: '5px', color: colors.primary }}>✓</span>}
+                                    </div>
+                                    <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{getMasteryStars(t)}</div>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
 

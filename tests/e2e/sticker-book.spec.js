@@ -8,6 +8,13 @@ test.describe('Sticker Book Feature', () => {
                 lastLogin: new Date().toISOString(),
                 streak: 1
             }));
+            // Seed a win to ensure "First Victory" is unlocked
+            localStorage.setItem('vocab_achievements_stats', JSON.stringify({
+                wins: 1,
+                totalCoins: 100,
+                wordsMastered: 5
+            }));
+            localStorage.setItem('vocab_achievements', JSON.stringify(['first_win']));
         });
         page.on('console', msg => console.log(`BROWSER: ${msg.text()}`));
         await page.goto('http://localhost:5173');
@@ -31,6 +38,16 @@ test.describe('Sticker Book Feature', () => {
 
             // 2. Verify Sticker Book Loaded
             await expect(page.getByRole('heading', { name: /Progress/i })).toBeVisible();
+
+            // DEBUG: Check localStorage
+            const storage = await page.evaluate(() => JSON.stringify(localStorage));
+            console.log('DEBUG LOCALSTORAGE:', storage);
+
+            // 2b. Navigate to Achievements Tab
+            await page.getByRole('button', { name: /Achievements/i }).click();
+
+            // Wait for grid to render
+            await expect(page.locator('div').filter({ hasText: 'Sticker Book' }).first()).toBeVisible({ timeout: 5000 });
 
             // 3. Verify Stickers exist (locked or unlocked)
             // We expect at least one sticker (First Victory)
