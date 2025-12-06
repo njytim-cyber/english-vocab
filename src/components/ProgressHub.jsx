@@ -26,6 +26,20 @@ export default function ProgressHub({
         const sr = engine?.spacedRep || engine?.sr;
         const allQuestions = engine?.allQuestions || [];
 
+        // Helper function (defined before use)
+        const calculateAccuracy = (srInstance, questions) => {
+            if (!srInstance) return 0;
+            let correct = 0, total = 0;
+            questions.forEach(q => {
+                const history = srInstance.history?.[q.question_number || q.id];
+                if (history) {
+                    correct += history.correct || 0;
+                    total += (history.correct || 0) + (history.wrong || 0);
+                }
+            });
+            return total > 0 ? Math.round((correct / total) * 100) : 0;
+        };
+
         // Word mastery distribution
         const masteryLevels = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
         allQuestions.forEach(q => {
@@ -63,19 +77,6 @@ export default function ProgressHub({
             accuracy: calculateAccuracy(sr, allQuestions)
         };
     }, [engine, economy, spellingProgress]);
-
-    const calculateAccuracy = (sr, questions) => {
-        if (!sr) return 0;
-        let correct = 0, total = 0;
-        questions.forEach(q => {
-            const history = sr.history?.[q.question_number || q.id];
-            if (history) {
-                correct += history.correct || 0;
-                total += (history.correct || 0) + (history.wrong || 0);
-            }
-        });
-        return total > 0 ? Math.round((correct / total) * 100) : 0;
-    };
 
     // Achievements data
     const unlockedAchievements = achievements?.getUnlocked?.() || [];

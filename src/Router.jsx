@@ -39,6 +39,7 @@ import comprehensionPassages from './data/comprehension_sample.json';
 import ReviseHub from './components/ReviseHub';
 import FlashcardView from './components/FlashcardView';
 import ProgressHub from './components/ProgressHub';
+import ArenaHub from './components/ArenaHub';
 
 export default function Router() {
     const { engine, economy, achievements, eventService } = useGame();
@@ -188,7 +189,14 @@ export default function Router() {
                     />
                 )}
                 {view === 'quiz' && (() => { console.log('Router: Rendering QuizView', QuizView); return <QuizView engine={engine} economy={economy} onFinish={handleFinish} />; })()}
-                {view === 'arena' && <ArenaView engine={engine} onFinish={handleFinish} onBack={() => setView('learn')} />}
+                {view === 'arena' && (
+                    <ArenaHub
+                        engine={engine}
+                        onStartBattle={() => setView('arena-battle')}
+                        onBack={() => setView('learn')}
+                    />
+                )}
+                {view === 'arena-battle' && <ArenaView engine={engine} onFinish={handleFinish} onBack={() => setView('arena')} />}
                 {view === 'results' && <ResultsView engine={engine} onRestart={handleRestart} />}
 
                 {/* Vocab Cloze */}
