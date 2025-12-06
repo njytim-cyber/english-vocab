@@ -1,6 +1,9 @@
 import { useState, useMemo } from 'react';
-import { colors, borderRadius, shadows, spacing, typography } from '../styles/designTokens';
+import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
+import { ACHIEVEMENTS } from '../engine/Achievements';
+import { GRAMMAR_CATEGORIES } from './GrammarSetup';
+import clozePassages from '../data/cloze_sample.json';
 
 /**
  * ProgressHub - Comprehensive progress and analytics center
@@ -20,6 +23,7 @@ export default function ProgressHub({
     onBack
 }) {
     const [activeTab, setActiveTab] = useState('overview');
+    const [selectedSticker, setSelectedSticker] = useState(null); // For Achievements modal
 
     // Calculate stats
     const stats = useMemo(() => {
@@ -217,6 +221,77 @@ export default function ProgressHub({
                 </div>
             </div>
 
+            {/* Grammar Skills */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.md }}>
+                    <span style={{ fontSize: '1.5rem' }}>✏️</span>
+                    <h3 style={{ margin: 0, color: colors.dark }}>Grammar</h3>
+                </div>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr',
+                    gap: spacing.sm,
+                    marginBottom: spacing.sm
+                }}>
+                    {GRAMMAR_CATEGORIES.map(cat => (
+                        <div key={cat.name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+                            <span style={{ color: colors.textMuted }}>{cat.name}</span>
+                            <span style={{ background: '#fef3c7', padding: '2px 8px', borderRadius: '10px', fontSize: '0.75rem', color: '#92400e' }}>
+                                {cat.subunits.length} Topics
+                            </span>
+                        </div>
+                    ))}
+                </div>
+                <div style={{
+                    marginTop: spacing.sm,
+                    padding: spacing.sm,
+                    background: colors.light,
+                    borderRadius: borderRadius.lg,
+                    textAlign: 'center',
+                    fontSize: '0.85rem',
+                    color: colors.textMuted
+                }}>
+                    Practice Mode Available
+                </div>
+            </div>
+
+            {/* Comprehension Skills */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.md }}>
+                    <span style={{ fontSize: '1.5rem' }}>📖</span>
+                    <h3 style={{ margin: 0, color: colors.dark }}>Reading</h3>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: spacing.sm }}>
+                    <span style={{ color: colors.textMuted }}>Passages Available</span>
+                    <span style={{ fontWeight: '600' }}>{clozePassages.length}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: colors.textMuted }}>Skills Tracked</span>
+                    <span style={{ fontWeight: '600' }}>Context & Recall</span>
+                </div>
+                <div style={{
+                    marginTop: spacing.sm,
+                    padding: spacing.sm,
+                    background: '#e0f2fe',
+                    borderRadius: borderRadius.lg,
+                    textAlign: 'center',
+                    fontSize: '0.85rem',
+                    color: '#0369a1'
+                }}>
+                    Progress linked to Vocabulary Mastery
+                </div>
+            </div>
+
             {/* View Full Skill Tree Button */}
             <button
                 onClick={() => onNavigate?.('skill-tree')}
@@ -239,72 +314,126 @@ export default function ProgressHub({
     const renderAchievements = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.md }}>
             <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: spacing.sm
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
             }}>
-                <span style={{ color: colors.textMuted }}>
-                    Unlocked: {unlockedAchievements.length} / {allAchievementDefs.length}
-                </span>
-                <button
-                    onClick={() => onNavigate?.('stickers')}
-                    style={{
-                        background: 'transparent',
-                        border: 'none',
-                        color: colors.primary,
-                        cursor: 'pointer',
-                        fontWeight: '600',
-                        fontSize: '0.9rem'
-                    }}
-                >
-                    View All →
-                </button>
-            </div>
-
-            {/* Recent Achievements */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
-                gap: spacing.sm
-            }}>
-                {(unlockedAchievements.length > 0 ? unlockedAchievements.slice(0, 8) :
-                    [{ id: 'placeholder', name: 'First Win', icon: '🏆' }]
-                ).map(achievement => (
-                    <div key={achievement.id} style={{
-                        background: colors.white,
-                        borderRadius: borderRadius.lg,
-                        padding: spacing.md,
-                        textAlign: 'center',
-                        boxShadow: shadows.sm,
-                        border: `2px solid ${colors.border}`
-                    }}>
-                        <div style={{ fontSize: '2rem', marginBottom: spacing.xs }}>
-                            {achievement.icon || '🏆'}
-                        </div>
-                        <div style={{
-                            fontSize: '0.7rem',
-                            color: colors.textMuted,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap'
-                        }}>
-                            {achievement.name}
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Locked Hint */}
-            {unlockedAchievements.length < allAchievementDefs.length && (
                 <div style={{
-                    background: '#fef3c7',
-                    borderRadius: borderRadius.lg,
-                    padding: spacing.md,
-                    textAlign: 'center',
-                    color: '#92400e'
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: spacing.md
                 }}>
-                    🔒 {allAchievementDefs.length - unlockedAchievements.length} more achievements to unlock!
+                    <h3 style={{ margin: 0, color: colors.dark }}>🏆 Sticker Book</h3>
+                    <span style={{ color: colors.textMuted }}>
+                        {unlockedAchievements.length} / {allAchievementDefs.length} Unlocked
+                    </span>
+                </div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+                    gap: '1rem'
+                }}>
+                    {allAchievementDefs.map(ach => {
+                        const isUnlocked = unlockedAchievements.some(u => u.id === ach.id);
+                        return (
+                            <div
+                                key={ach.id}
+                                onClick={() => setSelectedSticker(ach)}
+                                style={{
+                                    aspectRatio: '1/1',
+                                    background: isUnlocked ? '#f0fdf4' : colors.light,
+                                    borderRadius: borderRadius.lg,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '0.5rem',
+                                    cursor: 'pointer',
+                                    border: isUnlocked ? `2px solid ${colors.success}` : `2px dashed ${colors.border}`,
+                                    opacity: isUnlocked ? 1 : 0.7,
+                                    transition: 'all 0.2s',
+                                    transform: isUnlocked ? 'scale(1)' : 'scale(0.95)'
+                                }}
+                            >
+                                <div style={{
+                                    fontSize: '2rem',
+                                    marginBottom: '0.2rem',
+                                    filter: isUnlocked ? 'none' : 'grayscale(100%)'
+                                }}>
+                                    {isUnlocked ? ach.icon : '🔒'}
+                                </div>
+                                <div style={{
+                                    fontSize: '0.65rem',
+                                    textAlign: 'center',
+                                    color: isUnlocked ? colors.dark : colors.textMuted,
+                                    lineHeight: 1.2
+                                }}>
+                                    {ach.title}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Achievement Detail Modal */}
+            {selectedSticker && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    background: 'rgba(0,0,0,0.8)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem'
+                }} onClick={() => setSelectedSticker(null)}>
+                    <div onClick={e => e.stopPropagation()} style={{
+                        background: 'white',
+                        padding: '2rem',
+                        borderRadius: borderRadius.xl,
+                        maxWidth: '400px',
+                        width: '100%',
+                        textAlign: 'center',
+                        position: 'relative'
+                    }}>
+                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
+                            {unlockedAchievements.some(u => u.id === selectedSticker.id) ? selectedSticker.icon : '🔒'}
+                        </div>
+                        <h2 style={{ marginBottom: '0.5rem', color: colors.dark }}>{selectedSticker.title}</h2>
+                        <p style={{ color: colors.textMuted, marginBottom: '1.5rem' }}>
+                            {selectedSticker.description}
+                        </p>
+                        <div style={{
+                            padding: '0.5rem 1rem',
+                            background: unlockedAchievements.some(u => u.id === selectedSticker.id) ? '#dcfce7' : colors.light,
+                            color: unlockedAchievements.some(u => u.id === selectedSticker.id) ? '#166534' : colors.textMuted,
+                            borderRadius: borderRadius.round,
+                            display: 'inline-block',
+                            fontSize: '0.9rem',
+                            fontWeight: 'bold'
+                        }}>
+                            {unlockedAchievements.some(u => u.id === selectedSticker.id) ? 'Unlocked!' : 'Locked'}
+                        </div>
+                        <button
+                            onClick={() => setSelectedSticker(null)}
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '1.5rem',
+                                cursor: 'pointer',
+                                color: colors.textMuted
+                            }}
+                        >
+                            ×
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
@@ -327,6 +456,22 @@ export default function ProgressHub({
                 <StatRow label="Total XP Earned" value={stats.xp.toLocaleString()} />
                 <StatRow label="Stars Collected" value={stats.coins} />
                 <StatRow label="Current Level" value={stats.level} />
+            </div>
+
+            {/* Content Stats */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
+            }}>
+                <h3 style={{ margin: 0, marginBottom: spacing.md, color: colors.dark }}>
+                    📚 Content Progress
+                </h3>
+                <StatRow label="Vocabulary Words" value={stats.totalWords} />
+                <StatRow label="Spelling Words" value={stats.spellingStats.total} />
+                <StatRow label="Grammar Topics" value={GRAMMAR_CATEGORIES.reduce((acc, cat) => acc + cat.subunits.length, 0)} />
+                <StatRow label="Reading Passages" value={clozePassages.length} />
             </div>
 
             {/* Mastery Breakdown */}
