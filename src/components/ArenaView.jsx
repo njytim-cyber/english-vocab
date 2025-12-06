@@ -371,6 +371,15 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
         );
     };
 
+    // Responsive Layout
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div style={{
             minHeight: '100vh',
@@ -389,19 +398,21 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                         color: 'white',
                         padding: '0.5rem 1rem',
                         borderRadius: '10px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        fontSize: isMobile ? '0.8rem' : '1rem'
                     }}
                 >
-                    ← Exit
+                    ← {isMobile ? 'Exit' : 'Exit Arena'}
                 </button>
 
                 <h1 style={{
-                    fontSize: '2rem',
+                    fontSize: isMobile ? '1.5rem' : '2rem',
                     background: 'linear-gradient(90deg, #ffd700, #ff6b6b, #667eea)',
                     WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    WebkitTextFillColor: 'transparent',
+                    textAlign: 'center'
                 }}>
-                    ⚔️ THE ARENA ⚔️
+                    {isMobile ? '⚔️ ARENA ⚔️' : '⚔️ THE ARENA ⚔️'}
                 </h1>
 
                 {gameStarted && !winner && !playerState.isFinished && (
@@ -410,14 +421,14 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                         padding: '0.5rem 1rem',
                         borderRadius: '10px',
                         fontWeight: 'bold',
-                        fontSize: '1.5rem',
+                        fontSize: isMobile ? '1.2rem' : '1.5rem',
                         minWidth: '60px',
                         textAlign: 'center'
                     }}>
-                        ⏱️ {questionTimer}s
+                        {questionTimer}s
                     </div>
                 )}
-                {(!gameStarted || winner || playerState.isFinished) && <div style={{ width: '80px' }} />}
+                {(!gameStarted || winner || playerState.isFinished) && <div style={{ width: isMobile ? '50px' : '80px' }} />}
             </div>
 
             {/* Countdown/Winner Overlay */}
@@ -431,15 +442,17 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    color: 'white'
+                    color: 'white',
+                    padding: '1rem',
+                    textAlign: 'center'
                 }}>
                     {winner ? (
                         <>
-                            <div style={{ fontSize: '5rem', marginBottom: '1rem' }}>
+                            <div style={{ fontSize: isMobile ? '4rem' : '5rem', marginBottom: '1rem' }}>
                                 {winner === 'player' ? playerAvatar : winner === 'cpu' ? opponentConfig?.emoji : '🤝'}
                             </div>
                             <h1 style={{
-                                fontSize: '4rem',
+                                fontSize: isMobile ? '2.5rem' : '4rem',
                                 background: winner === 'player'
                                     ? 'linear-gradient(90deg, #ffd700, #ffed4a)'
                                     : 'linear-gradient(90deg, #ff6b6b, #ee5a24)',
@@ -447,17 +460,17 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                                 WebkitTextFillColor: 'transparent',
                                 marginBottom: '1rem'
                             }}>
-                                {winner === 'player' ? '🏆 VICTORY! 🏆' : winner === 'cpu' ? 'DEFEAT 💀' : 'DRAW!'}
+                                {winner === 'player' ? 'VICTORY!' : winner === 'cpu' ? 'DEFEAT' : 'DRAW!'}
                             </h1>
-                            <p style={{ fontSize: '1.5rem', opacity: 0.8 }}>
+                            <p style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', opacity: 0.8 }}>
                                 You: {playerState.score} pts — {opponentConfig?.name}: {cpuState.score} pts
                             </p>
                             <button
                                 onClick={onBack}
                                 style={{
                                     marginTop: '2rem',
-                                    padding: '1rem 3rem',
-                                    fontSize: '1.5rem',
+                                    padding: isMobile ? '0.8rem 2rem' : '1rem 3rem',
+                                    fontSize: isMobile ? '1.2rem' : '1.5rem',
                                     background: 'linear-gradient(135deg, #667eea, #764ba2)',
                                     color: 'white',
                                     border: 'none',
@@ -471,14 +484,14 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                         </>
                     ) : (
                         <>
-                            <div style={{ fontSize: '3rem', marginBottom: '1rem', display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                            <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem', display: 'flex', gap: isMobile ? '1rem' : '2rem', alignItems: 'center' }}>
                                 <span>{playerAvatar}</span>
                                 <span style={{ color: '#ff6b6b' }}>VS</span>
                                 <span>{opponentConfig?.emoji}</span>
                             </div>
                             <p style={{ marginBottom: '1rem', opacity: 0.8 }}>YOU vs {opponentConfig?.name}</p>
                             <h1 style={{
-                                fontSize: '8rem',
+                                fontSize: isMobile ? '5rem' : '8rem',
                                 background: 'linear-gradient(90deg, #ffd700, #ff6b6b)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent'
@@ -491,7 +504,16 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
             )}
 
             {/* Arena Split View */}
-            <div style={{ flex: 1, display: 'flex', maxWidth: '1200px', margin: '0 auto', width: '100%', padding: '0.5rem' }}>
+            <div style={{
+                flex: 1,
+                display: 'flex',
+                maxWidth: '1200px',
+                margin: '0 auto',
+                width: '100%',
+                padding: '0.5rem',
+                flexDirection: isMobile ? 'column' : 'row',
+                gap: isMobile ? '1rem' : '0'
+            }}>
                 {renderPlayerColumn()}
                 {renderCPUColumn()}
             </div>
