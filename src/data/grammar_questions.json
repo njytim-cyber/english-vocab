@@ -1,0 +1,194 @@
+[
+    {
+        "question_number": 1,
+        "question": "Yesterday, my brother ________ a beautiful sandcastle at the beach.",
+        "options": {
+            "1": "build",
+            "2": "builds",
+            "3": "built",
+            "4": "building"
+        },
+        "answer": "built",
+        "answer_index": 3,
+        "subunit": "Tenses & Verb Forms",
+        "difficulty": 2,
+        "explanation": "The word 'Yesterday' indicates that the action happened in the past, so we must use the simple past tense form 'built'.",
+        "example": "She built a tower with blocks yesterday."
+    },
+    {
+        "question_number": 2,
+        "question": "The cat ________ on the warm windowsill every afternoon.",
+        "options": {
+            "1": "sleep",
+            "2": "sleeps",
+            "3": "slept",
+            "4": "sleeping"
+        },
+        "answer": "sleeps",
+        "answer_index": 2,
+        "subunit": "Tenses & Verb Forms",
+        "difficulty": 1,
+        "explanation": "'Every afternoon' indicates a habitual action, requiring the simple present tense. With 'The cat' (third person singular), we add 's' to the verb.",
+        "example": "She reads a book every night."
+    },
+    {
+        "question_number": 3,
+        "question": "By the time we arrived, the concert ________ already.",
+        "options": {
+            "1": "starts",
+            "2": "started",
+            "3": "had started",
+            "4": "has started"
+        },
+        "answer": "had started",
+        "answer_index": 3,
+        "subunit": "Tenses & Verb Forms",
+        "difficulty": 4,
+        "explanation": "'By the time we arrived' indicates a past reference point. The past perfect 'had started' is used to show an action completed before another past action.",
+        "example": "By the time I woke up, my mother had already left for work."
+    },
+    {
+        "question_number": 4,
+        "question": "Neither the students nor the teacher ________ aware of the schedule change.",
+        "options": {
+            "1": "was",
+            "2": "were",
+            "3": "is",
+            "4": "are"
+        },
+        "answer": "was",
+        "answer_index": 1,
+        "subunit": "Subject-Verb Agreement",
+        "difficulty": 5,
+        "explanation": "With 'neither...nor', the verb agrees with the nearest subject. 'Teacher' is singular, so we use 'was'.",
+        "example": "Neither my friends nor my sister was at the party."
+    },
+    {
+        "question_number": 5,
+        "question": "If I ________ a bird, I would fly to the mountains.",
+        "options": {
+            "1": "am",
+            "2": "was",
+            "3": "were",
+            "4": "be"
+        },
+        "answer": "were",
+        "answer_index": 3,
+        "subunit": "Conditionals",
+        "difficulty": 4,
+        "explanation": "In the second conditional (hypothetical present/future), we use 'were' for all subjects, including 'I'. This is the subjunctive mood.",
+        "example": "If she were here, she would help us."
+    },
+    {
+        "question_number": 6,
+        "question": "The manager insisted that he ________ present at the meeting to address the grievances personally.",
+        "options": {
+            "1": "is",
+            "2": "be",
+            "3": "was",
+            "4": "has been"
+        },
+        "answer": "be",
+        "answer_index": 2,
+        "subunit": "Advanced Structures (Subjunctive)",
+        "difficulty": 8,
+        "explanation": "The verb 'insisted' triggers the subjunctive mood, which requires the base form of the verb 'be' regardless of the subject.",
+        "example": "It is essential that she be told the truth."
+    },
+    {
+        "question_number": 7,
+        "question": "The book, along with the magazines, ________ on the table.",
+        "options": {
+            "1": "is",
+            "2": "are",
+            "3": "were",
+            "4": "have been"
+        },
+        "answer": "is",
+        "answer_index": 1,
+        "subunit": "Subject-Verb Agreement",
+        "difficulty": 3,
+        "explanation": "When 'along with' connects subjects, the verb agrees with the first subject. 'Book' is singular, so we use 'is'.",
+        "example": "The teacher, along with her students, was at the library."
+    },
+    {
+        "question_number": 8,
+        "question": "She asked me where I ________ going after school.",
+        "options": {
+            "1": "am",
+            "2": "was",
+            "3": "will be",
+            "4": "would be"
+        },
+        "answer": "was",
+        "answer_index": 2,
+        "subunit": "Reported Speech",
+        "difficulty": 5,
+        "explanation": "In reported speech, 'am' changes to 'was' when the reporting verb ('asked') is in the past tense.",
+        "example": "He said he was tired."
+    },
+    {
+        "question_number": 9,
+        "question": "The children ________ playing in the garden when it started to rain.",
+        "options": {
+            "1": "are",
+            "2": "was",
+            "3": "were",
+            "4": "is"
+        },
+        "answer": "were",
+        "answer_index": 3,
+        "subunit": "Tenses & Verb Forms",
+        "difficulty": 2,
+        "explanation": "Past continuous tense is used for actions in progress when interrupted. 'Children' is plural, so we use 'were'.",
+        "example": "We were eating dinner when the phone rang."
+    },
+    {
+        "question_number": 10,
+        "question": "He would have passed the exam if he ________ harder.",
+        "options": {
+            "1": "studies",
+            "2": "studied",
+            "3": "had studied",
+            "4": "has studied"
+        },
+        "answer": "had studied",
+        "answer_index": 3,
+        "subunit": "Conditionals",
+        "difficulty": 6,
+        "explanation": "The third conditional (hypothetical past) uses 'would have + past participle' in the result clause and 'had + past participle' in the if-clause.",
+        "example": "If I had known, I would have helped."
+    },
+    {
+        "question_number": 11,
+        "question": "Each of the students ________ responsible for their own work.",
+        "options": {
+            "1": "is",
+            "2": "are",
+            "3": "were",
+            "4": "have been"
+        },
+        "answer": "is",
+        "answer_index": 1,
+        "subunit": "Subject-Verb Agreement",
+        "difficulty": 3,
+        "explanation": "'Each' is always singular, regardless of the prepositional phrase that follows. 'Each of the students' takes a singular verb.",
+        "example": "Each of the books was carefully wrapped."
+    },
+    {
+        "question_number": 12,
+        "question": "Not only ________ she intelligent, but she is also very kind.",
+        "options": {
+            "1": "is",
+            "2": "was",
+            "3": "does",
+            "4": "has"
+        },
+        "answer": "is",
+        "answer_index": 1,
+        "subunit": "Advanced Structures (Inversion)",
+        "difficulty": 7,
+        "explanation": "When 'Not only' begins a sentence, subject-verb inversion occurs. The present tense 'is' matches the second clause 'she is also very kind'.",
+        "example": "Not only does he sing, but he also dances."
+    }
+]

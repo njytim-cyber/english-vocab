@@ -9,39 +9,50 @@ test.describe('Sticker Book Feature', () => {
                 streak: 1
             }));
         });
+        page.on('console', msg => console.log(`BROWSER: ${msg.text()}`));
         await page.goto('http://localhost:5173');
         // Wait for hydration
         await expect(page.locator('body')).toBeVisible();
 
         // Verify Learn Hub loaded
-        await expect(page.getByRole('heading', { name: /Learn Hub/i })).toBeVisible();
+        await expect(page.getByRole('heading', { name: /Vocab Hub/i })).toBeVisible();
     });
 
     test('should navigate to Sticker Book and view stickers', async ({ page }) => {
-        // 1. Navigate to Progress tab in NavBar
-        const progressBtn = page.getByRole('button', { name: /Progress/i });
-        await expect(progressBtn).toBeVisible();
-        await progressBtn.click();
+        try {
+            // 1. Navigate to Progress tab in NavBar
+            // explicit wait for nav to ensure hydration
+            await expect(page.locator('nav')).toBeVisible({ timeout: 5000 });
 
-        // 2. Verify Sticker Book Loaded
-        await expect(page.getByRole('heading', { name: 'Sticker Book' })).toBeVisible();
+            console.log('Searching for Progress button...');
+            const progressBtn = page.getByRole('button', { name: /Progress/i });
+            await expect(progressBtn).toBeVisible({ timeout: 5000 });
+            await progressBtn.click();
 
-        // 3. Verify Stickers exist (locked or unlocked)
-        // We expect at least one sticker (First Victory)
-        await expect(page.getByText('First Victory')).toBeVisible();
+            // 2. Verify Sticker Book Loaded
+            await expect(page.getByRole('heading', { name: /Progress/i })).toBeVisible();
 
-        // 4. Click a sticker to see details
-        await page.getByText('First Victory').click();
-        await expect(page.getByText('Win your first quiz.')).toBeVisible();
+            // 3. Verify Stickers exist (locked or unlocked)
+            // We expect at least one sticker (First Victory)
+            await expect(page.getByText('First Victory')).toBeVisible();
 
-        // 5. Close modal
-        await page.getByRole('button', { name: 'Close' }).click();
-        await expect(page.getByText('Win your first quiz.')).not.toBeVisible();
+            // 4. Click a sticker to see details
+            await page.getByText('First Victory').click();
+            await expect(page.getByText('Win your first quiz.')).toBeVisible();
 
-        // 6. Back Navigation via Learn tab
-        const learnBtn = page.getByRole('button', { name: /Learn/i });
-        await expect(learnBtn).toBeVisible();
-        await learnBtn.click();
-        await expect(page.getByRole('heading', { name: /Learn Hub/i })).toBeVisible();
+            // 5. Close modal
+            await page.getByRole('button', { name: 'Close' }).click();
+            await expect(page.getByText('Win your first quiz.')).not.toBeVisible();
+
+            // 6. Back Navigation via Learn tab
+            const learnBtn = page.getByRole('button', { name: /Learn/i });
+            await expect(learnBtn).toBeVisible();
+            await learnBtn.click();
+            await expect(page.getByRole('heading', { name: /Vocab Hub/i })).toBeVisible();
+        } catch (e) {
+            console.log('TEST FAILED. Dumping page content:');
+            console.log(await page.content());
+            throw e;
+        }
     });
 });

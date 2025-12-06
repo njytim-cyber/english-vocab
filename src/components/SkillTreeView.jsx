@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PageLayout from './common/PageLayout';
 import DualRangeSlider from './common/DualRangeSlider';
 import { colors, borderRadius, shadows } from '../styles/designTokens';
@@ -9,6 +9,13 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
     const [filterLevel, setFilterLevel] = useState('All');
     const [minDifficulty, setMinDifficulty] = useState(1);
     const [maxDifficulty, setMaxDifficulty] = useState(9); // Max is 9 (no level 10 words)
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const LEVELS = {
         0: { name: 'Seed', desc: 'Initial Exposure', icon: '🌱', color: '#95a5a6' },
@@ -84,14 +91,16 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
             {/* Stats Header */}
             <div style={{
                 display: 'flex',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
+                justifyContent: isMobile ? 'flex-start' : 'center',
+                flexWrap: isMobile ? 'nowrap' : 'wrap',
                 gap: '1rem',
                 marginBottom: '1.5rem',
                 background: colors.white,
                 padding: '1rem',
                 borderRadius: borderRadius.lg,
-                boxShadow: shadows.sm
+                boxShadow: shadows.sm,
+                overflowX: 'auto',
+                paddingBottom: isMobile ? '1.5rem' : '1rem' // Space for scrollbar
             }}>
                 <div
                     onClick={() => setFilterLevel('All')}
@@ -101,7 +110,8 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                         cursor: 'pointer',
                         opacity: filterLevel === 'All' ? 1 : 0.5,
                         transform: filterLevel === 'All' ? 'scale(1.1)' : 'scale(1)',
-                        transition: 'all 0.2s'
+                        transition: 'all 0.2s',
+                        flexShrink: 0
                     }}
                 >
                     <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: colors.dark }}>{totalFilteredWords}</div>
@@ -117,7 +127,8 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                             cursor: 'pointer',
                             opacity: parseInt(filterLevel) === lvl ? 1 : 0.5,
                             transform: parseInt(filterLevel) === lvl ? 'scale(1.1)' : 'scale(1)',
-                            transition: 'all 0.2s'
+                            transition: 'all 0.2s',
+                            flexShrink: 0
                         }}
                     >
                         <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: LEVELS[lvl].color }}>{wordsByLevel[lvl].length}</div>
@@ -152,15 +163,18 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                         borderRadius: borderRadius.lg,
                         padding: '1.25rem',
                         boxShadow: shadows.sm,
-                        borderLeft: `4px solid ${LEVELS[level].color}`
+                        borderLeft: `4px solid ${LEVELS[level].color}`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%' // Full height for grid alignment
                     }}>
                         <h3 style={{
-                            margin: '0 0 0.4rem 0',
+                            margin: '0 0 0.75rem 0',
                             color: LEVELS[level].color,
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            fontSize: '1rem'
+                            fontSize: '1.1rem'
                         }}>
                             <span>{LEVELS[level].icon} {LEVELS[level].name}</span>
                             <span style={{
@@ -173,10 +187,17 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                                 {wordsByLevel[level].length}
                             </span>
                         </h3>
-                        <div style={{ fontSize: '0.8rem', color: colors.textMuted, marginBottom: '0.75rem', fontStyle: 'italic' }}>
-                            {LEVELS[level].desc}
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', maxHeight: '200px', overflowY: 'auto' }}>
+                        {/* Subtitle removed per user request */}
+
+                        <div style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '0.35rem',
+                            maxHeight: '110px', // Approx 3 lines (32px * 3 + gaps)
+                            overflowY: 'auto',
+                            scrollbarWidth: 'thin', // Firefox
+                            alignContent: 'flex-start'
+                        }}>
                             {wordsByLevel[level].length > 0 ? (
                                 wordsByLevel[level].map(q => (
                                     <span key={q.id || q.question_number} style={{
@@ -190,13 +211,14 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                                         display: 'inline-flex',
                                         alignItems: 'center',
                                         position: 'relative',
-                                        fontWeight: '500'
+                                        fontWeight: '500',
+                                        height: '32px' // Enforce uniform height
                                     }}>
                                         {q.answer}
                                         <span style={{
                                             position: 'absolute',
-                                            top: '1px',
-                                            right: '3px',
+                                            top: '2px',
+                                            right: '4px',
                                             fontSize: '0.5rem',
                                             color: colors.textMuted,
                                             fontWeight: 'bold'

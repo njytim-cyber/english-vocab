@@ -1,58 +1,65 @@
-import { colors, borderRadius, shadows, spacing, icons } from '../styles/designTokens';
+import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 
 
 /**
  * LearnHub - Central learning dashboard
- * Replaces StartScreen as the main entry point
+ * Shows Vocab MCQ only (Word Games moved to nav)
  */
 export default function LearnHub({ economy, onNavigate }) {
     const cards = [
         {
-            id: 'new-quiz',
-            title: 'New Quiz',
+            id: 'vocab-mcq',
+            title: 'Vocab MCQ',
             icon: '📝',
             description: 'Test your vocabulary knowledge',
             color: '#667eea',
             action: () => onNavigate('quiz-setup')
         },
         {
-            id: 'practice',
-            title: 'Practice',
-            icon: '🔄',
-            description: 'Revise 20 words you\'ve learned',
-            color: '#2ecc71',
-            action: () => onNavigate('practice')
+            id: 'vocab-cloze',
+            title: 'Vocab Cloze',
+            icon: '📖',
+            description: 'Fill in the blanks in passages',
+            color: '#10b981',
+            action: () => onNavigate('cloze')
         },
         {
-            id: 'arena',
-            title: 'Arena',
-            icon: '⚔️',
-            description: 'Compete against AI opponents',
-            color: '#e74c3c',
-            action: () => onNavigate('arena')
+            id: 'grammar-mcq',
+            title: 'Grammar MCQ',
+            icon: '✏️',
+            description: 'Master grammar rules and structures',
+            color: '#f59e0b',
+            action: () => onNavigate('grammar')
         },
         {
-            id: 'quests',
-            title: 'Quests',
-            icon: '🗺️',
-            description: 'Themed learning journeys',
-            color: '#f39c12',
-            action: () => onNavigate('quests')
+            id: 'grammar-cloze',
+            title: 'Grammar Cloze',
+            icon: '📜',
+            description: 'Fill in grammar blanks in passages',
+            color: '#d97706',
+            action: () => onNavigate('grammar-cloze')
         },
         {
-            id: 'games',
-            title: 'Word Games',
-            icon: '🎮',
-            description: 'Fun vocabulary minigames',
-            color: '#9b59b6',
-            action: () => onNavigate('minigames')
+            id: 'spelling',
+            title: 'Spelling',
+            icon: '🔤',
+            description: 'Practice spelling words',
+            color: '#3b82f6',
+            action: () => onNavigate('spelling')
+        },
+        {
+            id: 'comprehension',
+            title: 'Comprehension',
+            icon: '📰',
+            description: 'Read passages and answer questions',
+            color: '#0ea5e9',
+            action: () => onNavigate('comprehension')
         }
     ];
 
     return (
-        <PageLayout title="Vocab Hub" showBack={false} maxWidth="800px">
-
+        <PageLayout title="Learn" showBack={false} maxWidth="800px">
 
             {/* Action Cards Grid */}
             <div style={{

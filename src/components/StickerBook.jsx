@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ACHIEVEMENTS } from '../engine/Achievements';
-import { useQuests } from '../contexts/QuestContext';
 import PageLayout from './common/PageLayout';
 import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 export default function StickerBook({ achievements, onBack, onNavigate }) {
-    const { quests } = useQuests();
     const [unlocked, setUnlocked] = useState(new Set(achievements.getUnlocked()));
     const [selectedSticker, setSelectedSticker] = useState(null);
 
@@ -13,81 +11,11 @@ export default function StickerBook({ achievements, onBack, onNavigate }) {
         setUnlocked(new Set(achievements.getUnlocked()));
     }, [achievements]);
 
-    // Create quest stickers for completed quests
-    const questStickers = Object.values(quests)
-        .filter(q => q.isCompleted)
-        .map(q => ({
-            id: `quest_${q.id}`,
-            title: `${q.id} Master`,
-            description: `Mastered all ${q.id} vocabulary!`,
-            icon: '🏆',
-            isQuest: true
-        }));
-
     return (
         <PageLayout
             title="Progress 🏆"
             onBack={onBack}
-            rightContent={
-                <div style={{
-                    background: colors.white,
-                    padding: '0.5rem 1rem',
-                    borderRadius: borderRadius.pill,
-                    boxShadow: shadows.sm,
-                    fontSize: '0.9rem',
-                    color: colors.primary,
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                }}>
-                    <span>Level {Math.floor(achievements.stats.wins / 5) + 1}</span>
-                    <span style={{ fontSize: '0.7rem', color: colors.textMuted, fontWeight: 'normal' }}>
-                        ({achievements.stats.wins} wins)
-                    </span>
-                </div>
-            }
         >
-
-
-            {/* Quest Achievements Section */}
-            {questStickers.length > 0 && (
-                <div style={{ marginBottom: '2rem' }}>
-                    <h2 style={{ color: colors.primary, marginBottom: '1rem', fontSize: '1.2rem' }}>
-                        🎯 Quest Achievements
-                    </h2>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
-                        gap: '1rem'
-                    }}>
-                        {questStickers.map(sticker => (
-                            <div
-                                key={sticker.id}
-                                onClick={() => setSelectedSticker(sticker)}
-                                className="animate-pop"
-                                style={{
-                                    aspectRatio: '1/1',
-                                    background: colors.primaryGradient,
-                                    borderRadius: borderRadius.lg,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '0.5rem',
-                                    cursor: 'pointer',
-                                    boxShadow: shadows.primary
-                                }}
-                            >
-                                <div style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>🏆</div>
-                                <div style={{ fontSize: '0.65rem', color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
-                                    {sticker.title}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
 
             {/* Regular Achievements */}
             <h2 style={{ color: colors.dark, marginBottom: '1rem', fontSize: '1.2rem' }}>

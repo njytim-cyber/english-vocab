@@ -63,7 +63,6 @@ export class SpacedRepetition {
         };
 
         this.saveProgress();
-        this.saveProgress();
         return nextBox;
     }
 

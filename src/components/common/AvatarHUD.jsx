@@ -1,18 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing, icons } from '../../styles/designTokens';
 
 /**
  * AvatarHUD - Persistent HUD in top-right corner
- * Shows: Stars (currency) | Avatar + Name
+ * Shows: Stars (currency, clickable → Shop) | Avatar + Name
  * Clicking avatar opens the profile modal
  */
-export default function AvatarHUD({ userProfile, economy, onOpenProfile }) {
+export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenShop }) {
     const [isHovered, setIsHovered] = useState(false);
+    const [isCurrencyHovered, setIsCurrencyHovered] = useState(false);
+    const [stats, setStats] = useState({
+        coins: economy?.getCoins() || 0,
+        xp: economy?.getXP?.() || 0,
+        level: economy?.getLevel?.() || 1
+    });
+
+    useEffect(() => {
+        if (!economy || !economy.subscribe) return;
+
+        // Initial sync
+        setStats({
+            coins: economy.getCoins(),
+            xp: economy.getXP(),
+            level: economy.getLevel()
+        });
+
+        const unsubscribe = economy.subscribe((newState) => {
+            setStats({
+                coins: newState.coins,
+                xp: newState.xp || 0,
+                level: newState.level || 1
+            });
+        });
+        return unsubscribe;
+    }, [economy]);
 
     const avatar = userProfile?.getAvatar() || '🎓';
     const name = userProfile?.getName() || 'Learner';
-    const coins = economy?.getCoins?.() || 0;
-    console.log('AvatarHUD Render:', { icons, coins, economyExists: !!economy });
+
+    // XP Progress Calculation
+    const currentLevelBaseXP = Math.pow(stats.level - 1, 2) * 100;
+    const nextLevelXP = Math.pow(stats.level, 2) * 100;
+    const progress = Math.min(100, Math.max(0, ((stats.xp - currentLevelBaseXP) / (nextLevelXP - currentLevelBaseXP)) * 100));
 
     return (
         <div style={{
@@ -24,21 +53,45 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile }) {
             alignItems: 'center',
             gap: spacing.sm
         }}>
-            {/* Stars display */}
-            <div style={{
-                background: colors.white,
-                padding: `${spacing.xs} ${spacing.md}`,
-                borderRadius: '50px',
-                boxShadow: shadows.sm,
-                display: 'flex',
-                alignItems: 'center',
-                gap: spacing.xs,
-                fontWeight: '600',
-                fontSize: '0.95rem'
-            }}>
-                <span style={{ fontSize: '1.1rem' }}>{icons.currency}</span>
-                <span style={{ color: colors.primary }}>{coins}</span>
-            </div>
+            {/* Currency Display - CLICKABLE to open Shop */}
+            <button
+                onClick={onOpenShop}
+                onMouseEnter={() => setIsCurrencyHovered(true)}
+                onMouseLeave={() => setIsCurrencyHovered(false)}
+                style={{
+                    background: isCurrencyHovered
+                        ? 'linear-gradient(135deg, #f1c40f 0%, #e67e22 100%)'
+                        : colors.white,
+                    padding: '6px 12px',
+                    borderRadius: '50px',
+                    boxShadow: isCurrencyHovered ? shadows.md : shadows.sm,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    fontSize: '0.9rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    transform: isCurrencyHovered ? 'scale(1.05)' : 'scale(1)'
+                }}
+                title="Open Rewards Shop"
+            >
+                {/* Star + Count + Gift hint */}
+                <span style={{ fontSize: '1rem' }}>{icons.currency}</span>
+                <span style={{
+                    fontWeight: '600',
+                    color: isCurrencyHovered ? 'white' : colors.dark
+                }}>
+                    {stats.coins}
+                </span>
+                {/* Gift icon ALWAYS visible as shop hint */}
+                <span style={{
+                    fontSize: '0.85rem',
+                    opacity: isCurrencyHovered ? 1 : 0.5
+                }}>
+                    🎁
+                </span>
+            </button>
 
             {/* Avatar button */}
             <button

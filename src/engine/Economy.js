@@ -17,21 +17,38 @@ export const SHOP_ITEMS = [
 
 export class Economy {
     constructor() {
+        this.listeners = new Set();
         this.state = this.load();
+    }
+
+    subscribe(listener) {
+        this.listeners.add(listener);
+        return () => this.listeners.delete(listener);
+    }
+
+    notify() {
+        this.listeners.forEach(l => l(this.state));
     }
 
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : { coins: 0, eventTokens: 0, inventory: [] };
+            const defaultState = { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
+            if (!data) return defaultState;
+
+            const parsed = JSON.parse(data);
+            // Merge with default to ensure new fields (xp, level) exist for old users
+            return { ...defaultState, ...parsed };
         } catch (e) {
-            return { coins: 0, eventTokens: 0, inventory: [] };
+            console.error('Economy load failed:', e);
+            return { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
         }
     }
 
     save() {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+            this.notify();
         } catch (e) {
             console.error('Failed to save economy', e);
         }
@@ -41,12 +58,35 @@ export class Economy {
         return this.state.coins;
     }
 
+    getXP() {
+        return this.state.xp || 0;
+    }
+
+    getLevel() {
+        return this.state.level || 1;
+    }
+
     getEventTokens() {
         return this.state.eventTokens || 0;
     }
 
     addCoins(amount) {
         this.state.coins += amount;
+        this.save();
+    }
+
+    addXP(amount) {
+        this.state.xp = (this.state.xp || 0) + amount;
+        // Simple Level Formula: Level = 1 + floor(sqrt(XP / 100))
+        // 100xp = lvl 2, 400xp = lvl 3, 900xp = lvl 4
+        const newLevel = 1 + Math.floor(Math.sqrt(this.state.xp / 100));
+
+        if (newLevel > (this.state.level || 1)) {
+            this.state.level = newLevel;
+            // Bonus coins for leveling up
+            this.state.coins += newLevel * 50;
+        }
+
         this.save();
     }
 
@@ -72,7 +112,7 @@ export class Economy {
     }
 
     reset() {
-        this.state = { coins: 0, eventTokens: 0, inventory: [] };
+        this.state = { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
         this.save();
     }
 }

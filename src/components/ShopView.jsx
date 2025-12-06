@@ -5,11 +5,28 @@ import PageLayout from './common/PageLayout';
 import StarDisplay, { StarCost } from './common/StarDisplay';
 import { colors, borderRadius, shadows } from '../styles/designTokens';
 
-export default function ShopView({ economy, onBack }) {
+export default function ShopView({ economy, userProfile, onBack }) {
     const [coins, setCoins] = useState(economy.getCoins());
     const [inventory, setInventory] = useState(economy.state.inventory);
     const [message, setMessage] = useState(null);
     const [activeCategory, setActiveCategory] = useState('accessory');
+    const [equipped, setEquipped] = useState(userProfile ? userProfile.getEquippedItems() : {});
+
+    const handleEquip = (item) => {
+        if (!userProfile) return;
+
+        if (item.type === 'avatar') {
+            userProfile.setAvatar(item.icon); // Assuming icon is the emoji char
+            setMessage(`Equipped ${item.name}!`);
+            speak("Equipped!");
+        } else {
+            // For accessories/skins
+            userProfile.equipItem(item.id, item.type);
+            setEquipped({ ...userProfile.getEquippedItems() });
+            setMessage(`Equipped ${item.name}!`);
+            speak("Equipped!");
+        }
+    };
 
     const handleBuy = (item) => {
         const result = economy.buyItem(item.id);
@@ -18,11 +35,24 @@ export default function ShopView({ economy, onBack }) {
             setInventory([...economy.state.inventory]);
             speak("Purchased!");
             setMessage(`Bought ${item.name}!`);
+
+            // Auto-equip logic if userProfile is available
+            if (userProfile) {
+                handleEquip(item);
+                setMessage(`Bought & Equipped ${item.name}!`);
+                speak("Purchased and Equipped!");
+            }
         } else {
             speak(result.message);
             setMessage(result.message);
         }
-        setTimeout(() => setMessage(null), 2000);
+        setTimeout(() => setMessage(null), 3000);
+    };
+
+    const isEquipped = (item) => {
+        if (!userProfile) return false;
+        if (item.type === 'avatar') return userProfile.getAvatar() === item.icon;
+        return equipped[item.type] === item.id;
     };
 
     const categories = [
@@ -38,7 +68,6 @@ export default function ShopView({ economy, onBack }) {
             title="Item Shop 🛍️"
             onBack={onBack}
             maxWidth="700px"
-            rightContent={<StarDisplay count={coins} />}
         >
             {/* Category Tabs */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -83,10 +112,11 @@ export default function ShopView({ economy, onBack }) {
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
                 {filteredItems.map(item => {
                     const isOwned = inventory.includes(item.id);
                     const canAfford = coins >= item.cost;
+                    const currentlyEquipped = isEquipped(item);
 
                     return (
                         <div key={item.id} style={{
@@ -94,27 +124,48 @@ export default function ShopView({ economy, onBack }) {
                             flexDirection: 'column',
                             alignItems: 'center',
                             padding: '1.5rem',
-                            opacity: isOwned ? 0.7 : 1,
+                            opacity: 1, // Always fully opaque
                             borderRadius: borderRadius.lg,
                             background: colors.white,
-                            boxShadow: shadows.sm
+                            boxShadow: shadows.sm,
+                            border: currentlyEquipped ? `3px solid ${colors.primary}` : 'none'
                         }}>
                             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{item.icon}</div>
                             <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem', color: colors.dark, textAlign: 'center' }}>{item.name}</h3>
                             <StarCost cost={item.cost} />
 
                             {isOwned ? (
-                                <button disabled style={{
-                                    background: colors.light,
-                                    color: colors.textMuted,
-                                    padding: '0.4rem 1rem',
-                                    borderRadius: borderRadius.pill,
-                                    border: 'none',
-                                    fontWeight: 'bold',
-                                    fontSize: '0.85rem'
-                                }}>
-                                    ✓ Owned
-                                </button>
+                                currentlyEquipped ? (
+                                    <button disabled style={{
+                                        background: colors.primary,
+                                        color: 'white',
+                                        padding: '0.4rem 1rem',
+                                        borderRadius: borderRadius.pill,
+                                        border: 'none',
+                                        fontWeight: 'bold',
+                                        fontSize: '0.85rem',
+                                        marginTop: '0.5rem'
+                                    }}>
+                                        Equipped
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() => handleEquip(item)}
+                                        style={{
+                                            background: colors.light,
+                                            color: colors.dark,
+                                            padding: '0.4rem 1rem',
+                                            borderRadius: borderRadius.pill,
+                                            border: `1px solid ${colors.border}`,
+                                            fontWeight: 'bold',
+                                            fontSize: '0.85rem',
+                                            marginTop: '0.5rem',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Equip
+                                    </button>
+                                )
                             ) : (
                                 <button
                                     onClick={() => handleBuy(item)}
@@ -130,7 +181,8 @@ export default function ShopView({ economy, onBack }) {
                                         border: 'none',
                                         fontWeight: 'bold',
                                         fontSize: '0.85rem',
-                                        boxShadow: canAfford ? shadows.primary : 'none'
+                                        boxShadow: canAfford ? shadows.primary : 'none',
+                                        marginTop: '0.5rem'
                                     }}
                                 >
                                     Buy

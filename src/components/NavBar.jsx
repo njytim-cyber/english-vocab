@@ -2,18 +2,18 @@ import React from 'react';
 import { colors, borderRadius, shadows, icons } from '../styles/designTokens';
 
 /**
- * NavBar - Streamlined bottom navigation
+ * NavBar - Bottom navigation (5 items)
  * 
- * New structure:
- * - "Learn" is the hub (New Quiz, Practice, Arena, Quests, Games)
- * - "Progress" for skills and achievements
- * - "Rewards" for shop and cosmetics
+ * Learn | Games | Revise | Arena | Progress
+ * (Rewards accessible via HUD star icon)
  */
 
 const NAV_ITEMS = [
-    { id: 'learn', label: 'Vocab', icon: icons.learn, matchViews: ['learn', 'quiz-setup', 'quiz', 'practice', 'arena', 'quests', 'minigames', 'game-'] },
-    { id: 'skills', label: 'Progress', icon: icons.progress, matchViews: ['skills', 'stickers', 'certificate'] },
-    { id: 'shop', label: 'Rewards', icon: icons.rewards, matchViews: ['shop'] }
+    { id: 'learn', label: 'Learn', icon: icons.learn, matchViews: ['learn', 'quiz-setup', 'quiz'] },
+    { id: 'minigames', label: 'Games', icon: '🎮', matchViews: ['minigames', 'game-'] },
+    { id: 'practice', label: 'Revise', icon: '🔄', matchViews: ['practice'] },
+    { id: 'arena', label: 'Arena', icon: '⚔️', matchViews: ['arena'] },
+    { id: 'skills', label: 'Progress', icon: icons.progress, matchViews: ['skills', 'stickers', 'certificate'] }
 ];
 
 export default function NavBar({ currentView, onViewChange }) {
@@ -50,22 +50,22 @@ export default function NavBar({ currentView, onViewChange }) {
                         style={{
                             background: active ? colors.primaryGradient : 'transparent',
                             color: active ? colors.white : colors.textMuted,
-                            padding: '0.4rem 0.7rem',
+                            padding: '0.4rem 0.5rem',
                             borderRadius: borderRadius.lg,
-                            fontSize: '0.75rem',
+                            fontSize: '0.7rem',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: '0.15rem',
+                            gap: '0.1rem',
                             border: 'none',
                             cursor: 'pointer',
                             transition: 'all 0.2s ease',
                             fontWeight: active ? '600' : '500',
                             boxShadow: active ? shadows.primary : 'none',
-                            minWidth: '56px'
+                            minWidth: '50px'
                         }}
                     >
-                        <span style={{ fontSize: '1.25rem' }}>{item.icon}</span>
+                        <span style={{ fontSize: '1.1rem' }}>{item.icon}</span>
                         <span>{item.label}</span>
                     </button>
                 );

@@ -4,6 +4,8 @@
  */
 import { colors, spacing, borderRadius, shadows, typography } from '../../styles/designTokens';
 
+import { useState, useEffect } from 'react';
+
 export default function PageLayout({
     children,
     title,
@@ -12,10 +14,19 @@ export default function PageLayout({
     maxWidth = '800px',
     centered = true
 }) {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div style={{
             minHeight: '100vh',
-            padding: spacing.xl,
+            padding: isMobile ? spacing.md : spacing.xl,
+            paddingTop: isMobile ? '80px' : spacing.xl, // Extra padding for HUD on mobile
             paddingBottom: '100px',
             background: colors.light,
             fontFamily: typography.fontFamily,
@@ -27,14 +38,21 @@ export default function PageLayout({
                 width: '100%',
                 maxWidth: maxWidth
             }}>
-                {/* Header */}
+                {/* Header - Sticky */}
                 {(title || onBack) && (
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         marginBottom: spacing.xl,
-                        width: '100%'
+                        width: '100%',
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 900,
+                        background: colors.light, // Fully opaque to prevent content bleeding through
+                        backdropFilter: 'none',
+                        padding: isMobile ? '0.5rem 0' : '0',
+                        marginTop: isMobile ? '-0.5rem' : '0'
                     }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: spacing.md }}>
                             {onBack && (
@@ -45,12 +63,12 @@ export default function PageLayout({
                                         background: colors.white,
                                         border: 'none',
                                         borderRadius: borderRadius.round,
-                                        width: '44px',
-                                        height: '44px',
+                                        width: isMobile ? '36px' : '44px',
+                                        height: isMobile ? '36px' : '44px',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        fontSize: '1.2rem',
+                                        fontSize: isMobile ? '1rem' : '1.2rem',
                                         cursor: 'pointer',
                                         boxShadow: shadows.sm,
                                         color: colors.dark,
@@ -63,7 +81,7 @@ export default function PageLayout({
                             {title && (
                                 <h1 style={{
                                     margin: 0,
-                                    fontSize: typography.h1.fontSize,
+                                    fontSize: isMobile ? '1.5rem' : typography.h1.fontSize,
                                     fontWeight: typography.h1.fontWeight,
                                     color: colors.dark
                                 }}>
@@ -73,7 +91,7 @@ export default function PageLayout({
                         </div>
 
                         {rightContent && (
-                            <div>{rightContent}</div>
+                            <div style={{ transform: isMobile ? 'scale(0.8)' : 'none' }}>{rightContent}</div>
                         )}
                     </div>
                 )}

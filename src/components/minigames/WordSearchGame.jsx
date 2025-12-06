@@ -225,15 +225,25 @@ export default function WordSearchGame({ engine, onBack }) {
 
             <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                 {/* Grid */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${GRID_SIZE}, 40px)`,
-                    gap: '2px',
-                    background: '#ddd',
-                    padding: '5px',
-                    borderRadius: '5px',
-                    cursor: 'pointer'
-                }}>
+                {/* Grid */}
+                <div
+                    className="word-search-grid"
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
+                        gap: '2px',
+                        background: '#ddd',
+                        padding: '5px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        maxWidth: '100%',
+                        width: '100%',
+                        aspectRatio: '1', // Keep it square
+                        touchAction: 'none' // Prevent scrolling while playing
+                    }}
+                    onMouseLeave={handleMouseUp}
+                    onTouchEnd={handleMouseUp}
+                >
                     {grid.map((row, r) => row.map((char, c) => {
                         const isSelected = selectedCells.some(cell => cell.r === r && cell.c === c);
 
@@ -257,20 +267,38 @@ export default function WordSearchGame({ engine, onBack }) {
                         return (
                             <div
                                 key={`${r}-${c}`}
+                                data-r={r}
+                                data-c={c}
                                 onMouseDown={() => handleMouseDown(r, c)}
                                 onMouseEnter={() => handleMouseEnter(r, c)}
+                                onTouchStart={(e) => {
+                                    // Prevent default to stop scrolling
+                                    // e.preventDefault(); // Sometimes needed, but touch-action: none handles it
+                                    handleMouseDown(r, c);
+                                }}
+                                onTouchMove={(e) => {
+                                    const touch = e.touches[0];
+                                    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                                    if (target && target.hasAttribute('data-r')) {
+                                        const r = parseInt(target.getAttribute('data-r'));
+                                        const c = parseInt(target.getAttribute('data-c'));
+                                        handleMouseEnter(r, c);
+                                    }
+                                }}
                                 style={{
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '100%',
+                                    height: '100%', // Fill the grid cell
+                                    aspectRatio: '1',
                                     background: cellBackground,
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     fontWeight: 'bold',
-                                    fontSize: '1.2rem',
+                                    fontSize: 'clamp(0.8rem, 4vw, 1.5rem)', // Responsive font size
                                     color: cellColor,
                                     transition: 'background 0.2s',
-                                    borderRadius: '4px'
+                                    borderRadius: '4px',
+                                    userSelect: 'none'
                                 }}
                             >
                                 {char}

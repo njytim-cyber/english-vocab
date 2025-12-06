@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useGame } from './contexts/GameContext';
 import { useNavigation } from './contexts/NavigationContext';
-import { QuestProvider } from './contexts/QuestContext';
 import { speak } from './utils/audio';
 import { triggerConfetti } from './utils/effects';
 import { UserProfile } from './engine/UserProfile';
@@ -25,14 +24,34 @@ import DefinitionMatchGame from './components/minigames/DefinitionMatchGame';
 import LetterDeductionGame from './components/minigames/LetterDeductionGame';
 import WordScrambleGame from './components/minigames/WordScrambleGame';
 import WordLadderGame from './components/minigames/WordLadderGame';
+import ClozeView from './components/ClozeView';
+import clozePassages from './data/cloze_sample.json';
+import GrammarQuizView from './components/GrammarQuizView';
+import grammarQuestions from './data/grammar_questions.json';
+import GrammarClozeView from './components/GrammarClozeView';
+import grammarClozePassages from './data/grammar_cloze_sample.json';
+import SpellingView from './components/SpellingView';
+import spellingWords from './data/spelling_words.json';
+import SpellingProgress from './engine/SpellingProgress';
+import GrammarSetup from './components/GrammarSetup';
+import ComprehensionView from './components/ComprehensionView';
+import comprehensionPassages from './data/comprehension_sample.json';
+import ReviseHub from './components/ReviseHub';
+import FlashcardView from './components/FlashcardView';
+import ProgressHub from './components/ProgressHub';
 
 export default function Router() {
     const { engine, economy, achievements, eventService } = useGame();
     const { view, setView, navigate } = useNavigation();
     const userProfile = useMemo(() => new UserProfile(), []);
-    console.log('ROUTER VIEW:', view);
+    const spellingProgress = useMemo(() => new SpellingProgress(), []);
+    // console.log('ROUTER VIEW:', view); // Removed spam
     const [showDailyLogin, setShowDailyLogin] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const [clozePassageIndex, setClozePassageIndex] = useState(() => Math.floor(Math.random() * clozePassages.length));
+    const [grammarClozeIndex, setGrammarClozeIndex] = useState(() => Math.floor(Math.random() * grammarClozePassages.length));
+    const [grammarQuizQuestions, setGrammarQuizQuestions] = useState(null);
+    const [comprehensionIndex, setComprehensionIndex] = useState(() => Math.floor(Math.random() * comprehensionPassages.length));
     const [, setTick] = useState(0);
 
     // Force re-render when engine state changes (legacy behavior)
@@ -134,70 +153,157 @@ export default function Router() {
     }, [setView]);
 
     return (
-        <QuestProvider engine={engine} achievements={achievements}>
-            <div className="app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-                {showDailyLogin && <DailyLogin economy={economy} onClose={() => setShowDailyLogin(false)} />}
-                {showProfileModal && (
-                    <ProfileModal
-                        userProfile={userProfile}
-                        onClose={() => setShowProfileModal(false)}
-                        onSave={() => setTick(t => t + 1)}
+        <div className="app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            {showDailyLogin && <DailyLogin economy={economy} onClose={() => setShowDailyLogin(false)} />}
+            {showProfileModal && (
+                <ProfileModal
+                    userProfile={userProfile}
+                    onClose={() => setShowProfileModal(false)}
+                    onSave={() => setTick(t => t + 1)}
+                />
+            )}
+
+            {/* Avatar HUD - persistent across all views */}
+            <AvatarHUD
+                userProfile={userProfile}
+                economy={economy}
+                onOpenProfile={() => setShowProfileModal(true)}
+                onOpenShop={() => setView('shop')}
+            />
+
+            <div style={{ flex: 1, position: 'relative', paddingBottom: '80px' }}>
+                {/* Learn Hub - default view */}
+                {(view === 'learn' || view === 'start') && (
+                    <LearnHub economy={economy} onNavigate={setView} />
+                )}
+
+                {/* Quiz Flow */}
+                {view === 'quiz-setup' && <QuizSetup onStart={handleStartQuiz} onStartRevision={handleStartRevision} onBack={() => setView('learn')} engine={engine} />}
+                {view === 'practice' && (
+                    <ReviseHub
+                        engine={engine}
+                        spellingProgress={spellingProgress}
+                        onNavigate={setView}
+                        onBack={() => setView('learn')}
+                    />
+                )}
+                {view === 'quiz' && (() => { console.log('Router: Rendering QuizView', QuizView); return <QuizView engine={engine} economy={economy} onFinish={handleFinish} />; })()}
+                {view === 'arena' && <ArenaView engine={engine} onFinish={handleFinish} onBack={() => setView('learn')} />}
+                {view === 'results' && <ResultsView engine={engine} onRestart={handleRestart} />}
+
+                {/* Vocab Cloze */}
+                {view === 'cloze' && (
+                    <ClozeView
+                        key={clozePassageIndex}
+                        passage={clozePassages[clozePassageIndex]}
+                        onComplete={() => setClozePassageIndex((i) => (i + 1) % clozePassages.length)}
+                        onBack={() => setView('learn')}
+                        economy={economy}
+                        spacedRep={engine?.spacedRep}
                     />
                 )}
 
-                {/* Avatar HUD - persistent across all views */}
-                {/* Avatar HUD - persistent across all views */}
-                <AvatarHUD
-                    userProfile={userProfile}
-                    economy={economy}
-                    onOpenProfile={() => setShowProfileModal(true)}
-                />
+                {/* Grammar Setup -> Quiz flow */}
+                {view === 'grammar' && (
+                    <GrammarSetup
+                        allQuestions={grammarQuestions}
+                        onStart={(questions) => {
+                            setGrammarQuizQuestions(questions);
+                            setView('grammar-quiz');
+                        }}
+                        onBack={() => setView('learn')}
+                    />
+                )}
+                {view === 'grammar-quiz' && grammarQuizQuestions && (
+                    <GrammarQuizView
+                        questions={grammarQuizQuestions}
+                        onComplete={() => {
+                            setGrammarQuizQuestions(null);
+                            setView('grammar');
+                        }}
+                        onBack={() => setView('grammar')}
+                        economy={economy}
+                    />
+                )}
 
-                <div style={{ flex: 1, position: 'relative', paddingBottom: '80px' }}>
-                    {/* Learn Hub - default view */}
-                    {(view === 'learn' || view === 'start') && (
-                        <LearnHub economy={economy} onNavigate={setView} />
-                    )}
+                {/* Grammar Cloze */}
+                {view === 'grammar-cloze' && (
+                    <GrammarClozeView
+                        key={grammarClozeIndex}
+                        passage={grammarClozePassages[grammarClozeIndex]}
+                        onComplete={() => setGrammarClozeIndex((i) => (i + 1) % grammarClozePassages.length)}
+                        onBack={() => setView('learn')}
+                        economy={economy}
+                    />
+                )}
 
-                    {/* Quiz Flow */}
-                    {view === 'quiz-setup' && <QuizSetup onStart={handleStartQuiz} onStartRevision={handleStartRevision} onBack={() => setView('learn')} engine={engine} />}
-                    {view === 'practice' && <QuizSetup onStart={handleStartQuiz} onStartRevision={handleStartRevision} onBack={() => setView('learn')} engine={engine} mode="practice" />}
-                    {view === 'quiz' && (() => { console.log('Router: Rendering QuizView', QuizView); return <QuizView engine={engine} economy={economy} onFinish={handleFinish} />; })()}
-                    {view === 'arena' && <ArenaView engine={engine} onFinish={handleFinish} onBack={() => setView('learn')} />}
-                    {view === 'results' && <ResultsView engine={engine} onRestart={handleRestart} />}
+                {/* Spelling */}
+                {view === 'spelling' && (
+                    <SpellingView
+                        words={spellingProgress.getWordsForPractice(spellingWords, 10)}
+                        onComplete={() => setView('spelling')}
+                        onBack={() => setView('learn')}
+                        economy={economy}
+                        spellingProgress={spellingProgress}
+                    />
+                )}
 
-                    {/* Progress */}
-                    {view === 'shop' && <ShopView economy={economy} onBack={() => setView('learn')} />}
-                    {view === 'stickers' && <StickerBook achievements={achievements} onBack={() => setView('skills')} onNavigate={setView} />}
-                    {view === 'skills' && <SkillTreeView engine={engine} onBack={() => setView('learn')} onNavigate={setView} />}
+                {/* Comprehension */}
+                {view === 'comprehension' && (
+                    <ComprehensionView
+                        key={comprehensionIndex}
+                        passage={comprehensionPassages[comprehensionIndex]}
+                        onComplete={() => setComprehensionIndex((i) => (i + 1) % comprehensionPassages.length)}
+                        onBack={() => setView('learn')}
+                        economy={economy}
+                    />
+                )}
 
-                    {/* Minigames */}
-                    {view === 'minigames' && <MinigameHub onSelectGame={setView} onBack={() => setView('learn')} />}
-                    {view === 'game-wordsearch' && <WordSearchGame engine={engine} onBack={() => setView('minigames')} />}
-                    {view === 'game-definition' && <DefinitionMatchGame engine={engine} onBack={() => setView('minigames')} />}
-                    {view === 'game-hangman' && <LetterDeductionGame engine={engine} onBack={() => setView('minigames')} />}
-                    {view === 'game-scramble' && <WordScrambleGame engine={engine} onBack={() => setView('minigames')} />}
-                    {view === 'game-ladder' && <WordLadderGame engine={engine} onBack={() => setView('minigames')} />}
+                {/* Flashcards */}
+                {view === 'flashcards' && (
+                    <FlashcardView
+                        words={engine?.spacedRep?.getDueWords?.() || []}
+                        onComplete={() => setView('practice')}
+                        onBack={() => setView('practice')}
+                        economy={economy}
+                        engine={engine}
+                    />
+                )}
 
-                    {/* Quests placeholder */}
-                    {view === 'quests' && (
-                        <div style={{ padding: '2rem', textAlign: 'center' }}>
-                            <h2>🗺️ Quests Coming Soon!</h2>
-                            <p>Themed learning journeys will be available here.</p>
-                            <button onClick={() => setView('learn')} style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}>Back to Learn</button>
-                        </div>
-                    )}
+                {/* Progress */}
+                {view === 'shop' && <ShopView economy={economy} userProfile={userProfile} onBack={() => setView('learn')} />}
+                {view === 'stickers' && <StickerBook achievements={achievements} onBack={() => setView('skills')} onNavigate={setView} />}
+                {view === 'skills' && (
+                    <ProgressHub
+                        engine={engine}
+                        economy={economy}
+                        spellingProgress={spellingProgress}
+                        achievements={achievements}
+                        onNavigate={setView}
+                        onBack={() => setView('learn')}
+                    />
+                )}
+                {view === 'skill-tree' && <SkillTreeView engine={engine} onBack={() => setView('skills')} onNavigate={setView} />}
 
-                    {view.startsWith('game-') && view !== 'game-wordsearch' && view !== 'game-definition' && view !== 'game-hangman' && view !== 'game-scramble' && view !== 'game-ladder' && (
-                        <div style={{ padding: '2rem', textAlign: 'center' }}>
-                            <h2>Game Under Construction: {view}</h2>
-                            <button onClick={() => setView('minigames')}>Back to Arcade</button>
-                        </div>
-                    )}
-                </div>
+                {/* Minigames */}
+                {view === 'minigames' && <MinigameHub onSelectGame={setView} onBack={() => setView('learn')} />}
+                {view === 'game-wordsearch' && <WordSearchGame engine={engine} onBack={() => setView('minigames')} />}
+                {view === 'game-definition' && <DefinitionMatchGame engine={engine} onBack={() => setView('minigames')} />}
+                {view === 'game-hangman' && <LetterDeductionGame engine={engine} onBack={() => setView('minigames')} />}
+                {view === 'game-scramble' && <WordScrambleGame engine={engine} onBack={() => setView('minigames')} />}
+                {view === 'game-ladder' && <WordLadderGame engine={engine} onBack={() => setView('minigames')} />}
 
-                <NavBar currentView={view} onViewChange={navigate} />
+
+
+                {view.startsWith('game-') && view !== 'game-wordsearch' && view !== 'game-definition' && view !== 'game-hangman' && view !== 'game-scramble' && view !== 'game-ladder' && (
+                    <div style={{ padding: '2rem', textAlign: 'center' }}>
+                        <h2>Game Under Construction: {view}</h2>
+                        <button onClick={() => setView('minigames')}>Back to Arcade</button>
+                    </div>
+                )}
             </div>
-        </QuestProvider>
+
+            <NavBar currentView={view} onViewChange={navigate} />
+        </div>
     );
 }

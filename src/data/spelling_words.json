@@ -1,0 +1,142 @@
+[
+    {
+        "wordId": "sp_001",
+        "word": "apple",
+        "definition": "A round fruit that is usually red, green, or yellow",
+        "example": "I ate a red _____ for lunch.",
+        "difficulty": 1
+    },
+    {
+        "wordId": "sp_002",
+        "word": "happy",
+        "definition": "Feeling or showing joy; pleased",
+        "example": "She felt _____ when she got a present.",
+        "difficulty": 1
+    },
+    {
+        "wordId": "sp_003",
+        "word": "friend",
+        "definition": "A person you like and enjoy spending time with",
+        "example": "My best _____ lives next door.",
+        "difficulty": 1
+    },
+    {
+        "wordId": "sp_004",
+        "word": "school",
+        "definition": "A place where children go to learn",
+        "example": "I walk to _____ every morning.",
+        "difficulty": 1
+    },
+    {
+        "wordId": "sp_005",
+        "word": "beautiful",
+        "definition": "Very pretty or pleasing to look at",
+        "example": "The sunset was _____.",
+        "difficulty": 2
+    },
+    {
+        "wordId": "sp_006",
+        "word": "because",
+        "definition": "For the reason that",
+        "example": "I stayed home _____ I was sick.",
+        "difficulty": 2
+    },
+    {
+        "wordId": "sp_007",
+        "word": "enough",
+        "definition": "As much as needed; sufficient",
+        "example": "Do you have _____ money?",
+        "difficulty": 2
+    },
+    {
+        "wordId": "sp_008",
+        "word": "thought",
+        "definition": "Past tense of think; an idea",
+        "example": "I _____ about the problem carefully.",
+        "difficulty": 2
+    },
+    {
+        "wordId": "sp_009",
+        "word": "through",
+        "definition": "Moving in one side and out the other",
+        "example": "We walked _____ the tunnel.",
+        "difficulty": 3
+    },
+    {
+        "wordId": "sp_010",
+        "word": "although",
+        "definition": "Despite the fact that; even though",
+        "example": "_____ it rained, we still went out.",
+        "difficulty": 3
+    },
+    {
+        "wordId": "sp_011",
+        "word": "necessary",
+        "definition": "Needed; essential",
+        "example": "It is _____ to study for the test.",
+        "difficulty": 3
+    },
+    {
+        "wordId": "sp_012",
+        "word": "separate",
+        "definition": "Not joined or connected; apart",
+        "example": "Keep the dirty and clean clothes _____.",
+        "difficulty": 3
+    },
+    {
+        "wordId": "sp_013",
+        "word": "disappear",
+        "definition": "To stop being visible; to vanish",
+        "example": "The magician made the rabbit _____.",
+        "difficulty": 3
+    },
+    {
+        "wordId": "sp_014",
+        "word": "embarrass",
+        "definition": "To make someone feel shy or awkward",
+        "example": "Please don't _____ me in front of my friends.",
+        "difficulty": 4
+    },
+    {
+        "wordId": "sp_015",
+        "word": "recommend",
+        "definition": "To suggest something as good or suitable",
+        "example": "I _____ this book to everyone.",
+        "difficulty": 4
+    },
+    {
+        "wordId": "sp_016",
+        "word": "environment",
+        "definition": "The natural world around us",
+        "example": "We must protect the _____.",
+        "difficulty": 4
+    },
+    {
+        "wordId": "sp_017",
+        "word": "occurrence",
+        "definition": "An event or incident that happens",
+        "example": "This is a rare _____.",
+        "difficulty": 5
+    },
+    {
+        "wordId": "sp_018",
+        "word": "accommodate",
+        "definition": "To provide space or a place for something",
+        "example": "The hotel can _____ 200 guests.",
+        "difficulty": 5
+    },
+    {
+        "wordId": "sp_019",
+        "word": "conscientious",
+        "definition": "Careful and thorough in one's work",
+        "example": "She is a _____ student.",
+        "difficulty": 6
+    },
+    {
+        "wordId": "sp_020",
+        "word": "mischievous",
+        "definition": "Playfully causing trouble",
+        "example": "The _____ puppy chewed on the shoes.",
+        "difficulty": 5
+    }
+]
