@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
-
+import { QUESTION_TYPES } from '../utils/arenaQuestionBuilder';
 /**
  * ArenaHub - Enhanced Arena lobby with leaderboard and battle history
  * Features:
@@ -27,6 +27,26 @@ export default function ArenaHub({
     onBack
 }) {
     const [activeTab, setActiveTab] = useState('battle');
+    const [selectedTypes, setSelectedTypes] = useState(new Set(['vocab-mcq']));
+
+    const toggleQuestionType = (typeId) => {
+        setSelectedTypes(prev => {
+            const next = new Set(prev);
+            if (next.has(typeId)) {
+                // Don't allow deselecting if it's the only one
+                if (next.size > 1) {
+                    next.delete(typeId);
+                }
+            } else {
+                next.add(typeId);
+            }
+            return next;
+        });
+    };
+
+    const handleStartBattle = () => {
+        onStartBattle(Array.from(selectedTypes));
+    };
 
     // Load arena stats from localStorage
     const arenaStats = useMemo(() => {
@@ -127,9 +147,66 @@ export default function ArenaHub({
                     : 0}%`} color="#3b82f6" icon="📊" />
             </div>
 
+            {/* Question Type Selection */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.md,
+                boxShadow: shadows.sm
+            }}>
+                <h4 style={{ margin: 0, marginBottom: spacing.sm, color: colors.dark, fontSize: '0.9rem' }}>
+                    📋 Question Types (select at least 1)
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: spacing.xs }}>
+                    {QUESTION_TYPES.map(type => {
+                        const isSelected = selectedTypes.has(type.id);
+                        return (
+                            <button
+                                key={type.id}
+                                onClick={() => toggleQuestionType(type.id)}
+                                style={{
+                                    padding: spacing.sm,
+                                    background: isSelected ? `${type.color}15` : colors.light,
+                                    border: `2px solid ${isSelected ? type.color : 'transparent'}`,
+                                    borderRadius: borderRadius.md,
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: spacing.xs,
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                <span style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    borderRadius: '4px',
+                                    background: isSelected ? type.color : 'white',
+                                    border: `2px solid ${isSelected ? type.color : colors.border}`,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'white',
+                                    fontSize: '0.7rem'
+                                }}>
+                                    {isSelected && '✓'}
+                                </span>
+                                <span style={{ fontSize: '1rem' }}>{type.icon}</span>
+                                <span style={{
+                                    fontSize: '0.8rem',
+                                    color: isSelected ? type.color : colors.textMuted,
+                                    fontWeight: isSelected ? '600' : '400'
+                                }}>
+                                    {type.name}
+                                </span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
             {/* Battle Button */}
             <button
-                onClick={onStartBattle}
+                onClick={handleStartBattle}
                 style={{
                     padding: spacing.lg,
                     background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',

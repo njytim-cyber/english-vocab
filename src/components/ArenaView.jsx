@@ -3,6 +3,11 @@ import { QuizEngine } from '../engine/QuizEngine';
 import { triggerConfetti } from '../utils/effects';
 import balanceConfig from '../data/balance.json';
 
+import { buildArenaQuestions, flattenClozePassages, getQuestionTypeTheme } from '../utils/arenaQuestionBuilder';
+import clozePassagesData from '../data/cloze_sample.json';
+import grammarQuestionsData from '../data/grammar_questions.json';
+import grammarClozePassagesData from '../data/grammar_cloze_sample.json';
+
 // Get Arena config from balance.json
 const ARENA_CONFIG = balanceConfig.arena;
 const OPPONENTS = ARENA_CONFIG.opponents;
@@ -10,7 +15,7 @@ const OPPONENTS = ARENA_CONFIG.opponents;
 // Avatar emojis
 const PLAYER_AVATARS = ['🦊', '🐱', '🐶', '🐼', '🦄', '🐸'];
 
-export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
+export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = ['vocab-mcq'], onFinish, onBack }) {
     // Opponent selection state
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [showOpponentSelect, setShowOpponentSelect] = useState(true);
@@ -20,14 +25,35 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
 
     const playerAvatar = useMemo(() => PLAYER_AVATARS[Math.floor(Math.random() * PLAYER_AVATARS.length)], []);
 
+    const [playerEngine] = useState(() => {
+        // Flatten cloze passages
+        const vocabClozeQuestions = flattenClozePassages(clozePassagesData, 'vocab-cloze');
+        const grammarClozeQuestions = flattenClozePassages(grammarClozePassagesData, 'grammar-cloze');
+
+        // Build mixed question set
+        const mixedQuestions = buildArenaQuestions({
+            vocabMcq: mainEngine.allQuestions,
+            vocabCloze: vocabClozeQuestions,
+            grammarMcq: grammarQuestionsData,
+            grammarCloze: grammarClozeQuestions
+        }, new Set(selectedQuestionTypes), 10); // Standard 10 questions
+
+        const engine = new QuizEngine(mixedQuestions);
+        engine.startNewGame();
+        return engine;
+    });
+
     const [cpuEngine] = useState(() => {
-        const engine = new QuizEngine(playerEngine.allQuestions);
+        // CPU just answers questions, type doesn't matter much visually but we use the same questions mechanism for fairness?
+        // Actually CPU engine usually simulates answering. We can just give it the same questions.
+        const engine = new QuizEngine(playerEngine.allQuestions); // playerEngine already has mixed questions now
         engine.startNewGame();
         return engine;
     });
 
     useEffect(() => {
-        playerEngine.startNewGame();
+        // playerEngine already started in useState, this was redundant or specific to passed prop
+        // playerEngine.startNewGame(); 
     }, []);
 
     const [playerState, setPlayerState] = useState(playerEngine.getState());
@@ -221,7 +247,8 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
                                 {Math.round(opponent.accuracy * 100)}% accuracy
                             </div>
                         </button>
-                    ))}
+                    ))
+                    }
                 </div>
 
                 <button
@@ -245,57 +272,78 @@ export default function ArenaView({ engine: playerEngine, onFinish, onBack }) {
     const renderPlayerColumn = () => {
         const q = playerEngine.getCurrentQuestion();
         const progress = ((playerState.currentQuestionIndex) / totalQuestions) * 100;
+        const theme = q && q.questionType ? getQuestionTypeTheme(q.questionType) : { primary: '#667eea', background: '#e0e7ff', name: 'Vocab MCQ' };
 
         return (
             <div style={{
                 flex: 1,
                 padding: '1rem',
-                background: 'linear-gradient(180deg, #667eea22, #764ba222)',
+                background: `linear-gradient(180deg, ${theme.background}, #ffffff)`,
                 borderRadius: '20px',
                 margin: '0.5rem',
-                border: '3px solid #667eea'
+                border: `3px solid ${theme.primary}`,
+                display: 'flex',
+                flexDirection: 'column'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                    <span style={{ fontSize: '3rem' }}>{playerAvatar}</span>
-                    <div style={{ textAlign: 'center' }}>
-                        <h2 style={{ margin: 0, color: '#667eea', fontSize: '1.5rem' }}>YOU</h2>
-                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#667eea' }}>
-                            {playerState.score} pts
+                    <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>
+                        {playerAvatar}
+                    </div>
+                    <div>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: colors.dark }}>YOU</div>
+                        <div style={{ fontSize: '0.9rem', color: colors.textMuted }}>
+                            Streak: {playerState.streak} 🔥
                         </div>
                     </div>
                 </div>
 
-                <div style={{ background: '#ddd', borderRadius: '10px', height: '8px', marginBottom: '1rem', overflow: 'hidden' }}>
-                    <div style={{
-                        width: `${progress}%`,
-                        height: '100%',
-                        background: 'linear-gradient(90deg, #667eea, #764ba2)',
-                        transition: 'width 0.3s'
-                    }} />
-                </div>
-
-                <div style={{ textAlign: 'center', marginBottom: '0.5rem', color: '#666', fontWeight: 'bold' }}>
-                    Question {playerState.currentQuestionIndex + 1} / {totalQuestions}
+                {/* Progress Bar */}
+                <div style={{ height: '8px', background: '#eee', borderRadius: '4px', marginBottom: '1rem', overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: `${progress}%`, background: theme.primary, transition: 'width 0.3s' }} />
                 </div>
 
                 {q && !playerState.isFinished ? (
-                    <div style={{ background: 'white', borderRadius: '15px', padding: '1.5rem', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
-                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', textAlign: 'center', color: '#333' }}>
-                            {q.question || q.formatted_text || 'Answer the question!'}
-                        </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                            {Object.values(q.options || {}).map((opt, i) => (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {/* Question Badge */}
+                        <div style={{
+                            alignSelf: 'center',
+                            background: theme.primary,
+                            color: 'white',
+                            padding: '0.3rem 0.8rem',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: 'bold'
+                        }}>
+                            {theme.name || 'QUESTION'}
+                        </div>
+
+                        {/* Question Text */}
+                        <div style={{
+                            fontSize: q.question.length > 100 ? '1rem' : '1.3rem',
+                            fontWeight: '600',
+                            textAlign: 'center',
+                            color: colors.dark,
+                            whiteSpace: 'pre-wrap'
+                        }}>
+                            {q.question}
+                        </div>
+
+                        {/* Options */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
+                            {Object.entries(q.options).map(([key, opt]) => (
                                 <button
-                                    key={i}
+                                    key={key}
                                     onClick={() => handlePlayerAnswer(opt)}
                                     style={{
-                                        padding: '0.8rem',
-                                        background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '10px',
+                                        padding: '1rem',
+                                        background: 'white',
+                                        border: `2px solid ${theme.primary}40`,
+                                        borderRadius: '12px',
                                         cursor: 'pointer',
-                                        fontWeight: 'bold',
+                                        fontWeight: '600',
+                                        color: colors.dark,
+                                        transition: 'all 0.2s',
+                                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
                                         fontSize: '0.9rem'
                                     }}
                                 >

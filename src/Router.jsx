@@ -53,6 +53,7 @@ export default function Router() {
     const [grammarClozeIndex, setGrammarClozeIndex] = useState(() => Math.floor(Math.random() * grammarClozePassages.length));
     const [grammarQuizQuestions, setGrammarQuizQuestions] = useState(null);
     const [comprehensionIndex, setComprehensionIndex] = useState(() => Math.floor(Math.random() * comprehensionPassages.length));
+    const [arenaSelectedTypes, setArenaSelectedTypes] = useState(['vocab-mcq']);
     const [, setTick] = useState(0);
 
     // Force re-render when engine state changes (legacy behavior)
@@ -192,11 +193,21 @@ export default function Router() {
                 {view === 'arena' && (
                     <ArenaHub
                         engine={engine}
-                        onStartBattle={() => setView('arena-battle')}
+                        onStartBattle={(selectedTypes) => {
+                            setArenaSelectedTypes(selectedTypes);
+                            setView('arena-battle');
+                        }}
                         onBack={() => setView('learn')}
                     />
                 )}
-                {view === 'arena-battle' && <ArenaView engine={engine} onFinish={handleFinish} onBack={() => setView('arena')} />}
+                {view === 'arena-battle' && (
+                    <ArenaView
+                        engine={engine}
+                        selectedQuestionTypes={arenaSelectedTypes}
+                        onFinish={handleFinish}
+                        onBack={() => setView('arena')}
+                    />
+                )}
                 {view === 'results' && <ResultsView engine={engine} onRestart={handleRestart} />}
 
                 {/* Vocab Cloze */}
