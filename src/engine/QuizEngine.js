@@ -27,6 +27,7 @@ export class QuizEngine {
         // Initialize session with default questions for backward compatibility
         this.sessionManager.start(this.questions);
         this.sessionHistory = [];
+        this.questionHistory = []; // NEW: Track question history for progress tracker
 
         // Sync state
         this.state = this.sessionManager.getState();
@@ -109,6 +110,15 @@ export class QuizEngine {
         // Track history for backward compatibility
         this.sessionHistory = this.sessionManager.getHistory();
 
+        // NEW: Record question history for progress tracker
+        this.questionHistory.push({
+            questionIndex: this.state.currentQuestionIndex - 1, // Previous index (already incremented)
+            question: currentQuestion,
+            selectedAnswer: answer,
+            correctAnswer: currentQuestion.answer,
+            isCorrect
+        });
+
         // Update Spaced Repetition
         const qId = currentQuestion.question_number || currentQuestion.id;
         if (qId) {
@@ -119,6 +129,10 @@ export class QuizEngine {
         this.state = this.sessionManager.getState();
 
         return isCorrect;
+    }
+
+    getQuestionHistory() {
+        return this.questionHistory;
     }
 
     getState() {
