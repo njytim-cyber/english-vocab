@@ -217,7 +217,6 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
     if (showOpponentSelect) {
         return (
             <div style={{
-                minHeight: '100vh',
                 background: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
                 color: 'white',
                 display: 'flex',
@@ -305,7 +304,6 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
 
     return (
         <div style={{
-            minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
             background: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',

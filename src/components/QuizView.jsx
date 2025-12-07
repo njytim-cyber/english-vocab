@@ -250,7 +250,6 @@ export default function QuizView({ engine, economy, onFinish }) {
 
 const styles = {
     container: {
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
