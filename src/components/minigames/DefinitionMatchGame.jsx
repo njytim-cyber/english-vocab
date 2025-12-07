@@ -53,7 +53,7 @@ export default function DefinitionMatchGame({ engine, onBack }) {
         if (!hasSeenTutorial) {
             setShowTutorial(true);
         }
-    }, []); // Run ONCE on mount
+    }, [startNewRound]); // Added startNewRound dependency
 
     const handleWordClick = (q) => {
         if (matchedPairs.has(q.id) || gameStatus !== 'playing') return;
@@ -247,3 +247,4 @@ export default function DefinitionMatchGame({ engine, onBack }) {
         </div>
     );
 }
+
