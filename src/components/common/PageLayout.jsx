@@ -18,10 +18,9 @@ export default function PageLayout({
 
     return (
         <div style={{
-            minHeight: '100vh',
             padding: isMobile ? spacing.md : spacing.xl,
             paddingTop: isMobile ? '80px' : spacing.xl, // Extra padding for HUD on mobile
-            paddingBottom: '100px',
+            paddingBottom: isMobile ? '90px' : '70px', // Just enough for navbar
             background: colors.light,
             fontFamily: typography.fontFamily,
             display: 'flex',
