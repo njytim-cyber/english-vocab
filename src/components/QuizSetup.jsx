@@ -183,11 +183,10 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                                         position: 'relative'
                                     }}
                                 >
-                                    <div style={{ fontWeight: 'bold', marginBottom: '0.2rem', fontSize: '0.8rem', color: colors.dark }}>
+                                    <div style={{ fontSize: '0.85rem', color: colors.dark }}>
                                         {t}
                                         {isSelected && <span style={{ position: 'absolute', top: '5px', right: '5px', color: colors.primary }}>✓</span>}
                                     </div>
-                                    <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{getMasteryStars(t)}</div>
                                 </button>
                             );
                         })}
