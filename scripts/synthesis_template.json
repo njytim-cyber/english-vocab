@@ -1,0 +1,310 @@
+{
+    "curriculum": "Singapore PSLE/Secondary English Synthesis & Transformation",
+    "categories": [
+        {
+            "category_name": "Logical Connectors",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Contrast (Concession) – Clause Takers",
+                    "difficulty": 2,
+                    "logic": "Direct combining using connectors that take a Subject + Verb.",
+                    "triggers": [
+                        "Although",
+                        "Even though",
+                        "Though"
+                    ],
+                    "question": "The terrain was difficult. The hikers continued their journey.",
+                    "answer": "Although the terrain was difficult, the hikers continued their journey."
+                },
+                {
+                    "sub_category_name": "Contrast (Concession) – Noun Phrase Takers",
+                    "difficulty": 6,
+                    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+                    "triggers": [
+                        "Despite",
+                        "In spite of"
+                    ],
+                    "question": "She was very tired. She finished the marathon.",
+                    "answer": "In spite of her tiredness, she finished the marathon."
+                },
+                {
+                    "sub_category_name": "Cause and Effect – Clause Takers",
+                    "difficulty": 1,
+                    "logic": "Standard causal linking.",
+                    "triggers": [
+                        "Because",
+                        "Since",
+                        "As"
+                    ],
+                    "question": "It was raining heavily. We cancelled the picnic.",
+                    "answer": "Since it was raining heavily, we cancelled the picnic."
+                },
+                {
+                    "sub_category_name": "Cause and Effect – Noun Phrase Takers",
+                    "difficulty": 5,
+                    "logic": "Requires transforming the cause clause into a noun phrase.",
+                    "triggers": [
+                        "Due to",
+                        "Because of",
+                        "As a result of"
+                    ],
+                    "question": "The soccer match was postponed. The weather was bad.",
+                    "answer": "The soccer match was postponed due to the bad weather."
+                },
+                {
+                    "sub_category_name": "Time – Simultaneous Actions",
+                    "difficulty": 2,
+                    "logic": "Actions happening at the same time.",
+                    "triggers": [
+                        "As",
+                        "While"
+                    ],
+                    "question": "I was walking to school. I saw a kitten.",
+                    "answer": "While I was walking to school, I saw a kitten."
+                },
+                {
+                    "sub_category_name": "Time – Sequential Actions (Perfect Participles)",
+                    "difficulty": 6,
+                    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+                    "triggers": [
+                        "Having",
+                        "After"
+                    ],
+                    "question": "Ali completed his homework. He went out to play.",
+                    "answer": "Having completed his homework, Ali went out to play."
+                }
+            ]
+        },
+        {
+            "category_name": "Reported Speech (Indirect Speech)",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Statements",
+                    "difficulty": 5,
+                    "logic": "Requires backshifting tenses and mapping pronouns/time markers.",
+                    "triggers": [
+                        "said",
+                        "told"
+                    ],
+                    "question": "\"I am going to the library tomorrow,\" said Bala.",
+                    "answer": "Bala said that he was going to the library the next day."
+                },
+                {
+                    "sub_category_name": "Questions – Yes/No",
+                    "difficulty": 6,
+                    "logic": "Introduces 'if/whether' and requires reordering the subject-verb syntax.",
+                    "triggers": [
+                        "if",
+                        "whether"
+                    ],
+                    "question": "\"Did you eat the cake?\" Mother asked Tom.",
+                    "answer": "Mother asked Tom if he had eaten the cake."
+                },
+                {
+                    "sub_category_name": "Questions – WH-",
+                    "difficulty": 7,
+                    "logic": "Requires un-inverting the auxiliary verb (Subject-Verb order).",
+                    "triggers": [
+                        "who",
+                        "what",
+                        "where",
+                        "why",
+                        "how"
+                    ],
+                    "question": "\"Where is my book?\" asked Jane.",
+                    "answer": "Jane asked where her book was."
+                },
+                {
+                    "sub_category_name": "Imperatives (Commands)",
+                    "difficulty": 4,
+                    "logic": "Converts commands to infinite phrases (to do / not to do).",
+                    "triggers": [
+                        "ordered",
+                        "told",
+                        "requested"
+                    ],
+                    "question": "\"Please do not touch the exhibit,\" the guard told us.",
+                    "answer": "The guard requested us not to touch the exhibit."
+                }
+            ]
+        },
+        {
+            "category_name": "Voice Transformation",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Active to Passive",
+                    "difficulty": 4,
+                    "logic": "Object becomes Subject; verb changes to 'be' + past participle.",
+                    "triggers": [
+                        "by"
+                    ],
+                    "question": "The mechanic is repairing the car.",
+                    "answer": "The car is being repaired by the mechanic."
+                },
+                {
+                    "sub_category_name": "Passive to Active",
+                    "difficulty": 4,
+                    "logic": "Subject becomes Object; removal of 'by'.",
+                    "triggers": [
+                        "(Removal of 'by')"
+                    ],
+                    "question": "The winning goal was scored by the captain.",
+                    "answer": "The captain scored the winning goal."
+                }
+            ]
+        },
+        {
+            "category_name": "Conditional & Hypothetical",
+            "sub_categories": [
+                {
+                    "sub_category_name": "The \"Unless\" Transformation",
+                    "difficulty": 5,
+                    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+                    "triggers": [
+                        "Unless"
+                    ],
+                    "question": "If you do not water the plants, they will die.",
+                    "answer": "Unless you water the plants, they will die."
+                },
+                {
+                    "sub_category_name": "Hypothetical (Type 2 Conditional)",
+                    "difficulty": 6,
+                    "logic": "Imaginary situations using 'If I were'.",
+                    "triggers": [
+                        "If I were"
+                    ],
+                    "question": "I am not you. I will not accept that offer.",
+                    "answer": "If I were you, I would not accept that offer."
+                },
+                {
+                    "sub_category_name": "Subjunctive / Negative Purpose",
+                    "difficulty": 9,
+                    "logic": "Archaic structure requiring the base form of the verb or 'should'.",
+                    "triggers": [
+                        "Lest"
+                    ],
+                    "question": "He walked quietly. He did not want to wake the baby.",
+                    "answer": "He walked quietly lest he wake the baby."
+                }
+            ]
+        },
+        {
+            "category_name": "Word Class Transformation (Nominalization)",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Adjective → Noun",
+                    "difficulty": 6,
+                    "logic": "Vocabulary dependent transformation.",
+                    "triggers": [
+                        "curiosity",
+                        "bravery",
+                        "sincerity",
+                        "reluctance"
+                    ],
+                    "question": "The boy was curious. He opened the box.",
+                    "answer": "Out of curiosity, the boy opened the box."
+                },
+                {
+                    "sub_category_name": "Verb → Noun",
+                    "difficulty": 6,
+                    "logic": "Vocabulary dependent transformation.",
+                    "triggers": [
+                        "collision",
+                        "description",
+                        "perseverance"
+                    ],
+                    "question": "The witness described the burglar. It was very detailed.",
+                    "answer": "The witness gave a detailed description of the burglar."
+                },
+                {
+                    "sub_category_name": "Emotional Reaction",
+                    "difficulty": 7,
+                    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+                    "triggers": [
+                        "Much to the"
+                    ],
+                    "question": "John failed the test. He was disappointed.",
+                    "answer": "Much to the disappointment of John, he failed the test."
+                }
+            ]
+        },
+        {
+            "category_name": "Correlative Conjunctions",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Inclusion (Parallelism)",
+                    "difficulty": 5,
+                    "logic": "Ensuring grammatical parallelism on both sides of the conjunction.",
+                    "triggers": [
+                        "Not only ... but also"
+                    ],
+                    "question": "Mrs Tan is kind. She is also generous.",
+                    "answer": "Mrs Tan is not only kind but also generous."
+                },
+                {
+                    "sub_category_name": "Exclusion / Subject-Verb Agreement",
+                    "difficulty": 7,
+                    "logic": "Testing the Proximity Rule (verb agrees with the nearest noun).",
+                    "triggers": [
+                        "Neither ... nor"
+                    ],
+                    "question": "James did not go to the party. His friends did not go either.",
+                    "answer": "Neither James nor his friends went to the party."
+                }
+            ]
+        },
+        {
+            "category_name": "Advanced Inversion",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Temporal Inversion",
+                    "difficulty": 8,
+                    "logic": "Past Perfect Tense + Inversion + 'than'.",
+                    "triggers": [
+                        "No sooner ... than"
+                    ],
+                    "question": "As soon as the bell rang, the students rushed out.",
+                    "answer": "No sooner had the bell rung than the students rushed out."
+                },
+                {
+                    "sub_category_name": "Negative Inversion",
+                    "difficulty": 8,
+                    "logic": "Inverting the auxiliary verb for emphasis.",
+                    "triggers": [
+                        "Little",
+                        "Seldom",
+                        "Rarely"
+                    ],
+                    "question": "He did not know that he had won the lottery.",
+                    "answer": "Little did he know that he had won the lottery."
+                }
+            ]
+        },
+        {
+            "category_name": "Relative Clauses",
+            "sub_categories": [
+                {
+                    "sub_category_name": "Object Pronoun",
+                    "difficulty": 5,
+                    "logic": "Using 'whom' for people in the object position.",
+                    "triggers": [
+                        "Whom"
+                    ],
+                    "question": "That is the man. You met him at the airport.",
+                    "answer": "That is the man whom you met at the airport."
+                },
+                {
+                    "sub_category_name": "Quantifier Phrases",
+                    "difficulty": 7,
+                    "logic": "Complex combining involving quantifiers within relative clauses.",
+                    "triggers": [
+                        "... some of which",
+                        "... none of whom"
+                    ],
+                    "question": "I have many T-shirts. Some of them are brand new.",
+                    "answer": "I have many T-shirts, some of which are brand new."
+                }
+            ]
+        }
+    ]
+}
