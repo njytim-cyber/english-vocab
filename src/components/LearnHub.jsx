@@ -22,7 +22,7 @@ export default function LearnHub({ economy, onNavigate }) {
             icon: '📖',
             description: 'Fill in the blanks in passages',
             color: '#10b981',
-            action: () => onNavigate('cloze')
+            action: () => onNavigate('cloze-setup')
         },
         {
             id: 'grammar-mcq',
@@ -38,7 +38,7 @@ export default function LearnHub({ economy, onNavigate }) {
             icon: '📜',
             description: 'Fill in grammar blanks in passages',
             color: '#d97706',
-            action: () => onNavigate('grammar-cloze')
+            action: () => onNavigate('grammar-cloze-setup')
         },
         {
             id: 'spelling',
@@ -54,7 +54,7 @@ export default function LearnHub({ economy, onNavigate }) {
             icon: '📰',
             description: 'Read passages and answer questions',
             color: '#0ea5e9',
-            action: () => onNavigate('comprehension')
+            action: () => onNavigate('comprehension-setup')
         }
     ];
 

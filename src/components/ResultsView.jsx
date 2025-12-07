@@ -83,6 +83,7 @@ export default function ResultsView({ engine, onRestart }) {
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
                     <button
                         onClick={() => { engine.reset(); onRestart(); }}
+                        aria-label="Start new quiz"
                         style={{
                             flex: 1,
                             padding: '0.9rem',
@@ -102,6 +103,7 @@ export default function ResultsView({ engine, onRestart }) {
                     {incorrectItems.length > 0 && (
                         <button
                             onClick={handleRetry}
+                            aria-label={`Review ${incorrectItems.length} incorrect ${incorrectItems.length === 1 ? 'answer' : 'answers'}`}
                             style={{
                                 flex: 1,
                                 padding: '0.9rem',

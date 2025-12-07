@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ContentGenerator } from './ContentGenerator';
 
 describe('ContentGenerator', () => {
@@ -37,9 +37,12 @@ describe('ContentGenerator', () => {
     });
 
     it('returns null if example does not contain answer', () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { });
         const target = { id: 6, answer: 'pear', example: 'I like fruit.', theme: 'Food' };
         const result = generator.generateClozePassage(target, mockQuestions);
         expect(result).toBeNull();
+        expect(warnSpy).toHaveBeenCalled();
+        warnSpy.mockRestore();
     });
 
     it('is case insensitive for replacement', () => {

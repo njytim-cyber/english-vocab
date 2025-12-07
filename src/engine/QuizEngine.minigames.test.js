@@ -10,6 +10,12 @@ const mockQuestions = [
     { id: 6, question: 'Q6', answer: 'word', theme: 'T1', options: [] },
     { id: 7, question: 'Q7', answer: 'worm', theme: 'T1', options: [] },
     { id: 8, question: 'Q8', answer: 'longword', theme: 'T1', options: [] },
+    // Adding more words to satisfy pool length >= 10 check
+    { id: 9, question: 'Q9', answer: 'hard', theme: 'T1', options: [] },
+    { id: 10, question: 'Q10', answer: 'herd', theme: 'T1', options: [] },
+    { id: 11, question: 'Q11', answer: 'held', theme: 'T1', options: [] },
+    { id: 12, question: 'Q12', answer: 'hold', theme: 'T1', options: [] },
+    { id: 13, question: 'Q13', answer: 'gold', theme: 'T1', options: [] },
 ];
 
 describe('QuizEngine Minigames', () => {
@@ -25,15 +31,13 @@ describe('QuizEngine Minigames', () => {
         // or cold -> cord -> word -> worm -> warm (4 steps)
         const challenge = engine.getWordLadderChallenge(4, 2);
 
+        expect(challenge).not.toBeNull();
         if (challenge) {
             expect(challenge.start).toBeDefined();
             expect(challenge.end).toBeDefined();
             expect(challenge.path.length).toBeGreaterThanOrEqual(3);
             expect(challenge.path[0]).toBe(challenge.start);
             expect(challenge.path[challenge.path.length - 1]).toBe(challenge.end);
-        } else {
-            // It might fail if random selection is unlucky, but with this small pool and seed it should work
-            console.warn("Ladder generation failed (could be random chance)");
         }
     });
 

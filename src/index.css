@@ -1,11 +1,20 @@
 :root {
-  --primary: #FF6B6B;
+  /* Aligned with designTokens.js */
+  --primary: #667eea;
+  --primary-dark: #764ba2;
   --secondary: #4ECDC4;
   --accent: #FFE66D;
   --dark: #2C3E50;
   --light: #F7F9FC;
   --font-fun: 'Fredoka', sans-serif;
   --font-body: 'Outfit', sans-serif;
+
+  /* Spacing (mobile-first) */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
 }
 
 body {
@@ -37,11 +46,17 @@ button:active {
 /* Quiz View Styles */
 .quiz-container {
   min-height: 100vh;
-  padding: 2rem;
+  padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: background 1s ease;
+}
+
+@media (min-width: 768px) {
+  .quiz-container {
+    padding: var(--spacing-xl);
+  }
 }
 
 .quiz-header {
@@ -80,17 +95,31 @@ button:active {
 
 .options-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 480px) {
+  .options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .option-btn {
-  padding: 1.5rem;
-  font-size: 1.2rem;
+  padding: var(--spacing-lg);
+  min-height: 60px;
+  /* Touch-friendly */
+  font-size: 1.1rem;
   border-radius: 16px;
   border: 2px solid transparent;
   color: var(--dark);
   background: #f0f0f0;
+}
+
+@media (min-width: 480px) {
+  .option-btn {
+    font-size: 1.2rem;
+  }
 }
 
 .option-btn.selected {

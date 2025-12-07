@@ -88,5 +88,16 @@
                 "accuracy": 0.95
             }
         }
+    },
+    "gameSettings": {
+        "questionsPerRound": 10,
+        "retryDelay": 1500
+    },
+    "clozeLogic": {
+        "performanceThreshold": 0.7,
+        "probabilityHigh": 0.9,
+        "probabilityLow": 0.4,
+        "minBox": 2,
+        "maxBox": 5
     }
 }

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PageLayout from './common/PageLayout';
 import DualRangeSlider from './common/DualRangeSlider';
 import { colors, borderRadius, shadows } from '../styles/designTokens';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function SkillTreeView({ engine, onBack, onNavigate }) {
     const allQuestions = engine.allQuestions;
@@ -9,13 +10,7 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
     const [filterLevel, setFilterLevel] = useState('All');
     const [minDifficulty, setMinDifficulty] = useState(1);
     const [maxDifficulty, setMaxDifficulty] = useState(9); // Max is 9 (no level 10 words)
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isMobile = useIsMobile();
 
     const LEVELS = {
         0: { name: 'Seed', desc: 'Initial Exposure', icon: '🌱', color: '#95a5a6' },
@@ -26,32 +21,34 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
         5: { name: 'Tree', desc: 'Mastery', icon: '🌲', color: '#9b59b6' }
     };
 
-    const wordsByLevel = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [] };
-
-    allQuestions.forEach(q => {
+    // Filter and deduplicate in a single pass
+    const wordsByLevel = allQuestions.reduce((acc, q) => {
         const box = sr.getBox(q.question_number || q.id);
-        // Fix: Handle undefined difficulty - default to 0 which will be filtered out by most ranges
         const difficulty = q.difficulty ?? 0;
-        if (difficulty < minDifficulty || difficulty > maxDifficulty) return;
-        if (wordsByLevel[box] !== undefined) {
-            wordsByLevel[box].push(q);
-        } else {
-            wordsByLevel[0].push(q);
+
+        // Filter by difficulty range
+        if (difficulty < minDifficulty || difficulty > maxDifficulty) return acc;
+
+        // Ensure level exists
+        if (acc[box] === undefined) acc[box] = { words: [], seen: new Set() };
+
+        // Deduplicate by answer
+        const key = (q.answer || q.question).toLowerCase();
+        if (!acc[box].seen.has(key)) {
+            acc[box].words.push(q);
+            acc[box].seen.add(key);
         }
-    });
 
-    // Deduplicate words by answer within each level
-    Object.keys(wordsByLevel).forEach(level => {
-        const seen = new Set();
-        wordsByLevel[level] = wordsByLevel[level].filter(q => {
-            const key = (q.answer || q.question).toLowerCase();
-            if (seen.has(key)) return false;
-            seen.add(key);
-            return true;
-        });
-    });
+        return acc;
+    }, { 0: { words: [], seen: new Set() }, 1: { words: [], seen: new Set() }, 2: { words: [], seen: new Set() }, 3: { words: [], seen: new Set() }, 4: { words: [], seen: new Set() }, 5: { words: [], seen: new Set() } });
 
-    const totalFilteredWords = Object.values(wordsByLevel).reduce((acc, curr) => acc + curr.length, 0);
+    // Extract just the words arrays
+    const wordsByLevelFinal = Object.keys(wordsByLevel).reduce((acc, level) => {
+        acc[level] = wordsByLevel[level].words;
+        return acc;
+    }, {});
+
+    const totalFilteredWords = Object.values(wordsByLevelFinal).reduce((acc, curr) => acc + curr.length, 0);
     const levelsToShow = filterLevel === 'All' ? [0, 1, 2, 3, 4, 5] : [parseInt(filterLevel)];
 
     const handleDifficultyChange = (newMin, newMax) => {
@@ -131,7 +128,7 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                             flexShrink: 0
                         }}
                     >
-                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: LEVELS[lvl].color }}>{wordsByLevel[lvl].length}</div>
+                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: LEVELS[lvl].color }}>{wordsByLevelFinal[lvl].length}</div>
                         <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{LEVELS[lvl].icon} {LEVELS[lvl].name}</div>
                     </div>
                 ))}
@@ -184,7 +181,7 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                                 borderRadius: borderRadius.pill,
                                 color: colors.textMuted
                             }}>
-                                {wordsByLevel[level].length}
+                                {wordsByLevelFinal[level].length}
                             </span>
                         </h3>
                         {/* Subtitle removed per user request */}
@@ -198,8 +195,8 @@ export default function SkillTreeView({ engine, onBack, onNavigate }) {
                             scrollbarWidth: 'thin', // Firefox
                             alignContent: 'flex-start'
                         }}>
-                            {wordsByLevel[level].length > 0 ? (
-                                wordsByLevel[level].map(q => (
+                            {wordsByLevelFinal[level].length > 0 ? (
+                                wordsByLevelFinal[level].map(q => (
                                     <span key={q.id || q.question_number} style={{
                                         fontSize: '0.8rem',
                                         padding: '4px 10px',

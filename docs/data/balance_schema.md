@@ -30,3 +30,13 @@ Source: `src/data/balance.json` (Version 1.2)
 - `emoji`: Avatar icon.
 - `minResponseTime` / `maxResponseTime`: Bot delay range (ms).
 - `accuracy`: Probability of correct answer (0.0 - 1.0).
+
+## Game Settings
+- `questionsPerRound`: Number of questions in a standard session.
+- `retryDelay`: Delay (ms) before proceeding after feedback.
+
+## Cloze Logic
+- `performanceThreshold`: Accuracy below which high probability is triggered.
+- `probabilityHigh`: Probability of seeing Cloze if struggling (< threshold).
+- `probabilityLow`: Probability of seeing Cloze if mastering (> threshold).
+- `minBox` / `maxBox`: Spaced repetition box range for Cloze eligibility.

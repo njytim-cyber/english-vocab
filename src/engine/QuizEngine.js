@@ -9,6 +9,7 @@ import { SessionManager } from '../containers/SessionManager';
 import { SpacedRepetition } from './SpacedRepetition';
 import { ContentGenerator } from './ContentGenerator';
 import { AnalyticsService } from '../services/AnalyticsService';
+import balance from '../data/balance.json';
 
 export class QuizEngine {
     constructor(questionData = undefined) {
@@ -41,23 +42,23 @@ export class QuizEngine {
      * @param {number} difficulty
      */
     startNewGame(theme = null, difficulty = null) {
-        console.log('QuizEngine: startNewGame', theme, difficulty);
-
         // Use QuestionManager for filtering
         const filtered = this.questionManager.filter({ theme, difficulty });
-        console.log('QuizEngine: filtered count', filtered.length);
 
-        // Prioritize and limit to 10
-        let selectedQuestions = this.sr.prioritizeQuestions(filtered).slice(0, 10);
+        // Prioritize and limit (using balance.json)
+        const limit = balance.gameSettings.questionsPerRound;
+        let selectedQuestions = this.sr.prioritizeQuestions(filtered).slice(0, limit);
 
-        // Adaptive Cloze Generation
+        // Adaptive Cloze Generation (using balance.json)
         const clozePerf = this.analytics.getTypePerformance('ClozePassage');
-        const clozeProbability = clozePerf < 0.7 ? 0.9 : 0.4;
-        console.log(`QuizEngine: Cloze Performance ${clozePerf.toFixed(2)}, Probability ${clozeProbability}`);
+        const { performanceThreshold, probabilityHigh, probabilityLow, minBox, maxBox } = balance.clozeLogic;
+
+        const clozeProbability = clozePerf < performanceThreshold ? probabilityHigh : probabilityLow;
 
         this.questions = selectedQuestions.map(q => {
             const box = this.sr.getBox(q.question_number || q.id);
-            if (box >= 2 && box <= 5) {
+            // Only convert to cloze if reasonably familiar
+            if (box >= minBox && box <= maxBox) {
                 if (Math.random() < clozeProbability) {
                     const cloze = this.contentGenerator.generateClozePassage(q, this.allQuestions);
                     if (cloze) return cloze;
@@ -66,15 +67,12 @@ export class QuizEngine {
             return q;
         });
 
-        console.log('QuizEngine: prioritized count', this.questions.length);
-
         // Use SessionManager for state
         this.sessionManager.start(this.questions);
         this.sessionHistory = [];
 
         // Sync state for backward compatibility
         this.state = this.sessionManager.getState();
-        console.log('QuizEngine: state initialized');
     }
 
     /**
@@ -97,7 +95,7 @@ export class QuizEngine {
         if (this.state.isFinished) return false;
 
         const currentQuestion = this.sessionManager.getCurrentQuestion();
-        const { isCorrect, points } = this.sessionManager.submitAnswer(answer);
+        const { isCorrect } = this.sessionManager.submitAnswer(answer);
         const timeTaken = this.sessionManager.getHistory().slice(-1)[0]?.timeTaken || 0;
 
         // Log to Analytics
@@ -132,9 +130,7 @@ export class QuizEngine {
     }
 
     getThemes() {
-        const themes = this.questionManager.getThemes();
-        console.log('QuizEngine: Loaded Themes:', themes);
-        return themes;
+        return this.questionManager.getThemes();
     }
 
     getThemeMastery(theme) {
@@ -161,32 +157,32 @@ export class QuizEngine {
      * @returns {Object[]}
      */
     getReinforcementQuestions(count = 10) {
-        const byBox = {};
-        for (const q of this.allQuestions) {
-            const box = this.sr.getBox(q.question_number || q.id);
-            if (!byBox[box]) byBox[box] = [];
-            byBox[box].push(q);
-        }
-
         const selected = [];
         const seenAnswers = new Set();
+        const questionPool = [...this.allQuestions];
 
+        // Strategy: Iterate boxes 0..5, finding candidates
         for (let box = 0; box <= 5; box++) {
             if (selected.length >= count) break;
-            if (!byBox[box]) continue;
 
-            const shuffled = [...byBox[box]].sort(() => Math.random() - 0.5);
-            for (const q of shuffled) {
+            const candidates = questionPool.filter(q => {
+                const qBox = this.sr.getBox(q.question_number || q.id);
+                return qBox === box && !seenAnswers.has(q.answer);
+            });
+
+            // Shuffle candidates for this box
+            candidates.sort(() => Math.random() - 0.5);
+
+            for (const q of candidates) {
                 if (selected.length >= count) break;
-                if (!seenAnswers.has(q.answer)) {
-                    selected.push(q);
-                    seenAnswers.add(q.answer);
-                }
+                selected.push(q);
+                seenAnswers.add(q.answer);
             }
         }
 
+        // Fill remaining with random if needed
         if (selected.length < count) {
-            const remaining = this.allQuestions
+            const remaining = questionPool
                 .filter(q => !seenAnswers.has(q.answer))
                 .sort(() => Math.random() - 0.5);
 

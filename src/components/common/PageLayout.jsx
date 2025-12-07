@@ -3,8 +3,7 @@
  * All pages should use this as their root container
  */
 import { colors, spacing, borderRadius, shadows, typography } from '../../styles/designTokens';
-
-import { useState, useEffect } from 'react';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 export default function PageLayout({
     children,
@@ -14,13 +13,7 @@ export default function PageLayout({
     maxWidth = '800px',
     centered = true
 }) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isMobile = useIsMobile();
 
     return (
         <div style={{

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import StarDisplay from './common/StarDisplay';
+import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 const AVATARS = ['🦊', '🐼', '🦁', '🐯', '🐸', '🦄'];
 
@@ -30,29 +31,32 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '2rem',
+            padding: '1rem',
             paddingBottom: '100px',
-            background: 'var(--light)',
-            color: 'var(--dark)'
+            background: colors.light,
+            color: colors.dark
         }}>
             <div style={{
                 width: '100%',
+                maxWidth: '500px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: '2rem'
+                marginBottom: '1.5rem'
             }}>
-                <h1 style={{ fontSize: '2rem', margin: 0 }}>Home Base 🏠</h1>
+                <h1 style={{ fontSize: '1.8rem', margin: 0 }}>Home Base 🏠</h1>
                 <StarDisplay count={engine ? engine.state.score : 0} />
             </div>
 
             <div className="card" style={{
-                padding: '2rem',
+                padding: '1.5rem',
                 width: '100%',
                 maxWidth: '500px',
-                marginBottom: '2rem',
+                marginBottom: '1.5rem',
                 textAlign: 'center',
-                background: 'linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%)'
+                background: colors.white,
+                borderRadius: borderRadius.lg,
+                boxShadow: shadows.md
             }}>
                 {/* Avatar Display */}
                 <div style={{ fontSize: '5rem', marginBottom: '1rem' }}>
@@ -70,9 +74,9 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                             maxLength={20}
                             style={{
                                 padding: '0.8rem 1rem',
-                                fontSize: '1.1rem',
-                                border: '2px solid #667eea',
-                                borderRadius: '10px',
+                                fontSize: '1rem',
+                                border: `2px solid ${colors.primary}`,
+                                borderRadius: borderRadius.md,
                                 textAlign: 'center',
                                 width: '80%',
                                 marginBottom: '0.5rem'
@@ -85,10 +89,10 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                             disabled={!playerName.trim()}
                             style={{
                                 padding: '0.5rem 1.5rem',
-                                background: playerName.trim() ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#ccc',
-                                color: 'white',
+                                background: playerName.trim() ? colors.primaryGradient : '#ccc',
+                                color: colors.white,
                                 border: 'none',
-                                borderRadius: '10px',
+                                borderRadius: borderRadius.md,
                                 cursor: playerName.trim() ? 'pointer' : 'not-allowed',
                                 fontWeight: 'bold'
                             }}
@@ -98,15 +102,15 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                     </div>
                 ) : (
                     <div style={{ marginBottom: '1rem' }}>
-                        <h2 style={{ margin: '0 0 0.3rem 0' }}>
-                            Welcome, <span style={{ color: '#667eea' }}>{displayName}</span>! 👋
+                        <h2 style={{ margin: '0 0 0.3rem 0', fontSize: '1.5rem' }}>
+                            Welcome, <span style={{ color: colors.primary }}>{displayName}</span>! 👋
                         </h2>
                         <button
                             onClick={() => setIsEditingName(true)}
                             style={{
                                 background: 'none',
                                 border: 'none',
-                                color: '#888',
+                                color: colors.textMuted,
                                 cursor: 'pointer',
                                 fontSize: '0.9rem'
                             }}
@@ -117,17 +121,20 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                 )}
 
                 {/* Avatar Selection */}
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {AVATARS.map(avatar => (
                         <button
                             key={avatar}
                             onClick={() => setSelectedAvatar(avatar)}
+                            aria-label={`Select avatar ${avatar}`}
                             style={{
                                 fontSize: '1.5rem',
                                 padding: '0.5rem',
-                                background: selectedAvatar === avatar ? 'rgba(102, 126, 234, 0.2)' : 'transparent',
-                                borderRadius: '50%',
-                                border: selectedAvatar === avatar ? '2px solid #667eea' : '2px solid transparent',
+                                minWidth: '44px',
+                                minHeight: '44px',
+                                background: selectedAvatar === avatar ? `rgba(102, 126, 234, 0.2)` : 'transparent',
+                                borderRadius: borderRadius.round,
+                                border: selectedAvatar === avatar ? `2px solid ${colors.primary}` : '2px solid transparent',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s'
                             }}
@@ -142,17 +149,17 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                 width: '100%',
                 maxWidth: '500px',
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: '1fr',
                 gap: '1rem'
             }}>
                 <button
                     onClick={() => onNavigate('quiz-setup')}
                     style={{
-                        padding: '2rem',
-                        fontSize: '1.2rem',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        color: 'white',
-                        borderRadius: '20px',
+                        padding: '1.5rem',
+                        fontSize: '1.1rem',
+                        background: colors.primaryGradient,
+                        color: colors.white,
+                        borderRadius: borderRadius.lg,
                         border: 'none',
                         cursor: 'pointer',
                         display: 'flex',
@@ -160,7 +167,8 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '0.5rem',
-                        boxShadow: '0 4px 10px rgba(102, 126, 234, 0.4)'
+                        boxShadow: shadows.primary,
+                        minHeight: '80px'
                     }}
                 >
                     <span style={{ fontSize: '2rem' }}>⚔️</span>
@@ -170,11 +178,11 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                 <button
                     onClick={onStartArena}
                     style={{
-                        padding: '2rem',
-                        fontSize: '1.2rem',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        color: 'white',
-                        borderRadius: '20px',
+                        padding: '1.5rem',
+                        fontSize: '1.1rem',
+                        background: colors.primaryGradient,
+                        color: colors.white,
+                        borderRadius: borderRadius.lg,
                         border: 'none',
                         cursor: 'pointer',
                         display: 'flex',
@@ -182,7 +190,8 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '0.5rem',
-                        boxShadow: '0 4px 10px rgba(102, 126, 234, 0.4)'
+                        boxShadow: shadows.primary,
+                        minHeight: '80px'
                     }}
                 >
                     <span style={{ fontSize: '2rem' }}>🏟️</span>
