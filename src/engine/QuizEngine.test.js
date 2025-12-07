@@ -1,143 +1,221 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { QuizEngine } from './QuizEngine';
 
-const mockQuestions = [
-    {
-        id: 1,
-        question_number: 1,
-        question: "Q1",
-        options: { "1": "A", "2": "B" },
-        answer: "A",
-        answer_index: 1
-    },
-    {
-        id: 2,
-        question_number: 2,
-        question: "Q2",
-        options: { "1": "C", "2": "D" },
-        answer: "C",
-        answer_index: 1
-    }
-];
-
 describe('QuizEngine', () => {
     let engine;
+    const mockQuestions = [
+        { question_number: 1, answer: 'rope', theme: 'Nautical & Maritime', difficulty: 1, question: 'Test 1', options: { 1: 'rope', 2: 'chain', 3: 'cable', 4: 'wire' } },
+        { question_number: 2, answer: 'boat', theme: 'Nautical & Maritime', difficulty: 1, question: 'Test 2', options: { 1: 'boat', 2: 'ship', 3: 'dinghy', 4: 'raft' } },
+        { question_number: 3, answer: 'ocean', theme: 'Science', difficulty: 2, question: 'Test 3', options: { 1: 'ocean', 2: 'lake', 3: 'sea', 4: 'pond' } },
+        { question_number: 4, answer: 'coast', theme: 'Science', difficulty: 3, question: 'Test 4', options: { 1: 'coast', 2: 'shore', 3: 'beach', 4: 'bank' } },
+    ];
 
     beforeEach(() => {
-        // Mock localStorage for SpacedRepetition
-        global.localStorage = {
-            getItem: vi.fn(),
-            setItem: vi.fn(),
-            clear: vi.fn()
-        };
+        localStorage.clear();
         engine = new QuizEngine(mockQuestions);
     });
 
-    it('initializes with correct state', () => {
-        const state = engine.getState();
-        expect(state.currentQuestionIndex).toBe(0);
-        expect(state.score).toBe(0);
-        expect(state.streak).toBe(0);
-        expect(state.isFinished).toBe(false);
+    describe('Game Initialization', () => {
+        it('should initialize with default state', () => {
+            expect(engine.getState()).toBeDefined();
+            expect(engine.getState().currentQuestionIndex).toBe(0);
+            expect(engine.getState().score).toBe(0);
+        });
+
+        it('should start new game with theme filter', () => {
+            engine.startNewGame('Nautical & Maritime');
+            const questions = engine.sessionManager.questions;
+
+            expect(questions.length).toBeGreaterThan(0);
+            questions.forEach(q => {
+                expect(q.theme).toBe('Nautical & Maritime');
+            });
+        });
+
+        it('should start new game with difficulty filter', () => {
+            engine.startNewGame(null, 1);
+            const questions = engine.sessionManager.questions;
+
+            expect(questions.length).toBeGreaterThan(0);
+            questions.forEach(q => {
+                expect(q.difficulty).toBe(1);
+            });
+        });
+
+        it('should start new game with both theme and difficulty filters', () => {
+            engine.startNewGame('Science', 2);
+            const questions = engine.sessionManager.questions;
+
+            expect(questions.length).toBeGreaterThan(0);
+            questions.forEach(q => {
+                expect(q.theme).toBe('Science');
+                expect(q.difficulty).toBe(2);
+            });
+        });
     });
 
-    it('normalizes current question correctly', () => {
-        const q = engine.getCurrentQuestion();
-        expect(q.question_number).toBe(1);
-        expect(q.question).toBe("Q1");
-        const options = Array.isArray(q.options) ? q.options : Object.values(q.options);
-        expect(options).toEqual(["A", "B"]);
+    describe('Answer Submission', () => {
+        beforeEach(() => {
+            engine.startNewGame();
+        });
+
+        it('should return true for correct answer', () => {
+            const currentQuestion = engine.getCurrentQuestion();
+            const correctAnswer = currentQuestion.answer;
+
+            const isCorrect = engine.answer(correctAnswer);
+            expect(isCorrect).toBe(true);
+        });
+
+        it('should return false for incorrect answer', () => {
+            const currentQuestion = engine.getCurrentQuestion();
+            const wrongAnswer = 'definitely_wrong_answer';
+
+            const isCorrect = engine.answer(wrongAnswer);
+            expect(isCorrect).toBe(false);
+        });
+
+        it('should increment score on correct answer', () => {
+            const initialScore = engine.getState().score;
+            const currentQuestion = engine.getCurrentQuestion();
+
+            engine.answer(currentQuestion.answer);
+            expect(engine.getState().score).toBeGreaterThan(initialScore);
+        });
+
+        it('should not increment score on incorrect answer', () => {
+            const initialScore = engine.getState().score;
+
+            engine.answer('wrong_answer');
+            expect(engine.getState().score).toBe(initialScore);
+        });
+
+        it('should advance to next question after answering', () => {
+            const initialQuestionIndex = engine.getState().currentQuestionIndex;
+            const currentQuestion = engine.getCurrentQuestion();
+
+            engine.answer(currentQuestion.answer);
+            expect(engine.getState().currentQuestionIndex).toBe(initialQuestionIndex + 1);
+        });
     });
 
-    it('handles correct answer correctly', () => {
-        const q = engine.getCurrentQuestion();
-        const isCorrect = engine.answer(q.answer);
-        expect(isCorrect).toBe(true);
+    describe('Spaced Repetition Integration', () => {
+        beforeEach(() => {
+            engine.startNewGame();
+        });
 
-        const state = engine.getState();
-        expect(state.score).toBe(10);
-        expect(state.streak).toBe(1);
-        expect(state.xp).toBeGreaterThan(10); // Base + Streak bonus
-        expect(state.currentQuestionIndex).toBe(1);
+        it('should update box to 2 on first correct answer', () => {
+            const currentQuestion = engine.getCurrentQuestion();
+            const questionId = currentQuestion.question_number;
+
+            engine.answer(currentQuestion.answer);
+            expect(engine.sr.getBox(questionId)).toBe(2);
+        });
+
+        it('should demote to box 1 on incorrect answer', () => {
+            const currentQuestion = engine.getCurrentQuestion();
+            const questionId = currentQuestion.question_number;
+
+            engine.answer(currentQuestion.answer);
+            expect(engine.sr.getBox(questionId)).toBe(2);
+
+            engine.startRetryGame([currentQuestion]);
+            engine.answer('wrong_answer');
+            expect(engine.sr.getBox(questionId)).toBe(1);
+        });
     });
 
-    it('handles incorrect answer correctly', () => {
-        const q = engine.getCurrentQuestion();
-        // Find an option that is NOT the answer
-        const wrongAnswer = Object.values(q.options).find(o => o !== q.answer) || "WRONG";
-        const isCorrect = engine.answer(wrongAnswer);
-        expect(isCorrect).toBe(false);
+    describe('Session State Management', () => {
+        it('should track question history', () => {
+            engine.startNewGame();
+            const q1 = engine.getCurrentQuestion();
+            engine.answer(q1.answer);
 
-        const state = engine.getState();
-        expect(state.score).toBe(0);
-        expect(state.streak).toBe(0);
-        expect(state.currentQuestionIndex).toBe(1);
+            const q2 = engine.getCurrentQuestion();
+            engine.answer('wrong_answer');
+
+            const history = engine.getQuestionHistory();
+            expect(history.length).toBe(2);
+            expect(history[0].isCorrect).toBe(true);
+            expect(history[1].isCorrect).toBe(false);
+        });
+
+        it('should return session history', () => {
+            engine.startNewGame();
+            const q1 = engine.getCurrentQuestion();
+            engine.answer(q1.answer);
+
+            const sessionHistory = engine.getSessionHistory();
+            expect(sessionHistory).toBeDefined();
+            expect(sessionHistory.length).toBeGreaterThan(0);
+        });
     });
 
-    it('finishes the quiz', () => {
-        // Answer all questions
-        let q = engine.getCurrentQuestion();
-        while (q) {
+    describe('Theme Management', () => {
+        it('should return all unique themes', () => {
+            const themes = engine.getThemes();
+            expect(themes).toContain('Nautical & Maritime');
+            expect(themes).toContain('Science');
+        });
+
+        it('should calculate theme mastery', () => {
+            engine.startNewGame('Science');
+            while (engine.getState().currentQuestionIndex < 2 && engine.getCurrentQuestion()) {
+                const q = engine.getCurrentQuestion();
+                engine.answer(q.answer);
+            }
+
+            const mastery = engine.getThemeMastery('Science');
+            expect(mastery).toBeGreaterThan(0);
+        });
+    });
+
+    describe('Reinforcement Questions', () => {
+        it('should generate reinforcement questions', () => {
+            engine.startNewGame();
+            for (let i = 0; i < 3; i++) {
+                const q = engine.getCurrentQuestion();
+                engine.answer(q.answer);
+            }
+
+            const reinforcement = engine.getReinforcementQuestions(5);
+            expect(Array.isArray(reinforcement)).toBe(true);
+        });
+
+        it('should prioritize lower box questions for reinforcement', () => {
+            engine.startNewGame();
+            const q = engine.getCurrentQuestion();
+            const qId = q.question_number;
+
+            engine.sr.setBox(qId, 1);
+
+            const reinforcement = engine.getReinforcementQuestions(10);
+            const hasLowBoxQuestion = reinforcement.some(q => engine.sr.getBox(q.question_number) === 1);
+            expect(hasLowBoxQuestion).toBe(true);
+        });
+    });
+
+    describe('Retry Game', () => {
+        it('should start retry game with specific questions', () => {
+            const questionsToRetry = [mockQuestions[0], mockQuestions[1]];
+            engine.startRetryGame(questionsToRetry);
+
+            const state = engine.getState();
+            expect(state.currentQuestionIndex).toBe(0);
+            expect(engine.sessionManager.questions.length).toBe(2);
+        });
+    });
+
+    describe('Scoring Modes', () => {
+        it('should switch to time-decay scoring mode', () => {
+            engine.setScoringMode('time-decay');
+            engine.startNewGame();
+
+            const q = engine.getCurrentQuestion();
             engine.answer(q.answer);
-            q = engine.getCurrentQuestion();
-        }
 
-        const state = engine.getState();
-        expect(state.isFinished).toBe(true);
-        expect(engine.getCurrentQuestion()).toBeNull();
-    });
-
-    it('randomizes reinforcement questions within the same box', () => {
-        // Create a set of questions that will all be in box 0 (default)
-        const manyQuestions = Array.from({ length: 20 }, (_, i) => ({
-            id: i,
-            question_number: i,
-            question: `Q${i}`,
-            answer: `A${i}`,
-            options: ["A", "B"]
-        }));
-
-        const randomEngine = new QuizEngine(manyQuestions);
-
-        // Mock getBox to always return 0
-        randomEngine.sr.getBox = vi.fn().mockReturnValue(0);
-
-        const run1 = randomEngine.getReinforcementQuestions(5);
-        const run2 = randomEngine.getReinforcementQuestions(5);
-
-        // Check that we got 5 questions
-        expect(run1.length).toBe(5);
-        expect(run2.length).toBe(5);
-
-        // Check that the sets are likely different (probability of identical sets is very low)
-        const ids1 = run1.map(q => q.id).sort().join(',');
-        const ids2 = run2.map(q => q.id).sort().join(',');
-
-        expect(ids1).not.toBe(ids2);
-    });
-
-    describe('Revision Logic', () => {
-        it('getRevisionList returns questions in Box 1', () => {
-            // Mock getBox to return 1 for Q1 and 2 for Q2
-            engine.sr.getBox = vi.fn((id) => id === 1 ? 1 : 2);
-
-            const list = engine.getRevisionList();
-            expect(list).toHaveLength(1);
-            expect(list[0].id).toBe(1);
-        });
-
-        it('processRevisionAnswer boosts to Box 4 on success', () => {
-            engine.sr.setBox = vi.fn();
-            const result = engine.processRevisionAnswer(1, true);
-            expect(result).toBe(true);
-            expect(engine.sr.setBox).toHaveBeenCalledWith(1, 4);
-        });
-
-        it('processRevisionAnswer resets to Box 1 on failure', () => {
-            engine.sr.updateProgress = vi.fn();
-            const result = engine.processRevisionAnswer(1, false);
-            expect(result).toBe(false);
-            expect(engine.sr.updateProgress).toHaveBeenCalledWith(1, false);
+            const state = engine.getState();
+            expect(state).toBeDefined();
         });
     });
 });

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing, typography } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { triggerConfetti } from '../utils/effects';
+import BottomSheet from './common/BottomSheet';
 
 /**
  * ComprehensionView - Reading comprehension with two-pane layout on desktop
@@ -18,8 +19,8 @@ export default function ComprehensionView({
     const [selectedOption, setSelectedOption] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [score, setScore] = useState({ correct: 0, total: 0 });
-    const [showPassage, setShowPassage] = useState(true); // Mobile toggle
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 900);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 600); // Phones only
     const [completedQuestions, setCompletedQuestions] = useState({});
 
     const currentQuestion = passage.questions[currentQuestionIndex];
@@ -27,7 +28,10 @@ export default function ComprehensionView({
     const isCorrect = selectedOption === currentQuestion?.answer;
 
     useEffect(() => {
-        const handleResize = () => setIsDesktop(window.innerWidth >= 900);
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 900);
+            setIsMobile(window.innerWidth < 600);
+        };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -71,6 +75,45 @@ export default function ComprehensionView({
         }
     };
 
+    // Passage Content (for bottom sheet or side panel)
+    const passageContent = (
+        <>
+            <div style={{
+                display: 'flex',
+                gap: spacing.xs,
+                marginBottom: spacing.md,
+                flexWrap: 'wrap'
+            }}>
+                <span style={{
+                    padding: `${spacing.xs} ${spacing.sm}`,
+                    background: '#e0f2fe',
+                    borderRadius: borderRadius.md,
+                    fontSize: '0.75rem',
+                    color: '#0369a1'
+                }}>
+                    📊 Level {passage.difficulty}
+                </span>
+                <span style={{
+                    padding: `${spacing.xs} ${spacing.sm}`,
+                    background: '#fef3c7',
+                    borderRadius: borderRadius.md,
+                    fontSize: '0.75rem',
+                    color: '#92400e'
+                }}>
+                    📚 {passage.theme}
+                </span>
+            </div>
+            <div style={{
+                fontSize: '1rem',
+                lineHeight: '1.8',
+                color: colors.dark,
+                whiteSpace: 'pre-wrap'
+            }}>
+                {passage.passage}
+            </div>
+        </>
+    );
+
     const renderPassagePane = () => (
         <div style={{
             flex: isDesktop ? '1 1 50%' : '1',
@@ -82,73 +125,15 @@ export default function ComprehensionView({
             maxHeight: isDesktop ? 'calc(100vh - 200px)' : 'auto',
             marginBottom: isDesktop ? 0 : spacing.lg
         }}>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: spacing.md
+            <h2 style={{
+                margin: 0,
+                marginBottom: spacing.md,
+                fontSize: '1.2rem',
+                color: colors.dark
             }}>
-                <h2 style={{
-                    margin: 0,
-                    fontSize: '1.2rem',
-                    color: colors.dark
-                }}>
-                    📖 {passage.title}
-                </h2>
-                {!isDesktop && (
-                    <button
-                        onClick={() => setShowPassage(!showPassage)}
-                        style={{
-                            background: colors.light,
-                            border: 'none',
-                            padding: spacing.xs,
-                            borderRadius: borderRadius.md,
-                            cursor: 'pointer',
-                            fontSize: '0.8rem'
-                        }}
-                    >
-                        {showPassage ? 'Hide' : 'Show'}
-                    </button>
-                )}
-            </div>
-
-            {(isDesktop || showPassage) && (
-                <>
-                    <div style={{
-                        display: 'flex',
-                        gap: spacing.xs,
-                        marginBottom: spacing.md,
-                        flexWrap: 'wrap'
-                    }}>
-                        <span style={{
-                            padding: `${spacing.xs} ${spacing.sm}`,
-                            background: '#e0f2fe',
-                            borderRadius: borderRadius.md,
-                            fontSize: '0.75rem',
-                            color: '#0369a1'
-                        }}>
-                            📊 Level {passage.difficulty}
-                        </span>
-                        <span style={{
-                            padding: `${spacing.xs} ${spacing.sm}`,
-                            background: '#fef3c7',
-                            borderRadius: borderRadius.md,
-                            fontSize: '0.75rem',
-                            color: '#92400e'
-                        }}>
-                            📚 {passage.theme}
-                        </span>
-                    </div>
-                    <div style={{
-                        fontSize: '1rem',
-                        lineHeight: '1.8',
-                        color: colors.dark,
-                        whiteSpace: 'pre-wrap'
-                    }}>
-                        {passage.passage}
-                    </div>
-                </>
-            )}
+                📖 {passage.title}
+            </h2>
+            {passageContent}
         </div>
     );
 
@@ -224,9 +209,9 @@ export default function ComprehensionView({
                                             isSelected ? '#e0f2fe' :
                                                 colors.light,
                                     border: `2px solid ${showCorrect ? colors.success :
-                                            showWrong ? colors.error :
-                                                isSelected ? '#0ea5e9' :
-                                                    'transparent'
+                                        showWrong ? colors.error :
+                                            isSelected ? '#0ea5e9' :
+                                                'transparent'
                                         }`,
                                     borderRadius: borderRadius.lg,
                                     textAlign: 'left',
@@ -349,11 +334,34 @@ export default function ComprehensionView({
                 display: 'flex',
                 flexDirection: isDesktop ? 'row' : 'column',
                 gap: spacing.lg,
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                paddingBottom: isMobile ? '60vh' : 0 // Space for bottom sheet on mobile
             }}>
-                {renderPassagePane()}
+                {/* Desktop: Side-by-side layout */}
+                {isDesktop && renderPassagePane()}
+
+                {/* All devices: Question pane (fixed on mobile) */}
                 {renderQuestionsPane()}
             </div>
+
+            {/* Mobile-only: Bottom sheet for passage */}
+            {isMobile && (
+                <BottomSheet
+                    snapPoints={['30%', '50%', '85%']}
+                    initialSnap="30%"
+                    minHeight={120}
+                >
+                    <h3 style={{
+                        margin: 0,
+                        marginBottom: spacing.md,
+                        fontSize: '1.1rem',
+                        color: colors.dark
+                    }}>
+                        📖 {passage.title}
+                    </h3>
+                    {passageContent}
+                </BottomSheet>
+            )}
         </PageLayout>
     );
 }

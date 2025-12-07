@@ -2,6 +2,7 @@
  * PageLayout - Wrapper component for consistent page structure
  * All pages should use this as their root container
  */
+import React from 'react';
 import { colors, spacing, borderRadius, shadows, typography } from '../../styles/designTokens';
 import { useIsMobile } from '../../hooks/useIsMobile';
 

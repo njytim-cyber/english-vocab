@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { colors, borderRadius } from '../../styles/designTokens';
 
 /**
@@ -36,8 +36,8 @@ export default function ProgressMarkers({
                             height: '36px',
                             borderRadius: '50%',
                             border: `2px solid ${answered?.isCorrect ? '#28a745' :
-                                    answered ? '#dc3545' :
-                                        '#dee2e6'
+                                answered ? '#dc3545' :
+                                    '#dee2e6'
                                 }`,
                             background: answered?.isCorrect ? '#28a745' :
                                 answered ? '#dc3545' :
@@ -153,8 +153,8 @@ export function QuestionReviewModal({ questionData, onClose }) {
                                     padding: '16px',
                                     borderRadius: borderRadius.md,
                                     border: `2px solid ${isCorrect ? '#28a745' :
-                                            isUserAnswer ? '#dc3545' :
-                                                '#dee2e6'
+                                        isUserAnswer ? '#dc3545' :
+                                            '#dee2e6'
                                         }`,
                                     background: isCorrect ? '#d4edda' :
                                         isUserAnswer ? '#f8d7da' :

@@ -1,5 +1,5 @@
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import PageLayout from './common/PageLayout';
 import DualRangeSlider from './common/DualRangeSlider';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';

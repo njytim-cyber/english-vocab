@@ -1,7 +1,7 @@
 /**
  * DualRangeSlider - Single slider with two knobs for min/max selection
  */
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { colors, borderRadius } from '../../styles/designTokens';
 
 export default function DualRangeSlider({

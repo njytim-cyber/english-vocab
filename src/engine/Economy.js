@@ -1,18 +1,36 @@
 const STORAGE_KEY = 'vocab_quest_economy';
 
 export const SHOP_ITEMS = [
-    { id: 'sunglasses', name: 'Cool Shades', cost: 100, icon: '🕶️', type: 'accessory' },
-    { id: 'hat', name: 'Party Hat', cost: 200, icon: '🎩', type: 'accessory' },
-    { id: 'crown', name: 'Royal Crown', cost: 500, icon: '👑', type: 'accessory' },
-    { id: 'gold_skin', name: 'Gold Skin', cost: 1000, icon: '✨', type: 'skin' },
-    // Avatars
-    { id: 'avatar_robot', name: 'Robot', cost: 300, icon: '🤖', type: 'avatar' },
-    { id: 'avatar_alien', name: 'Alien', cost: 400, icon: '👽', type: 'avatar' },
-    { id: 'avatar_ghost', name: 'Ghost', cost: 500, icon: '👻', type: 'avatar' },
-    { id: 'avatar_ninja', name: 'Ninja', cost: 600, icon: '🥷', type: 'avatar' },
-    // Themes (Dark Mode is free - accessible in settings)
-    { id: 'theme_ocean', name: 'Ocean', cost: 750, icon: '🌊', type: 'theme' },
-    { id: 'theme_forest', name: 'Forest', cost: 750, icon: '🌲', type: 'theme' }
+    // Accessories - Top layer items
+    { id: 'sunglasses', name: 'Cool Shades', cost: 100, icon: '🕶️', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
+    { id: 'party_hat', name: 'Party Hat', cost: 150, icon: '🎉', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
+    { id: 'top_hat', name: 'Top Hat', cost: 200, icon: '🎩', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
+    { id: 'crown', name: 'Royal Crown', cost: 500, icon: '👑', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
+    { id: 'wizard_hat', name: 'Wizard Hat', cost: 400, icon: '🧙‍♂️', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
+    { id: 'headphones', name: 'Headphones', cost: 250, icon: '🎧', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
+    { id: 'halo', name: 'Angel Halo', cost: 600, icon: '😇', type: 'accessory', layer: { zIndex: 5, position: 'top' } },
+    { id: 'star_eyes', name: 'Star Eyes', cost: 300, icon: '🤩', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
+
+    // Skins/Effects
+    { id: 'gold_skin', name: 'Gold Aura', cost: 1000, icon: '✨', type: 'skin', layer: { zIndex: 0, position: 'center' } },
+    { id: 'rainbow_skin', name: 'Rainbow Aura', cost: 1500, icon: '🌈', type: 'skin', layer: { zIndex: 0, position: 'center' } },
+    { id: 'fire_aura', name: 'Fire Aura', cost: 800, icon: '🔥', type: 'skin', layer: { zIndex: 0, position: 'center' } },
+
+    // Avatars - Base characters
+    { id: 'avatar_default', name: 'Happy Scholar', cost: 0, icon: '😊', type: 'avatar' },
+    { id: 'avatar_cool', name: 'Cool Student', cost: 200, icon: '😎', type: 'avatar' },
+    { id: 'avatar_robot', name: 'Study Robot', cost: 300, icon: '🤖', type: 'avatar' },
+    { id: 'avatar_alien', name: 'Space Learner', cost: 400, icon: '👽', type: 'avatar' },
+    { id: 'avatar_ninja', name: 'Word Ninja', cost: 600, icon: '🥷', type: 'avatar' },
+    { id: 'avatar_unicorn', name: 'Magic Unicorn', cost: 700, icon: '🦄', type: 'avatar' },
+    { id: 'avatar_dragon', name: 'Wisdom Dragon', cost: 900, icon: '🐉', type: 'avatar' },
+    { id: 'avatar_wizard', name: 'Grand Wizard', cost: 1200, icon: '🧙', type: 'avatar' },
+
+    // Themes
+    { id: 'theme_ocean', name: 'Ocean Breeze', cost: 750, icon: '🌊', type: 'theme' },
+    { id: 'theme_forest', name: 'Forest Sanctuary', cost: 750, icon: '🌲', type: 'theme' },
+    { id: 'theme_sunset', name: 'Sunset Glow', cost: 850, icon: '🌅', type: 'theme' },
+    { id: 'theme_galaxy', name: 'Galaxy Space', cost: 1000, icon: '🌌', type: 'theme' }
 ];
 
 export class Economy {
@@ -56,7 +74,7 @@ export class Economy {
             return state;
         } catch (e) {
             console.error('Economy load failed:', e);
-            return { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
+            return { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [], arenaWins: 0, arenaLosses: 0, arenaELO: 1000 };
         }
     }
 
@@ -70,7 +88,7 @@ export class Economy {
     }
 
     getCoins() {
-        return this.state.coins;
+        return this.state.coins || 0; // Return 0 if undefined/null/NaN
     }
 
     getXP() {
@@ -136,7 +154,7 @@ export class Economy {
         return {
             wins: this.state.arenaWins || 0,
             losses: this.state.arenaLosses || 0,
-            elo: this.state.arenaELO || 1000
+            elo: this.state.arenaELO ?? 1000 // Use nullish coalescing to allow 0
         };
     }
 
@@ -144,12 +162,14 @@ export class Economy {
         this.state.arenaWins = (this.state.arenaWins || 0) + 1;
         this.state.arenaELO = (this.state.arenaELO || 1000) + eloGain;
         this.save();
+        this.notify();
     }
 
-    addArenaLoss(eloLoss = 15) {
+    addArenaLoss(eloChange = 15) {
         this.state.arenaLosses = (this.state.arenaLosses || 0) + 1;
-        this.state.arenaELO = Math.max(0, (this.state.arenaELO || 1000) - eloLoss);
+        this.state.arenaELO = Math.max(0, (this.state.arenaELO || 1000) - eloChange); // Floor at 0
         this.save();
+        this.notify();
     }
 
     reset() {

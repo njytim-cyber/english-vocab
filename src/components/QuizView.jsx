@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { triggerConfetti } from '../utils/effects';
-import { speak } from '../utils/audio';
+// import { speak } from '../utils/audio'; // REMOVED: No voiceovers per user request
 import balance from '../data/balance.json';
+import { calculateQuizReward } from '../utils/rewardCalculator';
 import { colors, shadows, borderRadius, spacing } from '../styles/designTokens';
 import ProgressMarkers, { QuestionReviewModal } from './common/ProgressMarkers';
 
@@ -13,6 +14,7 @@ export default function QuizView({ engine, economy, onFinish }) {
     const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect'
     const [shakeOption, setShakeOption] = useState(null); // Option to shake
     const [reviewQuestion, setReviewQuestion] = useState(null); // For question review modal
+    const [totalCorrect, setTotalCorrect] = useState(0); // Track correct answers for reward calculation
 
     const options = useMemo(() => {
         if (!currentQuestion) return [];
@@ -57,13 +59,35 @@ export default function QuizView({ engine, economy, onFinish }) {
 
         if (isCorrect) {
             triggerConfetti();
-            speak("Correct!");
+            // speak("Correct!"); // REMOVED: No voiceovers
+            // TODO: Add sound effect for correct answer
+            setTotalCorrect(prev => prev + 1);
 
+            // Award stars using new reward calculator
             if (economy) {
-                economy.addCoins(balance.rewards.quiz.correctAnswer);
+                const questionDifficulty = currentQuestion.difficulty || 5; // Default to mid difficulty
+                const questionType = currentQuestion.type === 'ClozePassage' ? 'vocab-cloze' : 'vocab-mcq';
+                const starsEarned = calculateQuizReward({
+                    questionType,
+                    totalQuestions: 1,
+                    correctAnswers: 1,
+                    difficulty: questionDifficulty
+                });
+                economy.addCoins(starsEarned);
+
+                // Check for streak milestone achievements
+                const newStreak = engine.getState().streak;
+                if (economy.achievements) {
+                    if (newStreak === 10) {
+                        economy.achievements.updateStats({ quizStreak10: 1 });
+                    } else if (newStreak === 20) {
+                        economy.achievements.updateStats({ quizStreak20: 1 });
+                    }
+                }
             }
         } else {
-            speak("Oops, try again next time.");
+            // speak("Oops, try again next time."); // REMOVED: No voice overs
+            // TODO: Add sound effect for wrong answer
             setShakeOption(option);
 
         }
@@ -88,8 +112,27 @@ export default function QuizView({ engine, economy, onFinish }) {
         return colors.primaryGradient;
     };
 
-    // On Fire Mode
-    const isOnFire = state.streak >= 3;
+    // Streak Tiers
+    const streakConfig = balance.streaks;
+    const streakTier = state.streak >= streakConfig.milestones.legendary ? 'legendary'
+        : state.streak >= streakConfig.milestones.hot ? 'hot'
+            : state.streak >= streakConfig.milestones.fire ? 'fire'
+                : 'none';
+
+    const getStreakStyle = () => {
+        if (streakTier === 'none') return {};
+        const [color1, color2] = streakConfig.colors[streakTier];
+        return {
+            background: `linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`,
+            boxShadow: `0 2px 8px ${color1}40`
+        };
+    };
+
+    const getStreakIcon = () => {
+        if (streakTier === 'hot') return '/assets/icons/flame-blue.png';
+        if (streakTier === 'legendary') return '/assets/icons/flame-purple.png';
+        return null; // Orange tier uses emoji
+    };
 
     if (!currentQuestion) {
         return (
@@ -109,12 +152,24 @@ export default function QuizView({ engine, economy, onFinish }) {
         }}>
             {/* Clean minimal header - just essential info */}
             <div style={styles.header}>
-                {/* Streak indicator - only show when on fire */}
+                {/* Streak indicator - tiered colors with custom icons */}
                 <div style={{
                     ...styles.streakBadge,
-                    visibility: isOnFire ? 'visible' : 'hidden'
+                    ...getStreakStyle(),
+                    visibility: streakTier !== 'none' ? 'visible' : 'hidden'
                 }}>
-                    🔥 {state.streak}
+                    {getStreakIcon() ? (
+                        <>
+                            <img
+                                src={getStreakIcon()}
+                                alt="streak"
+                                style={{ width: '18px', height: '18px', marginRight: '4px' }}
+                            />
+                            {state.streak}
+                        </>
+                    ) : (
+                        <>🔥 {state.streak}</>
+                    )}
                 </div>
 
                 {/* Stars earned */}
@@ -136,7 +191,7 @@ export default function QuizView({ engine, economy, onFinish }) {
             />
 
             {/* Question Card */}
-            <div className={`card question-card animate-pop ${isOnFire ? 'on-fire' : ''}`}>
+            <div className={`card question-card animate-pop ${streakTier !== 'none' ? 'on-fire' : ''}`}>
                 <h2 className="question-text">
                     {currentQuestion.type === 'ClozePassage' ? (
                         <span>

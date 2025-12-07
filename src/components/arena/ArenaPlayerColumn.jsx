@@ -1,4 +1,4 @@
-
+import { useMemo } from 'react';
 import { colors } from '../../styles/designTokens';
 import { getQuestionTypeTheme } from '../../utils/arenaQuestionBuilder';
 
@@ -6,6 +6,12 @@ export function ArenaPlayerColumn({ engine, state, avatar, totalQuestions, onAns
     const q = engine.getCurrentQuestion();
     const progress = totalQuestions > 0 ? ((state.currentQuestionIndex) / totalQuestions) * 100 : 0;
     const theme = q && q.questionType ? getQuestionTypeTheme(q.questionType) : { primary: '#667eea', background: '#e0e7ff', name: 'Vocab MCQ' };
+
+    // Memoize shuffled options to prevent re-shuffle on every render
+    const shuffledOptions = useMemo(() => {
+        if (!q || !q.options) return [];
+        return Object.entries(q.options).sort(() => Math.random() - 0.5);
+    }, [q]);
 
     return (
         <div style={{
@@ -63,28 +69,26 @@ export function ArenaPlayerColumn({ engine, state, avatar, totalQuestions, onAns
 
                     {/* Options */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
-                        {Object.entries(q.options)
-                            .sort(() => Math.random() - 0.5) // Shuffle display order
-                            .map(([key, opt]) => (
-                                <button
-                                    key={key}
-                                    onClick={() => onAnswer(opt)}
-                                    style={{
-                                        padding: '1rem',
-                                        background: 'white',
-                                        border: `2px solid ${theme.primary}40`,
-                                        borderRadius: '12px',
-                                        cursor: 'pointer',
-                                        fontWeight: '600',
-                                        color: colors.dark,
-                                        transition: 'all 0.2s',
-                                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-                                        fontSize: '0.9rem'
-                                    }}
-                                >
-                                    {opt}
-                                </button>
-                            ))}
+                        {shuffledOptions.map(([key, opt]) => (
+                            <button
+                                key={key}
+                                onClick={() => onAnswer(opt)}
+                                style={{
+                                    padding: '1rem',
+                                    background: 'white',
+                                    border: `2px solid ${theme.primary}40`,
+                                    borderRadius: '12px',
+                                    cursor: 'pointer',
+                                    fontWeight: '600',
+                                    color: colors.dark,
+                                    transition: 'all 0.2s',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                {opt}
+                            </button>
+                        ))}
                     </div>
                 </div>
             ) : (

@@ -23,10 +23,14 @@ export const ACHIEVEMENTS = [
     { id: 'shopper', title: 'Big Spender', description: 'Buy 5 items from the shop.', icon: '🛍️', condition: (stats) => stats.itemsBought >= 5 },
     { id: 'collector', title: 'Collector', description: 'Buy 10 items.', icon: '📦', condition: (stats) => stats.itemsBought >= 10 },
 
-    // --- Streaks ---
+    // --- Streaks (Daily Login) ---
     { id: 'streak_3', title: 'Consistent', description: 'Login for 3 days in a row.', icon: '🔥', condition: (stats) => stats.maxStreak >= 3 },
     { id: 'streak_week', title: 'Dedicated', description: 'Login for 7 days in a row.', icon: '🔥', condition: (stats) => stats.maxStreak >= 7 },
     { id: 'streak_month', title: 'Devoted', description: 'Login for 30 days in a row.', icon: '🌋', condition: (stats) => stats.maxStreak >= 30 },
+
+    // --- Quiz Streaks (In-Session) ---
+    { id: 'hot_streak', title: 'Hot Streak', description: 'Get 10 correct answers in a row.', icon: '💙', condition: (stats) => stats.quizStreak10 >= 1 },
+    { id: 'legendary_streak', title: 'Legendary', description: 'Get 20 correct answers in a row.', icon: '💜', condition: (stats) => stats.quizStreak20 >= 1 },
 
     // --- Word Mastery ---
     { id: 'words_10', title: 'Word Learner', description: 'Master 10 words.', icon: '📖', condition: (stats) => stats.wordsMastered >= 10 },
@@ -118,7 +122,9 @@ export class Achievements {
                 weekendStudy: 0,
                 correctAnswers: 0,
                 comebacks: 0,
-                noHintQuizzes: 0
+                noHintQuizzes: 0,
+                quizStreak10: 0,
+                quizStreak20: 0
             };
         } catch (e) {
             return { wins: 0, totalCoins: 0, itemsBought: 0, maxStreak: 0, perfectScores: 0 };
