@@ -63,26 +63,28 @@ export function ArenaPlayerColumn({ engine, state, avatar, totalQuestions, onAns
 
                     {/* Options */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
-                        {Object.entries(q.options).map(([key, opt]) => (
-                            <button
-                                key={key}
-                                onClick={() => onAnswer(opt)}
-                                style={{
-                                    padding: '1rem',
-                                    background: 'white',
-                                    border: `2px solid ${theme.primary}40`,
-                                    borderRadius: '12px',
-                                    cursor: 'pointer',
-                                    fontWeight: '600',
-                                    color: colors.dark,
-                                    transition: 'all 0.2s',
-                                    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-                                    fontSize: '0.9rem'
-                                }}
-                            >
-                                {opt}
-                            </button>
-                        ))}
+                        {Object.entries(q.options)
+                            .sort(() => Math.random() - 0.5) // Shuffle display order
+                            .map(([key, opt]) => (
+                                <button
+                                    key={key}
+                                    onClick={() => onAnswer(opt)}
+                                    style={{
+                                        padding: '1rem',
+                                        background: 'white',
+                                        border: `2px solid ${theme.primary}40`,
+                                        borderRadius: '12px',
+                                        cursor: 'pointer',
+                                        fontWeight: '600',
+                                        color: colors.dark,
+                                        transition: 'all 0.2s',
+                                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                                        fontSize: '0.9rem'
+                                    }}
+                                >
+                                    {opt}
+                                </button>
+                            ))}
                     </div>
                 </div>
             ) : (
