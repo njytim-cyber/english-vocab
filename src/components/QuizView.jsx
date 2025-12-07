@@ -3,6 +3,7 @@ import { triggerConfetti } from '../utils/effects';
 import { speak } from '../utils/audio';
 import balance from '../data/balance.json';
 import { colors, shadows, borderRadius, spacing } from '../styles/designTokens';
+import ProgressMarkers, { QuestionReviewModal } from './common/ProgressMarkers';
 
 export default function QuizView({ engine, economy, onFinish }) {
     // console.log('QuizView rendered', { state: engine.getState() }); // Cleaned up log
@@ -11,6 +12,7 @@ export default function QuizView({ engine, economy, onFinish }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [feedback, setFeedback] = useState(null); // 'correct' | 'incorrect'
     const [shakeOption, setShakeOption] = useState(null); // Option to shake
+    const [reviewQuestion, setReviewQuestion] = useState(null); // For question review modal
 
     const options = useMemo(() => {
         if (!currentQuestion) return [];
@@ -115,16 +117,23 @@ export default function QuizView({ engine, economy, onFinish }) {
                     🔥 {state.streak}
                 </div>
 
-                {/* Question counter - center */}
-                <div style={styles.counterBadge}>
-                    {state.currentQuestionIndex + 1} / {engine.questions.length}
-                </div>
-
                 {/* Stars earned */}
                 <div style={styles.starBadge}>
                     <span>⭐</span> {state.score}
                 </div>
             </div>
+
+            {/* Progress Markers - NEW */}
+            <ProgressMarkers
+                questionHistory={engine.getQuestionHistory ? engine.getQuestionHistory() : []}
+                currentIndex={state.currentQuestionIndex}
+                totalQuestions={engine.questions ? engine.questions.length : 10}
+                onReviewQuestion={(idx) => {
+                    const history = engine.getQuestionHistory ? engine.getQuestionHistory() : [];
+                    const question = history.find(h => h.questionIndex === idx);
+                    if (question) setReviewQuestion(question);
+                }}
+            />
 
             {/* Question Card */}
             <div className={`card question-card animate-pop ${isOnFire ? 'on-fire' : ''}`}>
@@ -171,13 +180,15 @@ export default function QuizView({ engine, economy, onFinish }) {
                 </div>
             </div>
 
-            {/* Progress */}
-            <div className="progress-bar-container">
-                <div
-                    className="progress-bar-fill"
-                    style={{ width: `${((state.currentQuestionIndex) / engine.questions.length) * 100}%` }}
+            {/* Question Review Modal */}
+            {reviewQuestion && (
+                <QuestionReviewModal
+                    questionData={reviewQuestion}
+                    onClose={() => setReviewQuestion(null)}
                 />
-            </div>
+            )}
+
+            {/* Progress Bar removed - replaced by ProgressMarkers */}
         </div>
     );
 }
