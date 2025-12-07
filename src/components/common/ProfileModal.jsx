@@ -1,16 +1,6 @@
-import { useState, useEffect } from 'react';
-import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
-import { sfx } from '../../utils/soundEffects';
-import AvatarBuilder from './AvatarBuilder';
-
-
-/**
- * ProfileModal - User profile customization
- * Allows editing name, avatar, and settings
- */
 export default function ProfileModal({ userProfile, economy, onClose, onSave }) {
     const [name, setName] = useState(userProfile?.getName() || '');
-    const [avatarData, setAvatarData] = useState(userProfile?.getAvatarData() || null);
+    const [avatarData, setAvatarData] = useState(userProfile?.getAvatarData() || DEFAULT_AVATAR);
     const [soundEnabled, setSoundEnabled] = useState(true);
 
     useEffect(() => {
