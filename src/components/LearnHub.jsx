@@ -49,6 +49,14 @@ export default function LearnHub({ economy, onNavigate }) {
             action: () => onNavigate('spelling')
         },
         {
+            id: 'synthesis',
+            title: 'Synthesis & Transform',
+            icon: '🔄',
+            description: 'Combine sentences using grammar',
+            color: '#8b5cf6',
+            action: () => onNavigate('synthesis-setup')
+        },
+        {
             id: 'comprehension',
             title: 'Comprehension',
             icon: '📰',

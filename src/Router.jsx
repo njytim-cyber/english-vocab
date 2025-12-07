@@ -45,6 +45,8 @@ import ReviseHub from './components/ReviseHub';
 import FlashcardView from './components/FlashcardView';
 import ProgressHub from './components/ProgressHub';
 import ContentSetup from './components/ContentSetup';
+import SynthesisView from './components/SynthesisView';
+import synthesisQuestions from './data/synthesis_transformation.json';
 
 export default function Router() {
     const { engine, economy, achievements, eventService } = useGame();
@@ -65,6 +67,8 @@ export default function Router() {
     const [filteredClozePassages, setFilteredClozePassages] = useState(null);
     const [filteredGrammarCloze, setFilteredGrammarCloze] = useState(null);
     const [filteredComprehension, setFilteredComprehension] = useState(null);
+    const [filteredSynthesis, setFilteredSynthesis] = useState(null);
+    const [synthesisIndex, setSynthesisIndex] = useState(0);
 
     const [, setTick] = useState(0);
 
@@ -256,6 +260,20 @@ export default function Router() {
                         />
                     )}
 
+                    {view === 'synthesis-setup' && (
+                        <ContentSetup
+                            title="Synthesis & Transformation Setup"
+                            data={synthesisQuestions}
+                            themeKey="category"
+                            onStart={(filtered) => {
+                                setFilteredSynthesis(filtered);
+                                setSynthesisIndex(0);
+                                setView('synthesis');
+                            }}
+                            onBack={() => setView('learn')}
+                        />
+                    )}
+
                     {/* Content Views */}
                     {view === 'cloze' && (
                         <ClozeView
@@ -305,6 +323,23 @@ export default function Router() {
                             onComplete={() => setComprehensionIndex((i) => (i + 1) % (filteredComprehension || comprehensionPassages).length)}
                             onBack={() => setView('comprehension-setup')}
                             economy={economy}
+                        />
+                    )}
+
+                    {view === 'synthesis' && (
+                        <SynthesisView
+                            questions={filteredSynthesis || synthesisQuestions}
+                            currentIndex={synthesisIndex}
+                            onComplete={(nextIndex) => {
+                                if (nextIndex === -1) {
+                                    setView('synthesis-setup');
+                                } else {
+                                    setSynthesisIndex(nextIndex);
+                                }
+                            }}
+                            onBack={() => setView('synthesis-setup')}
+                            economy={economy}
+                            spacedRep={engine?.spacedRep}
                         />
                     )}
 
