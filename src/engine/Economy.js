@@ -33,7 +33,16 @@ export class Economy {
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
-            const defaultState = { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
+            const defaultState = {
+                coins: 0,
+                xp: 0,
+                level: 1,
+                eventTokens: 0,
+                inventory: [],
+                arenaWins: 0,
+                arenaLosses: 0,
+                arenaELO: 1000
+            };
             if (!data) return defaultState;
 
             const parsed = JSON.parse(data);
@@ -123,8 +132,37 @@ export class Economy {
         return { success: true, message: 'Purchased!' };
     }
 
+    getArenaStats() {
+        return {
+            wins: this.state.arenaWins || 0,
+            losses: this.state.arenaLosses || 0,
+            elo: this.state.arenaELO || 1000
+        };
+    }
+
+    addArenaWin(eloGain = 25) {
+        this.state.arenaWins = (this.state.arenaWins || 0) + 1;
+        this.state.arenaELO = (this.state.arenaELO || 1000) + eloGain;
+        this.save();
+    }
+
+    addArenaLoss(eloLoss = 15) {
+        this.state.arenaLosses = (this.state.arenaLosses || 0) + 1;
+        this.state.arenaELO = Math.max(0, (this.state.arenaELO || 1000) - eloLoss);
+        this.save();
+    }
+
     reset() {
-        this.state = { coins: 0, xp: 0, level: 1, eventTokens: 0, inventory: [] };
+        this.state = {
+            coins: 0,
+            xp: 0,
+            level: 1,
+            eventTokens: 0,
+            inventory: [],
+            arenaWins: 0,
+            arenaLosses: 0,
+            arenaELO: 1000
+        };
         this.save();
     }
 }

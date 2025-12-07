@@ -164,8 +164,24 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
             if (pState.score > cState.score) {
                 setWinner('player');
                 triggerConfetti();
+                // Persist arena win with ELO based on difficulty
+                const eloGain = selectedDifficulty === 'master' ? 50 :
+                    selectedDifficulty === 'hard' ? 40 :
+                        selectedDifficulty === 'medium' ? 30 :
+                            selectedDifficulty === 'easy' ? 20 : 15;
+                if (mainEngine?.economy) {
+                    mainEngine.economy.addArenaWin(eloGain);
+                }
             } else if (cState.score > pState.score) {
                 setWinner('cpu');
+                // Persist arena loss
+                const eloLoss = selectedDifficulty === 'master' ? 10 :
+                    selectedDifficulty === 'hard' ? 12 :
+                        selectedDifficulty === 'medium' ? 15 :
+                            selectedDifficulty === 'easy' ? 18 : 20;
+                if (mainEngine?.economy) {
+                    mainEngine.economy.addArenaLoss(eloLoss);
+                }
             } else {
                 setWinner('draw');
             }
@@ -173,8 +189,24 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
             if (pState.score >= cState.score) {
                 setWinner('player');
                 triggerConfetti();
+                // Persist win
+                const eloGain = selectedDifficulty === 'master' ? 50 :
+                    selectedDifficulty === 'hard' ? 40 :
+                        selectedDifficulty === 'medium' ? 30 :
+                            selectedDifficulty === 'easy' ? 20 : 15;
+                if (mainEngine?.economy) {
+                    mainEngine.economy.addArenaWin(eloGain);
+                }
             } else {
                 setWinner('cpu');
+                // Persist loss
+                const eloLoss = selectedDifficulty === 'master' ? 10 :
+                    selectedDifficulty === 'hard' ? 12 :
+                        selectedDifficulty === 'medium' ? 15 :
+                            selectedDifficulty === 'easy' ? 18 : 20;
+                if (mainEngine?.economy) {
+                    mainEngine.economy.addArenaLoss(eloLoss);
+                }
             }
         }
     };

@@ -52,15 +52,41 @@ describe('Economy System', () => {
     });
 
     it('should recover from corrupted NaN state on load', () => {
-        // Simulate corrupted storage
+        // Simulate corrupted storage with fresh mock
+        const corruptedStore = { 'vocab_quest_economy': JSON.stringify({ coins: NaN, xp: NaN, level: NaN, inventory: [] }) };
         vi.stubGlobal('localStorage', {
-            getItem: () => JSON.stringify({ coins: NaN, xp: NaN, level: NaN, inventory: [] }),
-            setItem: () => { }
+            getItem: (key) => corruptedStore[key] || null,
+            setItem: (key, value) => { corruptedStore[key] = value; }
         });
 
         const recoveredEconomy = new Economy();
         expect(recoveredEconomy.getCoins()).toBe(0);
         expect(recoveredEconomy.getXP()).toBe(0);
         expect(recoveredEconomy.getLevel()).toBe(1);
+    });
+
+    it('should track arena wins and ELO gains', () => {
+        const stats = economy.getArenaStats();
+        expect(stats.wins).toBe(0);
+        expect(stats.losses).toBe(0);
+        expect(stats.elo).toBe(1000);
+
+        economy.addArenaWin(25);
+        const updated = economy.getArenaStats();
+        expect(updated.wins).toBe(1);
+        expect(updated.elo).toBe(1025);
+    });
+
+    it('should track arena losses and ELO losses', () => {
+        economy.addArenaLoss(15);
+        const stats = economy.getArenaStats();
+        expect(stats.losses).toBe(1);
+        expect(stats.elo).toBe(985);
+    });
+
+    it('should prevent ELO from going below 0', () => {
+        economy.addArenaLoss(2000); // Massive loss
+        const stats = economy.getArenaStats();
+        expect(stats.elo).toBe(0);
     });
 });
