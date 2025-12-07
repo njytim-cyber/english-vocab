@@ -129,39 +129,26 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
         <PageLayout title="New Quiz 📝" onBack={onBack} maxWidth="600px">
             {/* Revision Block - Show if words need practice */}
             {revisionCount > 0 && (
-                <div style={{
-                    marginBottom: '1.5rem',
-                    padding: '1.25rem',
-                    background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
-                    borderRadius: borderRadius.lg,
-                    color: 'white',
-                    boxShadow: shadows.sm,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
-                    <div>
-                        <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🔄 Need Practice?</h3>
-                        <p style={{ margin: '0.3rem 0 0 0', opacity: 0.9, fontSize: '0.85rem' }}>
-                            {revisionCount} words ready for review
-                        </p>
-                    </div>
-                    <button
-                        onClick={onStartRevision}
-                        style={{
-                            padding: '0.5rem 1rem',
-                            background: 'white',
-                            color: '#27ae60',
-                            border: 'none',
-                            borderRadius: borderRadius.md,
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            fontSize: '0.85rem'
-                        }}
-                    >
-                        Quick Practice
-                    </button>
-                </div>
+                <button
+                    onClick={onStartRevision}
+                    style={{
+                        marginBottom: '1.5rem',
+                        width: '100%',
+                        padding: '1rem',
+                        background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
+                        borderRadius: borderRadius.lg,
+                        color: 'white',
+                        boxShadow: shadows.sm,
+                        border: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left'
+                    }}
+                >
+                    <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🔄 Need Practice?</h3>
+                    <p style={{ margin: '0.3rem 0 0 0', opacity: 0.9, fontSize: '0.85rem' }}>
+                        {revisionCount} words ready for review
+                    </p>
+                </button>
             )}
 
             <div style={{ background: colors.white, padding: '1.5rem', borderRadius: borderRadius.lg, boxShadow: shadows.sm }}>
@@ -185,7 +172,7 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                                     key={t}
                                     onClick={() => handleThemeToggle(t)}
                                     style={{
-                                        padding: '0.8rem',
+                                        padding: '0.5rem',
                                         borderRadius: borderRadius.md,
                                         border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
                                         background: isSelected ? `${colors.primary}10` : colors.white,
@@ -196,7 +183,7 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                                         position: 'relative'
                                     }}
                                 >
-                                    <div style={{ fontWeight: 'bold', marginBottom: '0.2rem', fontSize: '0.9rem', color: colors.dark }}>
+                                    <div style={{ fontWeight: 'bold', marginBottom: '0.2rem', fontSize: '0.8rem', color: colors.dark }}>
                                         {t}
                                         {isSelected && <span style={{ position: 'absolute', top: '5px', right: '5px', color: colors.primary }}>✓</span>}
                                     </div>
