@@ -19,8 +19,8 @@ test.describe('Minigames Arcade Flow', () => {
         // Wait for hydration
         await expect(page.locator('body')).toBeVisible();
 
-        // Ensure we are on Vocab Hub (new landing page)
-        await expect(page.getByRole('heading', { name: /Vocab Hub/i })).toBeVisible();
+        // Ensure we are on Learn Hub (new landing page)
+        await expect(page.getByRole('heading', { name: /Learn/i })).toBeVisible();
     });
 
     // Helper: Navigate to Games Hub via "Word Games" card
@@ -43,8 +43,8 @@ test.describe('Minigames Arcade Flow', () => {
         await expect(backBtn).toBeVisible();
         await backBtn.click();
 
-        // 4. Verify Vocab Hub
-        await expect(page.getByRole('heading', { name: /Vocab Hub/i })).toBeVisible();
+        // 4. Verify Learn Hub
+        await expect(page.getByRole('heading', { name: /Learn/i })).toBeVisible();
     });
 
     test('should play Word Search game', async ({ page }) => {
