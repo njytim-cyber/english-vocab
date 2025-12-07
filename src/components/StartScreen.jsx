@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import StarDisplay from './common/StarDisplay';
 import { colors, borderRadius, shadows } from '../styles/designTokens';
 
+const VERSION = '1.2.0'; // SemVer
 const AVATARS = ['🦊', '🐼', '🦁', '🐯', '🐸', '🦄'];
 
 export default function StartScreen({ onNavigate, engine, onStartArena, userProfile }) {
@@ -197,6 +198,17 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                     <span style={{ fontSize: '2rem' }}>🏟️</span>
                     The Arena
                 </button>
+            </div>
+
+            {/* Version Display */}
+            <div style={{
+                position: 'absolute',
+                bottom: '1rem',
+                fontSize: '0.75rem',
+                color: colors.textMuted,
+                opacity: 0.5
+            }}>
+                v{VERSION}
             </div>
         </div>
     );
