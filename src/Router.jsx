@@ -166,6 +166,7 @@ export default function Router() {
             {showProfileModal && (
                 <ProfileModal
                     userProfile={userProfile}
+                    economy={economy}
                     onClose={() => setShowProfileModal(false)}
                     onSave={() => setTick(t => t + 1)}
                 />
