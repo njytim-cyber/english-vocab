@@ -1,41 +1,135 @@
 {
-    "version": "1.2",
+    "version": "1.3",
     "entities": {
         "player": {
             "baseSpeed": 10
         }
     },
     "rewards": {
-        "quiz": {
-            "correctAnswer": 15,
-            "perfectBonus": 75,
-            "streakBonus": 5
+        "activities": {
+            "vocabMCQ": {
+                "baseStars": 3,
+                "xpMultiplier": 2,
+                "learningValue": "medium"
+            },
+            "grammarMCQ": {
+                "baseStars": 4,
+                "xpMultiplier": 2,
+                "learningValue": "high"
+            },
+            "vocabCloze": {
+                "starsPerBlank": 5,
+                "xpMultiplier": 2,
+                "learningValue": "high"
+            },
+            "grammarCloze": {
+                "starsPerBlank": 6,
+                "xpMultiplier": 2,
+                "learningValue": "very_high"
+            },
+            "comprehension": {
+                "starsPerQuestion": 7,
+                "xpMultiplier": 2,
+                "learningValue": "very_high"
+            },
+            "spelling": {
+                "starsPerWord": 4,
+                "xpMultiplier": 2,
+                "learningValue": "medium"
+            },
+            "flashcards": {
+                "starsPerCard": 3,
+                "xpMultiplier": 2,
+                "learningValue": "medium"
+            },
+            "srsReview": {
+                "starsPerCard": 4,
+                "xpMultiplier": 2,
+                "learningValue": "high"
+            }
         },
         "minigames": {
             "wordSearch": {
-                "xp": 25,
-                "stars": 15,
+                "baseStars": 5,
+                "starsPerWord": 1,
+                "maxBonus": 10,
+                "xp": 30,
                 "learningValue": "low"
             },
             "definitionMatch": {
-                "xp": 60,
-                "stars": 35,
+                "baseStars": 20,
+                "starsPerCorrect": 2,
+                "maxBonus": 20,
+                "xp": 80,
                 "learningValue": "high"
             },
             "letterDeduction": {
-                "xp": 35,
-                "stars": 20,
+                "baseStars": 10,
+                "starsPerCorrect": 1.5,
+                "maxBonus": 15,
+                "xp": 50,
                 "learningValue": "medium"
             },
             "wordScramble": {
-                "xp": 30,
-                "stars": 20,
+                "baseStars": 10,
+                "starsPerCorrect": 1.5,
+                "maxBonus": 15,
+                "xp": 50,
                 "learningValue": "medium"
             },
             "wordLadder": {
-                "xp": 20,
+                "baseStars": 8,
+                "starsPerCorrect": 1,
+                "maxBonus": 12,
+                "xp": 40,
+                "learningValue": "low_medium"
+            },
+            "sentenceMatch": {
+                "baseStars": 15,
+                "starsPerCorrect": 2,
+                "maxBonus": 20,
+                "xp": 70,
+                "learningValue": "high"
+            }
+        },
+        "arena": {
+            "winVs": {
+                "noob": {
+                    "stars": 40,
+                    "xp": 80
+                },
+                "easy": {
+                    "stars": 50,
+                    "xp": 100
+                },
+                "medium": {
+                    "stars": 75,
+                    "xp": 150
+                },
+                "hard": {
+                    "stars": 100,
+                    "xp": 200
+                },
+                "master": {
+                    "stars": 150,
+                    "xp": 300
+                }
+            },
+            "draw": {
                 "stars": 15,
-                "learningValue": "low"
+                "xp": 30
+            },
+            "loss": {
+                "stars": 0,
+                "xp": 10
+            }
+        },
+        "difficultyMultiplier": {
+            "formula": "1 + (difficulty - 1) / 10",
+            "examples": {
+                "1": 1.0,
+                "5": 1.4,
+                "10": 1.9
             }
         },
         "dailyLogin": [
