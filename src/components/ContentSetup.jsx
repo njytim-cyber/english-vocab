@@ -65,6 +65,18 @@ export default function ContentSetup({
         <PageLayout title={title} onBack={onBack} maxWidth="600px">
             <div style={{ background: colors.white, padding: '1.5rem', borderRadius: borderRadius.lg, boxShadow: shadows.sm }}>
 
+                {/* Difficulty - MOVED TO TOP */}
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <DualRangeSlider
+                        min={1}
+                        max={10}
+                        minValue={minDifficulty}
+                        maxValue={maxDifficulty}
+                        onChange={(min, max) => { setMinDifficulty(min); setMaxDifficulty(max); }}
+                        label="Difficulty Range"
+                    />
+                </div>
+
                 {/* Theme Selection */}
                 <div style={{ marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 'bold', fontSize: '1.1rem', color: colors.dark }}>
@@ -73,8 +85,8 @@ export default function ContentSetup({
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-                        gap: '0.6rem',
-                        maxHeight: '40vh',
+                        gap: '0.5rem',
+                        maxHeight: '30vh',
                         overflowY: 'auto',
                         padding: '0.3rem'
                     }}>
@@ -85,7 +97,7 @@ export default function ContentSetup({
                                     key={t}
                                     onClick={() => handleThemeToggle(t)}
                                     style={{
-                                        padding: '0.8rem',
+                                        padding: '0.5rem 0.7rem',
                                         borderRadius: borderRadius.md,
                                         border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
                                         background: isSelected ? `${colors.primary}10` : colors.white,
@@ -94,27 +106,16 @@ export default function ContentSetup({
                                         transition: 'all 0.2s',
                                         position: 'relative',
                                         fontWeight: isSelected ? 'bold' : 'normal',
-                                        color: colors.dark
+                                        color: colors.dark,
+                                        fontSize: '0.9rem'
                                     }}
                                 >
                                     {t}
-                                    {isSelected && <span style={{ position: 'absolute', top: '5px', right: '5px', color: colors.primary, fontSize: '0.8rem' }}>✓</span>}
+                                    {isSelected && <span style={{ position: 'absolute', top: '3px', right: '5px', color: colors.primary, fontSize: '0.75rem' }}>✓</span>}
                                 </button>
                             );
                         })}
                     </div>
-                </div>
-
-                {/* Difficulty */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <DualRangeSlider
-                        min={1}
-                        max={10} // Assumed max difficulty
-                        minValue={minDifficulty}
-                        maxValue={maxDifficulty}
-                        onChange={(min, max) => { setMinDifficulty(min); setMaxDifficulty(max); }}
-                        label="Difficulty Range"
-                    />
                 </div>
 
                 <div style={{ textAlign: 'center', marginBottom: '1rem', color: colors.textMuted }}>

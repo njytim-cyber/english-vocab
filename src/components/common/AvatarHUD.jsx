@@ -37,6 +37,7 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
 
     const avatar = userProfile?.getAvatar() || '🎓';
     const name = userProfile?.getName() || 'Learner';
+    const equippedItems = userProfile?.getEquippedItems() || { hat: null, accessory: null, skin: null };
 
     // XP Progress Calculation
     const currentLevelBaseXP = Math.pow(stats.level - 1, 2) * 100;
@@ -122,9 +123,24 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    fontSize: '1.5rem',
+                    position: 'relative'
                 }}>
                     {avatar}
+                    {/* Equipped item overlay */}
+                    {(equippedItems.hat || equippedItems.accessory) && (
+                        <span style={{
+                            position: 'absolute',
+                            top: '-8px',
+                            right: '-4px',
+                            fontSize: '1.2rem',
+                            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                        }}>
+                            {equippedItems.hat === 'crown' ? '👑' :
+                                equippedItems.hat === 'hat' ? '🎩' :
+                                    equippedItems.accessory === 'sunglasses' ? '🕶️' : null}
+                        </span>
+                    )}
                 </div>
                 <span style={{
                     fontWeight: '600',
