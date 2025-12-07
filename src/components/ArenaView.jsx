@@ -309,10 +309,18 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
             display: 'flex',
             flexDirection: 'column',
             background: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
-            color: 'white'
+            color: 'white',
+            maxWidth: '100vw',
+            overflowX: 'hidden'
         }}>
             {/* Header */}
-            <div style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{
+                padding: isMobile ? '6rem 1rem 1rem 1rem' : '1rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                maxWidth: '100%'
+            }}>
                 <button
                     onClick={onBack}
                     style={{
@@ -439,10 +447,11 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
                 flexDirection: isMobile ? 'column' : 'row',
                 gap: isMobile ? '1rem' : '2rem',
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: isMobile ? '100vw' : '1200px',
                 margin: '0 auto',
                 padding: '1rem',
-                overflowY: isMobile ? 'auto' : 'visible'
+                overflowY: isMobile ? 'auto' : 'visible',
+                overflowX: 'hidden'
             }}>
                 <ArenaPlayerColumn
                     engine={playerEngine}

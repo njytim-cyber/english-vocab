@@ -45,61 +45,17 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
     const progress = Math.min(100, Math.max(0, ((stats.xp - currentLevelBaseXP) / (nextLevelXP - currentLevelBaseXP)) * 100));
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: spacing.md,
-            right: spacing.md,
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            gap: spacing.sm
-        }}>
-            {/* Currency Display - CLICKABLE to open Shop */}
-            <button
-                onClick={onOpenShop}
-                onMouseEnter={() => setIsCurrencyHovered(true)}
-                onMouseLeave={() => setIsCurrencyHovered(false)}
-                style={{
-                    background: isCurrencyHovered
-                        ? 'linear-gradient(135deg, #f1c40f 0%, #e67e22 100%)'
-                        : colors.white,
-                    padding: '6px 12px',
-                    borderRadius: '50px',
-                    boxShadow: isCurrencyHovered ? shadows.md : shadows.sm,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    fontSize: '0.9rem',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    transform: isCurrencyHovered ? 'scale(1.05)' : 'scale(1)'
-                }}
-                title="Open Rewards Shop"
-            >
-                {/* Star + Count + Gift hint */}
-                <span style={{ fontSize: '1rem' }}>{icons.currency}</span>
-                <span style={{
-                    fontWeight: '600',
-                    color: isCurrencyHovered ? 'white' : colors.dark
-                }}>
-                    {stats.coins}
-                </span>
-                {/* Gift icon ALWAYS visible as shop hint */}
-                <span style={{
-                    fontSize: '0.85rem',
-                    opacity: isCurrencyHovered ? 1 : 0.5
-                }}>
-                    🎁
-                </span>
-            </button>
-
-            {/* Avatar button */}
+        <>
+            {/* Profile Pill - TOP LEFT */}
             <button
                 onClick={onOpenProfile}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 style={{
+                    position: 'fixed',
+                    top: spacing.md,
+                    left: spacing.md,
+                    zIndex: 1000,
                     display: 'flex',
                     alignItems: 'center',
                     gap: spacing.sm,
@@ -112,18 +68,19 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                     cursor: 'pointer',
                     boxShadow: isHovered ? shadows.lg : shadows.md,
                     transition: 'all 0.2s ease',
-                    transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+                    transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+                    height: '48px'
                 }}
             >
                 <div style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     background: isHovered ? 'rgba(255,255,255,0.2)' : colors.light,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem',
+                    fontSize: '1.3rem',
                     position: 'relative'
                 }}>
                     {avatar}
@@ -133,7 +90,7 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                             position: 'absolute',
                             top: '-8px',
                             right: '-4px',
-                            fontSize: '1.2rem',
+                            fontSize: '1.1rem',
                             filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
                         }}>
                             {equippedItems.hat === 'crown' ? '👑' :
@@ -155,6 +112,43 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                     {name}
                 </span>
             </button>
-        </div>
+
+            {/* Currency Display - TOP RIGHT */}
+            <button
+                onClick={onOpenShop}
+                onMouseEnter={() => setIsCurrencyHovered(true)}
+                onMouseLeave={() => setIsCurrencyHovered(false)}
+                style={{
+                    position: 'fixed',
+                    top: spacing.md,
+                    right: spacing.md,
+                    zIndex: 1000,
+                    background: isCurrencyHovered
+                        ? 'linear-gradient(135deg, #f1c40f 0%, #e67e22 100%)'
+                        : colors.white,
+                    padding: '0 16px',
+                    borderRadius: '50px',
+                    boxShadow: isCurrencyHovered ? shadows.md : shadows.sm,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '0.9rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    transform: isCurrencyHovered ? 'scale(1.05)' : 'scale(1)',
+                    height: '48px'
+                }}
+                title="Open Rewards Shop"
+            >
+                <span style={{ fontSize: '1.1rem' }}>{icons.currency}</span>
+                <span style={{
+                    fontWeight: '600',
+                    color: isCurrencyHovered ? 'white' : colors.dark
+                }}>
+                    {stats.coins}
+                </span>
+            </button>
+        </>
     );
 }
