@@ -1,3 +1,5 @@
+import { DEFAULT_AVATAR, migrateEmojiToAvatarData } from '../data/avatarTypes';
+
 const STORAGE_KEY = 'vocab_user_profile';
 
 /**
@@ -12,21 +14,31 @@ export class UserProfile {
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : {
-                name: '',
-                avatar: '🦊',
-                createdAt: new Date().toISOString(),
-                totalPlayTime: 0,
-                equippedItems: {
-                    hat: null,
-                    accessory: null,
-                    skin: null
-                }
-            };
+            const parsed = data ? JSON.parse(data) : null;
+
+            // If no data, return default
+            if (!parsed) {
+                return {
+                    name: '',
+                    avatar: '🦊',
+                    avatarData: { ...DEFAULT_AVATAR },
+                    createdAt: new Date().toISOString(),
+                    totalPlayTime: 0,
+                    equippedItems: { hat: null, accessory: null, skin: null }
+                };
+            }
+
+            // Migration: if avatarData doesn't exist, create from emoji
+            if (!parsed.avatarData && parsed.avatar) {
+                parsed.avatarData = migrateEmojiToAvatarData(parsed.avatar);
+            }
+
+            return parsed;
         } catch (e) {
             return {
                 name: '',
                 avatar: '🦊',
+                avatarData: { ...DEFAULT_AVATAR },
                 createdAt: new Date().toISOString(),
                 totalPlayTime: 0,
                 equippedItems: { hat: null, accessory: null, skin: null }
@@ -57,6 +69,25 @@ export class UserProfile {
 
     setAvatar(avatar) {
         this.state.avatar = avatar;
+        this.save();
+    }
+
+    getAvatarData() {
+        return this.state.avatarData || { ...DEFAULT_AVATAR };
+    }
+
+    setAvatarData(avatarData) {
+        this.state.avatarData = avatarData;
+        // Also update legacy emoji for backwards compatibility
+        const baseEmoji = {
+            human: '🧑',
+            cat: '🐱',
+            dog: '🐶',
+            bear: '🐻',
+            fox: '🦊',
+            panda: '🐼'
+        }[avatarData.base] || '🦊';
+        this.state.avatar = baseEmoji;
         this.save();
     }
 

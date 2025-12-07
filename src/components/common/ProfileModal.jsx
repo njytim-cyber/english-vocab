@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import { sfx } from '../../utils/soundEffects';
+import AvatarBuilder from './AvatarBuilder';
 
-const AVATARS = ['🎓', '🦊', '🐱', '🐶', '🦁', '🐼', '🐨', '🐸', '🦉', '🐙', '🦋', '🌟'];
 
 /**
  * ProfileModal - User profile customization
  * Allows editing name, avatar, and settings
  */
-export default function ProfileModal({ userProfile, onClose, onSave }) {
+export default function ProfileModal({ userProfile, economy, onClose, onSave }) {
     const [name, setName] = useState(userProfile?.getName() || '');
-    const [avatar, setAvatar] = useState(userProfile?.getAvatar() || '🎓');
+    const [avatarData, setAvatarData] = useState(userProfile?.getAvatarData() || null);
     const [soundEnabled, setSoundEnabled] = useState(true);
 
     useEffect(() => {
@@ -25,16 +25,18 @@ export default function ProfileModal({ userProfile, onClose, onSave }) {
         sfx.playClick();
         if (userProfile) {
             userProfile.setName(name);
-            userProfile.setAvatar(avatar);
+            if (avatarData) {
+                userProfile.setAvatarData(avatarData);
+            }
         }
         localStorage.setItem('sound_enabled', soundEnabled);
         onSave?.();
         onClose();
     };
 
-    const handleAvatarSelect = (newAvatar) => {
+    const handleAvatarChange = (newAvatarData) => {
         sfx.playPop();
-        setAvatar(newAvatar);
+        setAvatarData(newAvatarData);
     };
 
     return (
@@ -137,7 +139,7 @@ export default function ProfileModal({ userProfile, onClose, onSave }) {
                     />
                 </div>
 
-                {/* Avatar Selection */}
+                {/* Avatar Builder */}
                 <div style={{ marginBottom: spacing.lg }}>
                     <label style={{
                         display: 'block',
@@ -145,35 +147,13 @@ export default function ProfileModal({ userProfile, onClose, onSave }) {
                         fontWeight: '600',
                         color: colors.dark
                     }}>
-                        Choose Avatar
+                        Customize Avatar
                     </label>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(6, 1fr)',
-                        gap: spacing.sm
-                    }}>
-                        {AVATARS.map(a => (
-                            <button
-                                key={a}
-                                onClick={() => handleAvatarSelect(a)}
-                                style={{
-                                    width: '45px',
-                                    height: '45px',
-                                    borderRadius: '50%',
-                                    border: avatar === a ? '3px solid #667eea' : '2px solid #eee',
-                                    background: avatar === a ? '#f0f4ff' : colors.white,
-                                    fontSize: '1.5rem',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.2s'
-                                }}
-                            >
-                                {a}
-                            </button>
-                        ))}
-                    </div>
+                    <AvatarBuilder
+                        avatarData={avatarData}
+                        ownedItems={economy?.getInventory() || []}
+                        onChange={handleAvatarChange}
+                    />
                 </div>
 
                 {/* Settings */}

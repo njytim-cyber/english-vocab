@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing, icons } from '../../styles/designTokens';
+import Avatar from './Avatar';
 
 /**
  * AvatarHUD - Persistent HUD in top-right corner
@@ -35,9 +36,8 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
         return unsubscribe;
     }, [economy]);
 
-    const avatar = userProfile?.getAvatar() || '🎓';
+    const avatarData = userProfile?.getAvatarData() || null;
     const name = userProfile?.getName() || 'Learner';
-    const equippedItems = userProfile?.getEquippedItems() || { hat: null, accessory: null, skin: null };
 
     // XP Progress Calculation
     const currentLevelBaseXP = Math.pow(stats.level - 1, 2) * 100;
@@ -72,32 +72,13 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                     height: '48px'
                 }}
             >
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: isHovered ? 'rgba(255,255,255,0.2)' : colors.light,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.3rem',
-                    position: 'relative'
-                }}>
-                    {avatar}
-                    {/* Equipped item overlay */}
-                    {(equippedItems.hat || equippedItems.accessory) && (
-                        <span style={{
-                            position: 'absolute',
-                            top: '-8px',
-                            right: '-4px',
-                            fontSize: '1.1rem',
-                            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
-                        }}>
-                            {equippedItems.hat === 'crown' ? '👑' :
-                                equippedItems.hat === 'hat' ? '🎩' :
-                                    equippedItems.accessory === 'sunglasses' ? '🕶️' : null}
-                        </span>
-                    )}
+                {/* Avatar Component */}
+                <div style={{ transform: 'scale(0.8)' }}>
+                    <Avatar
+                        avatarData={avatarData}
+                        size="small"
+                        showBorder={false}
+                    />
                 </div>
                 <span style={{
                     fontWeight: '600',
