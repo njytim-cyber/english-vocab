@@ -7,7 +7,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { buildArenaQuestions, flattenClozePassages, getQuestionTypeTheme } from '../utils/arenaQuestionBuilder';
 import clozePassagesData from '../data/cloze_sample.json';
 import grammarQuestionsData from '../data/grammar_questions.json';
-import grammarClozePassagesData from '../data/grammar_cloze_sample.json';
+import grammarClozePassagesData from '../data/grammar_cloze_full.json';
 import { ArenaPlayerColumn } from './arena/ArenaPlayerColumn';
 import { ArenaCPUColumn } from './arena/ArenaCPUColumn';
 
