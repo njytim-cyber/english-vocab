@@ -83,7 +83,7 @@ export default function StartScreen({ onNavigate, engine, onStartArena, userProf
                                 marginBottom: '0.5rem'
                             }}
                             onKeyPress={(e) => e.key === 'Enter' && handleNameSave()}
-                            onKeyPress={(e) => e.key === 'Enter' && handleNameSave()}
+
                         />
                         <button
                             onClick={handleNameSave}

@@ -12,6 +12,7 @@ export const colors = {
     // Semantic colors (WCAG AA compliant)
     success: '#6B8E23',      // Olive green
     warning: '#B8860B',      // Dark goldenrod
+    errorGradient: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)',
     error: '#C9302C',        // Muted red
 
     // Neutrals

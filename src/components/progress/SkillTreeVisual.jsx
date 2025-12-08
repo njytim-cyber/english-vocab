@@ -67,6 +67,7 @@ const TreeNode = memo(({ node, nodeColor, status, progress, onClick }) => (
         </text>
     </g>
 ));
+TreeNode.displayName = 'TreeNode';
 
 export default function SkillTreeVisual({ engine, spellingProgress, onBack }) {
     const [activeTree, setActiveTree] = useState('vocab');

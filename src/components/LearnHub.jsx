@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import UserProgress from '../engine/UserProgress';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 
 /**
@@ -9,6 +10,7 @@ import UserProgress from '../engine/UserProgress';
  * Shows Vocab MCQ only (Word Games moved to nav)
  */
 export default function LearnHub({ economy, onNavigate }) {
+    const isMobile = useIsMobile();
     const [userProgress] = useState(() => new UserProgress());
     const [, forceUpdate] = useState({});
 
@@ -82,6 +84,7 @@ export default function LearnHub({ economy, onNavigate }) {
                 style={{
                     position: 'relative',
                     display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
                     alignItems: 'center',
                     minHeight: '140px',
                     marginBottom: spacing.xl,
@@ -103,7 +106,14 @@ export default function LearnHub({ economy, onNavigate }) {
                     e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255, 215, 0, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.5)';
                 }}
             >
-                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.lg, flex: 1 }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: 'center',
+                    gap: isMobile ? spacing.md : spacing.lg,
+                    flex: 1,
+                    textAlign: isMobile ? 'center' : 'left'
+                }}>
                     {/* Icon with PRO Badge */}
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <div style={{
@@ -124,7 +134,7 @@ export default function LearnHub({ economy, onNavigate }) {
                     {/* Text Content */}
                     <div>
                         <h2 style={{
-                            fontSize: '1.8rem',
+                            fontSize: isMobile ? '1.4rem' : '1.8rem',
                             margin: 0,
                             marginBottom: spacing.xs,
                             fontWeight: 'bold',
@@ -149,7 +159,9 @@ export default function LearnHub({ economy, onNavigate }) {
                 <div style={{
                     fontSize: '1.5rem',
                     opacity: 0.6,
-                    color: '#ffd700'
+                    color: '#ffd700',
+                    transform: isMobile ? 'rotate(90deg)' : 'none',
+                    marginTop: isMobile ? spacing.md : 0
                 }}>
                     →
                 </div>

@@ -233,7 +233,7 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
                                 </>
                             )}
 
-                        >
+
                             {activeTab === 'bg' && item.color ? (
                                 <div style={{
                                     width: '40px',

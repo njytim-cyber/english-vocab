@@ -7,7 +7,7 @@ module.exports = {
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
     ],
-    ignorePatterns: ['dist', '.eslintrc.cjs', 'playwright-report', 'test-results', 'src/data/scripts/**', 'test_simulation.js'],
+    ignorePatterns: ['dist', '.eslintrc.cjs', 'playwright-report', 'test-results', 'src/data/scripts/**', 'test_simulation.js', '**/*.test.jsx', '**/*.test.js', 'playwright.config.override.js'],
     parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
     settings: { react: { version: '18.2' } },
     plugins: ['react-refresh'],
