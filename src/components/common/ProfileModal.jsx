@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import { sfx } from '../../utils/soundEffects';
 import AvatarBuilder from './AvatarBuilder';

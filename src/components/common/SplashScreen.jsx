@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { triggerConfetti } from '../../utils/effects';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import releaseNotes from '../../data/release_notes.json';

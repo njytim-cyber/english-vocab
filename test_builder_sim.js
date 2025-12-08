@@ -1,7 +1,7 @@
 
 const DEFAULT_AVATAR = { base: 'fox', face: { eyes: 'default' }, accessories: { hat: null } };
 
-function checkAvatarBuilder(avatarData, ownedItems) {
+function checkAvatarBuilder(avatarData, _ownedItems) {
     console.log('Testing AvatarBuilder...');
 
     // Logic from AvatarBuilder.jsx

@@ -56,7 +56,7 @@ export default function MinigameHub({ onSelectGame, onBack }) {
                                 gridColumn: isFeatured ? '1 / -1' : 'auto',
                                 background: colors.white,
                                 color: colors.dark,
-                                border: 'none', // Cleaner look for bento
+                                border: isFeatured ? 'none' : `1px solid ${colors.border}`, // Cleaner look for bento
                                 borderRadius: borderRadius.xl,
                                 padding: isFeatured ? '1.5rem' : '1rem',
                                 display: 'flex',

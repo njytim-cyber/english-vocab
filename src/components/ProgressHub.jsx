@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { ACHIEVEMENTS } from '../engine/Achievements';
-import { GRAMMAR_CATEGORIES } from './GrammarSetup';
+import { GRAMMAR_CATEGORIES } from '../data/grammarData';
 import { VOCAB_CLOZE } from '../data/dataManifest';
 const clozePassages = VOCAB_CLOZE;
 import { StatCard } from './progress/StatCard';

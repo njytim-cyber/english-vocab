@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { triggerConfetti } from '../utils/effects';
 // import { speak } from '../utils/audio'; // REMOVED: No voiceovers per user request
 import balance from '../data/balance.json';

@@ -1,115 +1,55 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
+import { GRAMMAR_CATEGORIES } from '../data/grammarData';
 
 /**
- * GrammarSetup - Setup screen for Grammar MCQ with subunit selection
- * Allows students to choose specific grammar topics to practice
+ * GrammarSetup - Setup screen for Grammar MCQ using "Clean Themes" style
  */
-
-const GRAMMAR_CATEGORIES = [
-    {
-        name: "Nouns, Pronouns & Determiners",
-        subunits: [
-            { id: "countable-uncountable", name: "Countable vs. Uncountable Nouns" },
-            { id: "collective-nouns", name: "Collective Nouns" },
-            { id: "possessive-pronouns", name: "Possessive Pronouns vs. Adjectives" },
-            { id: "reflexive-pronouns", name: "Reflexive Pronouns" },
-            { id: "demonstrative-pronouns", name: "Demonstrative Pronouns" }
-        ]
-    },
-    {
-        name: "Subject-Verb Agreement",
-        subunits: [
-            { id: "basic-sva", name: "Basic SVA (Singular/Plural)" },
-            { id: "proximity-rule", name: "Proximity Rule (Neither/Nor)" },
-            { id: "together-with", name: "'Together with / As well as' Rule" },
-            { id: "indefinite-pronouns", name: "Indefinite Pronouns (Everyone, Each)" },
-            { id: "exception-nouns", name: "Exception Nouns (News, Trousers)" }
-        ]
-    },
-    {
-        name: "Tenses & Verb Forms",
-        subunits: [
-            { id: "past-present-perfect", name: "Simple Past vs. Present Perfect" },
-            { id: "past-continuous", name: "Past Continuous vs. Simple Past" },
-            { id: "past-perfect", name: "Past Perfect (Sequencing Actions)" },
-            { id: "future-forms", name: "Future Forms (Will vs. Going to)" },
-            { id: "irregular-verbs", name: "Irregular Verbs" }
-        ]
-    },
-    {
-        name: "Conditionals & Modals",
-        subunits: [
-            { id: "zero-first-conditional", name: "Zero & First Conditionals" },
-            { id: "second-third-conditional", name: "Second & Third Conditionals" },
-            { id: "mixed-conditionals", name: "Mixed Conditionals" },
-            { id: "modal-verbs", name: "Modal Verbs (Can/Could/May/Might)" },
-            { id: "modal-perfects", name: "Modal Perfects (Should have, Could have)" }
-        ]
-    },
-    {
-        name: "Advanced Structures",
-        subunits: [
-            { id: "reported-speech", name: "Reported Speech" },
-            { id: "passive-voice", name: "Passive Voice" },
-            { id: "relative-clauses", name: "Relative Clauses" },
-            { id: "subjunctive", name: "The Subjunctive Mood" },
-            { id: "inversion", name: "Inversion for Emphasis" }
-        ]
-    }
-];
-
 export default function GrammarSetup({
     allQuestions,
     onStart,
     onBack
 }) {
     const [selectedSubunits, setSelectedSubunits] = useState(new Set());
-    const [expandedCategories, setExpandedCategories] = useState(new Set());
 
-    const toggleCategory = (categoryName) => {
-        setExpandedCategories(prev => {
+    // Flatten all topics for easy selection
+    const allTopics = useMemo(() => {
+        const topics = [];
+        (GRAMMAR_CATEGORIES || []).forEach(cat => { // Defensive check
+            cat.subunits.forEach(sub => {
+                topics.push({
+                    id: sub.name, // Using name as ID for now to match Question logic
+                    name: sub.name,
+                    category: cat.name
+                });
+            });
+        });
+        return topics;
+    }, []);
+
+    const toggleTopic = (topicName) => {
+        setSelectedSubunits(prev => {
             const next = new Set(prev);
-            if (next.has(categoryName)) {
-                next.delete(categoryName);
+            if (next.has(topicName)) {
+                next.delete(topicName);
             } else {
-                next.add(categoryName);
+                next.add(topicName);
             }
             return next;
         });
     };
 
-    const toggleSubunit = (subunitName) => {
-        setSelectedSubunits(prev => {
-            const next = new Set(prev);
-            if (next.has(subunitName)) {
-                next.delete(subunitName);
-            } else {
-                next.add(subunitName);
-            }
-            return next;
-        });
-    };
-
-    const selectAllInCategory = (category) => {
-        setSelectedSubunits(prev => {
-            const next = new Set(prev);
-            category.subunits.forEach(s => next.add(s.name));
-            return next;
-        });
-    };
-
-    const deselectAllInCategory = (category) => {
-        setSelectedSubunits(prev => {
-            const next = new Set(prev);
-            category.subunits.forEach(s => next.delete(s.name));
-            return next;
-        });
+    const toggleAll = () => {
+        if (selectedSubunits.size === allTopics.length) {
+            setSelectedSubunits(new Set());
+        } else {
+            setSelectedSubunits(new Set(allTopics.map(t => t.name)));
+        }
     };
 
     const handleStart = () => {
-        // Filter questions by selected subunits
+        // Filter questions
         const selected = Array.from(selectedSubunits);
         let filteredQuestions = allQuestions;
 
@@ -119,7 +59,7 @@ export default function GrammarSetup({
             );
         }
 
-        // Shuffle and take up to 15 questions
+        // Shuffle and take 15
         const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5);
         const finalQuestions = shuffled.slice(0, 15);
 
@@ -132,182 +72,105 @@ export default function GrammarSetup({
     };
 
     return (
-        <PageLayout
-            title="Grammar Quiz Setup"
-            showBack={true}
-            onBack={onBack}
-            maxWidth="700px"
-        >
-            <p style={{
-                color: colors.textMuted,
-                marginBottom: spacing.lg,
-                textAlign: 'center'
-            }}>
-                Select topics to practice, or start with all topics
-            </p>
+        <PageLayout title="Grammar Setup" showBack={true} onBack={onBack} maxWidth="700px">
+            <div style={{ background: colors.white, padding: spacing.lg, borderRadius: borderRadius.lg, boxShadow: shadows.md }}>
 
-            {/* Category List */}
-            <div style={{ marginBottom: spacing.xl }}>
-                {GRAMMAR_CATEGORIES.map(category => {
-                    const isExpanded = expandedCategories.has(category.name);
-                    const selectedCount = category.subunits.filter(s =>
-                        selectedSubunits.has(s.name)
-                    ).length;
-                    const allSelected = selectedCount === category.subunits.length;
+                {/* Header / Selection Info */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.md }}>
+                    <div>
+                        <h2 style={{ fontSize: '1.2rem', margin: 0, color: colors.dark }}>Select Topics</h2>
+                        <span style={{ fontSize: '0.9rem', color: colors.textMuted }}>
+                            {selectedSubunits.size} selected
+                        </span>
+                    </div>
 
-                    return (
-                        <div key={category.name} style={{
-                            background: colors.white,
-                            borderRadius: borderRadius.lg,
-                            marginBottom: spacing.sm,
-                            overflow: 'hidden',
-                            boxShadow: shadows.sm
-                        }}>
-                            {/* Category Header */}
-                            <div
-                                onClick={() => toggleCategory(category.name)}
-                                style={{
-                                    padding: spacing.md,
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    cursor: 'pointer',
-                                    background: selectedCount > 0 ? '#fef3c7' : colors.white
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.sm }}>
-                                    <span>{isExpanded ? '▼' : '▶'}</span>
-                                    <span style={{ fontWeight: '600', color: colors.dark }}>
-                                        {category.name}
-                                    </span>
-                                </div>
-                                <span style={{
-                                    padding: `${spacing.xs} ${spacing.sm}`,
-                                    background: selectedCount > 0 ? '#f59e0b' : colors.light,
-                                    color: selectedCount > 0 ? 'white' : colors.textMuted,
-                                    borderRadius: borderRadius.round,
-                                    fontSize: '0.8rem'
-                                }}>
-                                    {selectedCount}/{category.subunits.length}
-                                </span>
-                            </div>
-
-                            {/* Subunits */}
-                            {isExpanded && (
-                                <div style={{
-                                    padding: spacing.sm,
-                                    borderTop: `1px solid ${colors.border}`,
-                                    background: colors.light
-                                }}>
-                                    {/* Select/Deselect All */}
-                                    <div style={{
-                                        marginBottom: spacing.sm,
-                                        display: 'flex',
-                                        gap: spacing.xs
-                                    }}>
-                                        <button
-                                            onClick={(e) => { e.stopPropagation(); selectAllInCategory(category); }}
-                                            style={{
-                                                padding: `${spacing.xs} ${spacing.sm}`,
-                                                background: colors.white,
-                                                border: `1px solid ${colors.border}`,
-                                                borderRadius: borderRadius.md,
-                                                cursor: 'pointer',
-                                                fontSize: '0.75rem'
-                                            }}
-                                        >
-                                            Select All
-                                        </button>
-                                        <button
-                                            onClick={(e) => { e.stopPropagation(); deselectAllInCategory(category); }}
-                                            style={{
-                                                padding: `${spacing.xs} ${spacing.sm}`,
-                                                background: colors.white,
-                                                border: `1px solid ${colors.border}`,
-                                                borderRadius: borderRadius.md,
-                                                cursor: 'pointer',
-                                                fontSize: '0.75rem'
-                                            }}
-                                        >
-                                            Deselect All
-                                        </button>
-                                    </div>
-
-                                    {category.subunits.map(subunit => {
-                                        const isSelected = selectedSubunits.has(subunit.name);
-                                        return (
-                                            <div
-                                                key={subunit.id}
-                                                onClick={() => toggleSubunit(subunit.name)}
-                                                style={{
-                                                    padding: spacing.sm,
-                                                    marginBottom: spacing.xs,
-                                                    background: isSelected ? '#fef3c7' : colors.white,
-                                                    borderRadius: borderRadius.md,
-                                                    cursor: 'pointer',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: spacing.sm,
-                                                    border: isSelected ? '2px solid #f59e0b' : '2px solid transparent'
-                                                }}
-                                            >
-                                                <span style={{
-                                                    width: '20px',
-                                                    height: '20px',
-                                                    borderRadius: '4px',
-                                                    border: `2px solid ${isSelected ? '#f59e0b' : colors.border}`,
-                                                    background: isSelected ? '#f59e0b' : 'white',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    color: 'white',
-                                                    fontSize: '0.7rem'
-                                                }}>
-                                                    {isSelected && '✓'}
-                                                </span>
-                                                <span style={{ fontSize: '0.9rem', color: colors.dark }}>
-                                                    {subunit.name}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/* Start Button */}
-            <div style={{ textAlign: 'center' }}>
-                <div style={{ marginBottom: spacing.sm, color: colors.textMuted }}>
-                    {selectedSubunits.size === 0
-                        ? `All topics (${getQuestionCount()} questions available)`
-                        : `${selectedSubunits.size} topics selected (${getQuestionCount()} questions)`
-                    }
+                    <button
+                        onClick={toggleAll}
+                        style={{
+                            background: colors.light,
+                            border: 'none',
+                            padding: '6px 12px',
+                            borderRadius: borderRadius.md,
+                            cursor: 'pointer',
+                            fontSize: '0.9rem',
+                            color: colors.primary,
+                            fontWeight: '600'
+                        }}
+                    >
+                        {selectedSubunits.size === allTopics.length ? 'Deselect All' : 'Select All'}
+                    </button>
                 </div>
+
+                {/* Re-rendering properly structure: List of Categories with internal Grids */}
+                <div style={{ maxHeight: '60vh', overflowY: 'auto', marginBottom: spacing.lg }}>
+                    {(GRAMMAR_CATEGORIES || []).map(cat => (
+                        <div key={cat.name} style={{ marginBottom: spacing.md }}>
+                            <h4 style={{
+                                margin: `0 0 ${spacing.sm} 0`,
+                                fontSize: '0.9rem',
+                                color: colors.textMuted,
+                                borderBottom: `1px solid ${colors.border}`,
+                                paddingBottom: '4px'
+                            }}>
+                                {cat.name}
+                            </h4>
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                                gap: spacing.sm
+                            }}>
+                                {cat.subunits.map(sub => {
+                                    const isSelected = selectedSubunits.has(sub.name);
+                                    return (
+                                        <button
+                                            key={sub.name}
+                                            onClick={() => toggleTopic(sub.name)}
+                                            style={{
+                                                padding: spacing.sm,
+                                                borderRadius: borderRadius.md,
+                                                border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
+                                                background: isSelected ? `${colors.primary}15` : colors.white,
+                                                color: isSelected ? colors.primary : colors.dark,
+                                                textAlign: 'left',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem',
+                                                fontWeight: isSelected ? '600' : '400',
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                transition: 'all 0.2s'
+                                            }}
+                                        >
+                                            <span style={{ marginRight: '8px' }}>{sub.name}</span>
+                                            {isSelected && <span>✓</span>}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Footer Action */}
                 <button
                     onClick={handleStart}
                     disabled={getQuestionCount() === 0}
                     style={{
-                        padding: `${spacing.md} ${spacing.xl}`,
-                        background: getQuestionCount() > 0
-                            ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
-                            : colors.light,
+                        width: '100%',
+                        padding: spacing.md,
+                        fontSize: '1.2rem',
+                        background: getQuestionCount() > 0 ? colors.primaryGradient : colors.light,
                         color: getQuestionCount() > 0 ? 'white' : colors.textMuted,
-                        border: 'none',
                         borderRadius: borderRadius.lg,
-                        fontSize: '1.1rem',
-                        fontWeight: '600',
+                        border: 'none',
                         cursor: getQuestionCount() > 0 ? 'pointer' : 'not-allowed',
-                        boxShadow: getQuestionCount() > 0 ? shadows.md : 'none'
+                        boxShadow: getQuestionCount() > 0 ? shadows.md : 'none',
+                        fontWeight: 'bold'
                     }}
                 >
-                    Start Quiz
+                    Start Quiz ({getQuestionCount()} Questions)
                 </button>
             </div>
         </PageLayout>
     );
 }
-
-export { GRAMMAR_CATEGORIES };

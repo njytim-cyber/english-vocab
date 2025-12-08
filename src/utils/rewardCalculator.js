@@ -44,7 +44,7 @@ export function calculateQuizReward(activityType, difficulty = 5, isCorrect = fa
  * @param {number} totalCount - total questions/items
  * @returns {object} { stars, xp }
  */
-export function calculateMinigameReward(gameName, correctCount, totalCount) {
+export function calculateMinigameReward(gameName, correctCount) {
     const game = balance.rewards.minigames[gameName];
     if (!game) {
         console.warn(`Unknown minigame: ${gameName}`);

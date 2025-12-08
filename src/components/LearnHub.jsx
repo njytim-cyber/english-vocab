@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import UserProgress from '../engine/UserProgress';
@@ -9,69 +9,60 @@ import { useIsMobile } from '../hooks/useIsMobile';
  * LearnHub - Central learning dashboard
  * Shows Vocab MCQ only (Word Games moved to nav)
  */
-export default function LearnHub({ economy, onNavigate }) {
+export default function LearnHub({ onNavigate }) {
     const isMobile = useIsMobile();
-    const [userProgress] = useState(() => new UserProgress());
-    const [, forceUpdate] = useState({});
+    const userProgress = useMemo(() => new UserProgress(), []);
 
-    const cards = [
+    const cards = useMemo(() => [
         {
             id: 'vocab-mcq',
             title: 'Vocab MCQ',
-            subtitle: 'Multiple-choice questions',
             icon: '📝',
             action: () => onNavigate('quiz-setup')
         },
         {
             id: 'vocab-cloze',
             title: 'Vocab Cloze',
-            subtitle: 'Fill-in-the-blanks',
             icon: '📖',
             action: () => onNavigate('cloze-setup')
         },
         {
             id: 'grammar-mcq',
             title: 'Grammar MCQ',
-            subtitle: 'Grammar rules & structures',
             icon: '✏️',
             action: () => onNavigate('grammar')
         },
         {
             id: 'grammar-cloze',
             title: 'Grammar Cloze',
-            subtitle: 'Grammar fill-in-the-blanks',
             icon: '📜',
             action: () => onNavigate('grammar-cloze-setup')
         },
         {
             id: 'spelling',
             title: 'Spelling',
-            subtitle: 'Practice spelling words',
             icon: '🔤',
             action: () => onNavigate('spelling')
         },
         {
             id: 'synthesis',
-            title: 'Synthesis and Transformation',
-            subtitle: 'Combine sentences',
+            title: 'Synthesis',
             icon: '🔄',
             action: () => onNavigate('synthesis-setup')
         },
         {
             id: 'listening',
-            title: 'Listening Comprehension',
-            subtitle: 'Master native accents with audio scenes',
+            title: 'Listening',
             icon: '🎧',
             action: () => onNavigate('listening-setup')
         },
         {
             id: 'comprehension',
             title: 'Comprehension',
-            subtitle: 'Reading passages',
             icon: '📰',
             action: () => onNavigate('comprehension-setup')
         }
-    ];
+    ], [onNavigate]);
 
     const recommendedId = useMemo(() => userProgress.getRecommendedModule(cards), [userProgress, cards]);
 
@@ -281,11 +272,4 @@ export default function LearnHub({ economy, onNavigate }) {
     );
 }
 
-// Helper to darken/lighten hex colors
-function adjustColor(hex, amount) {
-    const num = parseInt(hex.replace('#', ''), 16);
-    const r = Math.min(255, Math.max(0, (num >> 16) + amount));
-    const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
-    const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
-    return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
-}
+

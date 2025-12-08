@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, memo } from 'react';
+import { useState, useMemo, useCallback, memo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import PageLayout from '../common/PageLayout';
 import treeConfig from '../../data/tree_config.json';

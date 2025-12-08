@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+// ProgressMarkers component - no React import needed in modern JSX
 import { colors, borderRadius } from '../../styles/designTokens';
 
 /**

@@ -91,7 +91,6 @@ export default function ListeningView({
 
     // Calculate how many answered
     const answeredCount = Object.keys(answers).length;
-    const isAllAnswered = answeredCount === totalQuestions;
 
     return (
         <PageLayout
@@ -199,7 +198,7 @@ export default function ListeningView({
                     {passage.questions.map((q, idx) => {
                         const isSelected = (val) => answers[idx] === val;
                         const isCorrectAnswer = (val) => val === q.answer;
-                        const hasAnswer = answers[idx] !== undefined;
+                        const _hasAnswer = answers[idx] !== undefined;
 
                         const isCardCorrect = answers[idx] === q.answer;
 

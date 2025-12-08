@@ -1,7 +1,7 @@
 {
     "name": "word-citadel",
     "private": true,
-    "version": "1.3.1",
+    "version": "1.3.2",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -11,7 +11,9 @@
         "cap": "cap",
         "docs": "node scripts/auto-doc.js",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives",
-        "test": "vitest"
+        "verify": "npm run lint && npm test",
+        "test": "vitest",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@capacitor/core": "^5.0.0",
@@ -32,8 +34,15 @@
         "eslint-plugin-react": "^7.32.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
+        "husky": "^8.0.0",
         "jsdom": "^27.2.0",
+        "lint-staged": "^16.2.7",
         "vite": "^7.2.6",
         "vitest": "^4.0.15"
+    },
+    "lint-staged": {
+        "*.{js,jsx}": [
+            "eslint --fix"
+        ]
     }
 }

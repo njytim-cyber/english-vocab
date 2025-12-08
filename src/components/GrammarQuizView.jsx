@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { colors, borderRadius, shadows, spacing, typography } from '../styles/designTokens';
+import { useState } from 'react';
+import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { triggerConfetti } from '../utils/effects';
 
@@ -196,9 +196,9 @@ export default function GrammarQuizView({
                                             isSelected ? colors.primaryLight :
                                                 colors.light,
                                     border: `2px solid ${showCorrect ? colors.success :
-                                            showWrong ? colors.error :
-                                                isSelected ? colors.primary :
-                                                    'transparent'
+                                        showWrong ? colors.error :
+                                            isSelected ? colors.primary :
+                                                'transparent'
                                         }`,
                                     borderRadius: borderRadius.lg,
                                     textAlign: 'left',

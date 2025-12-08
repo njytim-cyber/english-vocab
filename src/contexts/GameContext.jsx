@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { QuizEngine } from '../engine/QuizEngine';
 import { Economy } from '../engine/Economy';
 import { Achievements } from '../engine/Achievements';

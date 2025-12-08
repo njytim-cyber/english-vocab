@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import Avatar from './Avatar';
-import { DEFAULT_AVATAR } from '../../data/avatarTypes';
-
-/**
- * AvatarBuilder - Interactive avatar customization component
- * Allows users to customize their avatar by selecting from owned items
- */
 import { SHOP_ITEMS } from '../../engine/Economy';
+import { DEFAULT_AVATAR } from '../../data/avatarTypes';
 
 /**
  * AvatarBuilder - Interactive avatar customization component
@@ -27,12 +22,12 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
     const [currentAvatar, setCurrentAvatar] = useState(safeAvatarData);
 
     // Sync internal state if prop changes
-    React.useEffect(() => {
+    useEffect(() => {
         setCurrentAvatar(safeAvatarData);
     }, [avatarData]);
 
     // Memoize derived lists for performance
-    const { bases, hats, eyes, backgrounds } = React.useMemo(() => {
+    const { bases, hats, eyes, backgrounds } = useMemo(() => {
         // Shop -> Avatar Mappings
         const shopAvatars = SHOP_ITEMS
             .filter(i => i.type === 'avatar')
@@ -78,7 +73,7 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
         };
     }, []);
 
-    const tabs = React.useMemo(() => [
+    const tabs = useMemo(() => [
         { id: 'base', icon: '👤', items: bases },
         { id: 'eyes', icon: '👓', items: eyes },
         { id: 'hat', icon: '🎩', items: hats },
@@ -211,7 +206,11 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
                                 border: `1px solid ${colors.border}`
                             }} />;
                         }
-                        return <div style={{ fontSize: '1.8rem' }}>{item.emoji || '⚪'}</div>;
+                        if (item.emoji) {
+                            return <div style={{ fontSize: '1.5rem', lineHeight: 1 }}>{item.emoji}</div>;
+                        }
+                        // Fallback
+                        return <div style={{ fontSize: '1rem' }}>?</div>;
                     };
 
                     return (
@@ -259,7 +258,8 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
 AvatarBuilder.propTypes = {
     avatarData: PropTypes.object,
-    ownedItems: PropTypes.arrayOf(PropTypes.string),
+    ownedItems: PropTypes.array,
     onChange: PropTypes.func,
-    readonly: PropTypes.bool
+    readonly: PropTypes.bool,
+    showPreview: PropTypes.bool
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 
@@ -26,7 +26,7 @@ export default function DragDropAnswerInput({ answerParts, onChange, disabled })
     const [selectedSlot, setSelectedSlot] = useState(0); // Currently selected slot for click-to-add
 
     // Update parent component whenever placement changes
-    React.useEffect(() => {
+    useEffect(() => {
         const answer = answerParts.map((part, idx) => {
             if (part.type === 'locked') {
                 return part.text;
