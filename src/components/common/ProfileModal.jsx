@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 import { sfx } from '../../utils/soundEffects';
 import AvatarBuilder from './AvatarBuilder';
+import Avatar from './Avatar';
 import { DEFAULT_AVATAR } from '../../data/avatarTypes';
 
 /**
@@ -17,6 +18,7 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
             return '';
         }
     });
+    // Ensure avatarData isn't null, defaulting to DEFAULT_AVATAR
     const [avatarData, setAvatarData] = useState(() => {
         try {
             return userProfile?.getAvatarData?.() || DEFAULT_AVATAR;
@@ -25,15 +27,6 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
             return DEFAULT_AVATAR;
         }
     });
-    const [soundEnabled, setSoundEnabled] = useState(true);
-
-    useEffect(() => {
-        // Load sound preference
-        const savedSound = localStorage.getItem('sound_enabled');
-        if (savedSound !== null) {
-            setSoundEnabled(savedSound === 'true');
-        }
-    }, []);
 
     const handleSave = () => {
         sfx.playClick();
@@ -43,7 +36,6 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                 userProfile.setAvatarData(avatarData);
             }
         }
-        localStorage.setItem('sound_enabled', soundEnabled);
         onSave?.();
         onClose();
     };
@@ -60,12 +52,13 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0,0,0,0.5)',
+            background: 'rgba(0,0,0,0.6)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 2000,
-            padding: spacing.md
+            padding: spacing.md,
+            backdropFilter: 'blur(4px)'
         }}>
             <div
                 className="animate-pop"
@@ -80,115 +73,71 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                     overflowY: 'auto'
                 }}
             >
+                {/* Header (Done Button Only) */}
                 <div style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: spacing.lg
+                    justifyContent: 'flex-end',
+                    marginBottom: spacing.md
                 }}>
-                    <h2 style={{ margin: 0, color: colors.dark }}>Your Profile</h2>
                     <button
-                        onClick={() => { sfx.playClick(); onClose(); }}
+                        onClick={handleSave}
                         style={{
                             background: 'none',
                             border: 'none',
-                            fontSize: '1.5rem',
+                            fontSize: '1rem',
+                            fontWeight: 'bold',
                             cursor: 'pointer',
-                            color: colors.textMuted
+                            color: colors.primary,
+                            padding: spacing.xs
                         }}
-                        aria-label="Close"
                     >
-                        ✕
+                        Done
                     </button>
                 </div>
 
+                {/* Avatar Preview */}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: spacing.md
+                }}>
+                    <Avatar avatarData={avatarData} size="large" showBorder />
+                </div>
+
                 {/* Name Input */}
-                <div style={{ marginBottom: spacing.lg }}>
-                    <label style={{
-                        display: 'block',
-                        marginBottom: spacing.xs,
-                        fontWeight: '600',
-                        color: colors.dark
-                    }}>
-                        Your Name
-                    </label>
+                <div style={{ marginBottom: spacing.xl, textAlign: 'center' }}>
                     <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter your name..."
+                        placeholder="Enter Name"
                         maxLength={20}
                         style={{
                             width: '100%',
-                            padding: spacing.md,
-                            border: `2px solid ${colors.border}`,
-                            borderRadius: borderRadius.md,
-                            fontSize: '1rem',
+                            maxWidth: '250px',
+                            padding: spacing.sm,
+                            border: 'none',
+                            borderBottom: `2px solid ${colors.light}`,
+                            background: 'transparent',
+                            fontSize: '1.25rem',
+                            fontWeight: 'bold',
                             outline: 'none',
-                            transition: 'border-color 0.2s',
-                            boxSizing: 'border-box'
+                            textAlign: 'center',
+                            color: colors.dark,
+                            transition: 'border-color 0.2s'
                         }}
-                        onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                        onBlur={(e) => e.target.style.borderColor = colors.border}
+                        onFocus={(e) => e.target.style.borderColor = colors.primary}
+                        onBlur={(e) => e.target.style.borderColor = colors.light}
                     />
                 </div>
 
-                {/* Avatar Builder */}
-                <div style={{ marginBottom: spacing.lg }}>
-                    <label style={{
-                        display: 'block',
-                        marginBottom: spacing.sm,
-                        fontWeight: '600',
-                        color: colors.dark
-                    }}>
-                        Customize Avatar
-                    </label>
-                    <AvatarBuilder
-                        avatarData={avatarData}
-                        ownedItems={economy?.getInventory?.() || []}
-                        onChange={handleAvatarChange}
-                    />
-                </div>
-
-                {/* Settings */}
-                <div style={{ marginBottom: spacing.lg }}>
-                    <label style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: spacing.sm,
-                        cursor: 'pointer'
-                    }}>
-                        <input
-                            type="checkbox"
-                            checked={soundEnabled}
-                            onChange={(e) => setSoundEnabled(e.target.checked)}
-                            style={{ width: '18px', height: '18px' }}
-                        />
-                        <span style={{ color: colors.dark }}>🔊 Sound Effects</span>
-                    </label>
-                </div>
-
-                {/* Save Button */}
-                <button
-                    onClick={handleSave}
-                    style={{
-                        width: '100%',
-                        padding: spacing.md,
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        border: 'none',
-                        borderRadius: borderRadius.lg,
-                        color: 'white',
-                        fontSize: '1.1rem',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        boxShadow: shadows.sm,
-                        transition: 'transform 0.2s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                >
-                    Save Profile
-                </button>
+                {/* Avatar Controls (Builder without Preview) */}
+                <AvatarBuilder
+                    showPreview={false}
+                    avatarData={avatarData}
+                    ownedItems={economy?.getInventory?.() || []}
+                    onChange={handleAvatarChange}
+                />
             </div>
         </div >
     );

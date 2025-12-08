@@ -16,7 +16,7 @@ const questions = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 let migratedCount = 0;
 let skippedCount = 0;
 
-questions.forEach((q, idx) => {
+questions.forEach((q) => {
     // Skip if already has answerParts
     if (q.answerParts) {
         skippedCount++;
@@ -43,7 +43,7 @@ questions.forEach((q, idx) => {
     }
 
     // Split answer into parts based on trigger position
-    const beforeTrigger = answer.substring(0, triggerIndex);
+
     const afterTrigger = answer.substring(triggerIndex + trigger.length);
 
     // Build answerParts array

@@ -14,9 +14,8 @@ import { SHOP_ITEMS } from '../../engine/Economy';
  * AvatarBuilder - Interactive avatar customization component
  * Allows users to customize their avatar by selecting from owned items
  */
-export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, readonly = false }) {
+export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, readonly = false, showPreview = true }) {
     // Defensive copy with defaults
-    console.log('AvatarBuilder ownedItems:', ownedItems);
     const safeAvatarData = {
         ...DEFAULT_AVATAR,
         ...(avatarData || {}),
@@ -27,7 +26,10 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
     const [activeTab, setActiveTab] = useState('base');
     const [currentAvatar, setCurrentAvatar] = useState(safeAvatarData);
 
-    // Available bases (always unlocked)
+    // Sync internal state if prop changes
+    React.useEffect(() => {
+        setCurrentAvatar(safeAvatarData);
+    }, [avatarData]);
 
     // Memoize derived lists for performance
     const { bases, hats, eyes, backgrounds } = React.useMemo(() => {
@@ -50,12 +52,10 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
         return {
             bases: [
-                // Diverse human options (gender-neutral)
                 { id: 'person', name: 'Person', emoji: '🧑', free: true },
-                { id: 'person-fem', name: 'Person (Feminine)', emoji: '👩', free: true },
-                { id: 'person-masc', name: 'Person (Masculine)', emoji: '👨', free: true },
+                { id: 'person-fem', name: 'Person (Fem)', emoji: '👩', free: true },
+                { id: 'person-masc', name: 'Person (Masc)', emoji: '👨', free: true },
                 { id: 'child', name: 'Child', emoji: '🧒', free: true },
-                // Animal options (inherently gender-neutral)
                 { id: 'cat', name: 'Cat', emoji: '🐱', free: true },
                 { id: 'dog', name: 'Dog', emoji: '🐶', free: true },
                 { id: 'bear', name: 'Bear', emoji: '🐻', free: true },
@@ -64,11 +64,11 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
                 ...shopAvatars
             ],
             hats: [
-                { id: null, name: 'None', emoji: '❌', free: true },
+                { id: null, name: 'None', emoji: null, free: true }, // Emoji null triggers special render
                 ...shopHats
             ],
             eyes: [
-                { id: 'default', name: 'Default', emoji: '👀', free: true },
+                { id: 'default', name: 'Default', emoji: null, free: true },
                 ...shopEyes
             ],
             backgrounds: [
@@ -76,13 +76,13 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
                 ...shopBackgrounds
             ]
         };
-    }, []); // Empty dependency array as SHOP_ITEMS is static constant
+    }, []);
 
     const tabs = React.useMemo(() => [
-        { id: 'base', name: '👤 Base', items: bases },
-        { id: 'eyes', name: '👓 Eyes', items: eyes },
-        { id: 'hat', name: '🎩 Hat', items: hats },
-        { id: 'bg', name: '🎨 Background', items: backgrounds }
+        { id: 'base', icon: '👤', items: bases },
+        { id: 'eyes', icon: '👓', items: eyes },
+        { id: 'hat', icon: '🎩', items: hats },
+        { id: 'bg', icon: '🎨', items: backgrounds }
     ], [bases, eyes, hats, backgrounds]);
 
     const handleItemSelect = (tabId, itemId) => {
@@ -111,10 +111,8 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
     const isItemOwned = (item) => {
         if (item.free) return true;
-        // Check shop cost automatically
         const shopItemDef = SHOP_ITEMS.find(i => i.id === item.shopItem);
         if (shopItemDef && shopItemDef.cost === 0) return true;
-
         if (!item.shopItem) return false;
         return ownedItems.includes(item.shopItem);
     };
@@ -123,55 +121,65 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
     return (
         <div style={{ width: '100%' }}>
-            {/* Preview */}
+            {/* Preview - Optional */}
+            {showPreview && (
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: spacing.lg
+                }}>
+                    <Avatar avatarData={currentAvatar} size="large" showBorder />
+                </div>
+            )}
+
+            {/* Tabs - Icon Only Pills */}
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
-                marginBottom: spacing.lg
-            }}>
-                <Avatar avatarData={currentAvatar} size="large" showBorder />
-            </div>
-
-            {/* Tabs */}
-            <div style={{
-                display: 'flex',
-                gap: spacing.xs,
-                marginBottom: spacing.md,
-                borderBottom: `2px solid ${colors.border}`
+                gap: spacing.sm,
+                marginBottom: spacing.md
             }}>
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         style={{
-                            padding: spacing.sm,
+                            padding: `${spacing.sm} ${spacing.lg}`,
                             border: 'none',
-                            borderBottom: activeTab === tab.id ? `3px solid ${colors.primary}` : '3px solid transparent',
-                            background: 'transparent',
+                            borderRadius: borderRadius.pill,
+                            background: activeTab === tab.id ? colors.primary + '20' : 'transparent',
                             cursor: 'pointer',
-                            fontWeight: activeTab === tab.id ? 'bold' : 'normal',
                             color: activeTab === tab.id ? colors.primary : colors.textMuted,
-                            fontSize: '0.9rem',
-                            transition: 'all 0.2s'
+                            fontSize: '1.2rem',
+                            transition: 'all 0.2s',
+                            boxShadow: activeTab === tab.id ? shadows.sm : 'none'
                         }}
+                        aria-label={tab.id}
+                        title={tab.id}
                     >
-                        {tab.name}
+                        {tab.icon}
                     </button>
                 ))}
             </div>
 
-            {/* Items Grid */}
+            {/* Items Grid - Horizontal Carousel */}
             <div style={{
                 display: 'flex',
                 gap: spacing.sm,
                 overflowX: 'auto',
                 overflowY: 'hidden',
-                padding: spacing.xs,
-                scrollbarWidth: 'thin',
-                scrollbarColor: `${colors.primary} ${colors.light}`,
+                padding: `${spacing.xs} ${spacing.xs} ${spacing.md} ${spacing.xs}`,
+                scrollbarWidth: 'none', // Firefox
+                msOverflowStyle: 'none', // IE/Edge
                 WebkitOverflowScrolling: 'touch',
                 scrollSnapType: 'x mandatory'
             }}>
+                <style>{`
+                    /* Hide scrollbar for Chrome, Safari and Opera */
+                    div::-webkit-scrollbar {
+                        display: none;
+                    }
+                `}</style>
                 {(currentTabData?.items || []).map(item => {
                     if (!item) return null;
                     const owned = isItemOwned(item);
@@ -183,94 +191,68 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
                     const isLocked = !owned;
                     const ariaLabel = `${owned ? 'Equip' : 'Locked:'} ${item.name}`;
 
+                    // Special rendering for 'None' or 'Default' which might have null emoji
+                    const renderIcon = () => {
+                        if (item.emoji === null && item.id === null) {
+                            // "None" / Null item
+                            return <div style={{
+                                width: '24px',
+                                height: '24px',
+                                border: `2px dashed ${colors.textMuted}`,
+                                borderRadius: '50%'
+                            }} />;
+                        }
+                        if (activeTab === 'bg' && item.color) {
+                            return <div style={{
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                                background: item.color,
+                                border: `1px solid ${colors.border}`
+                            }} />;
+                        }
+                        return <div style={{ fontSize: '1.8rem' }}>{item.emoji || '⚪'}</div>;
+                    };
+
                     return (
                         <button
                             key={item.id || 'none'}
                             onClick={() => owned && handleItemSelect(activeTab, item.id)}
                             disabled={!owned || readonly}
                             aria-label={ariaLabel}
-                            title={ariaLabel}
+                            title={item.name}
                             style={{
-                                minWidth: '70px',
+                                minWidth: '60px',
+                                height: '60px',
                                 flexShrink: 0,
                                 scrollSnapAlign: 'start',
-                                padding: spacing.sm,
-                                borderRadius: borderRadius.md,
+                                borderRadius: borderRadius.lg,
                                 border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
-                                background: isSelected ? `${colors.primary}10` : owned ? colors.white : colors.light,
-                                cursor: owned && !readonly ? 'pointer' : 'not-allowed',
-                                opacity: 1,  // Always 1, we'll use overlay instead
+                                background: isSelected ? `${colors.primary}10` : colors.white,
+                                cursor: owned && !readonly ? 'pointer' : 'default',
                                 display: 'flex',
-                                flexDirection: 'column',
                                 alignItems: 'center',
-                                gap: spacing.xs,
+                                justifyContent: 'center',
                                 position: 'relative',
                                 transition: 'all 0.2s',
                                 boxShadow: isSelected ? shadows.sm : 'none'
                             }}
                         >
-                            {/* Locked Overlay - WCAG AA Compliant */}
+                            {renderIcon()}
+
+                            {/* Locked Icon */}
                             {isLocked && (
-                                <>
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        background: 'rgba(0, 0, 0, 0.6)',  // High contrast overlay
-                                        borderRadius: borderRadius.md,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        zIndex: 1
-                                    }}>
-                                        <span style={{
-                                            fontSize: '1.5rem',
-                                            filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.8))'  // Glow for visibility
-                                        }}>🔒</span>
-                                    </div>
-                                </>
-                            )}
-
-
-                            {activeTab === 'bg' && item.color ? (
-                                <div style={{
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    background: item.color,
-                                    border: `2px solid ${colors.border}`
-                                }} />
-                            ) : (
-                                <div style={{ fontSize: '2rem' }}>{item.emoji}</div>
-                            )}
-                            <div style={{ fontSize: '0.7rem', textAlign: 'center', color: colors.dark }}>
-                                {item.name}
-                            </div>
-                            {!owned && (
                                 <div style={{
                                     position: 'absolute',
-                                    top: '4px',
-                                    right: '4px',
-                                    fontSize: '0.8rem'
+                                    top: '2px',
+                                    right: '2px',
+                                    fontSize: '0.7rem'
                                 }}>🔒</div>
                             )}
                         </button>
                     );
                 })}
             </div>
-
-            {!ownedItems.length && (
-                <div style={{
-                    textAlign: 'center',
-                    padding: spacing.lg,
-                    color: colors.textMuted,
-                    fontSize: '0.9rem'
-                }}>
-                    💡 Visit the shop to unlock more items!
-                </div>
-            )}
         </div>
     );
 }

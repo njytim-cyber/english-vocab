@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useMemo, useCallback, Suspense, lazy } from 'react';
+import { useEffect, useState, useMemo, useCallback, Suspense, lazy } from 'react';
 import { useGame } from './contexts/GameContext';
 import { useNavigation } from './contexts/NavigationContext';
 import { speak } from './utils/audio';
@@ -40,8 +40,7 @@ import GrammarSetup from './components/GrammarSetup';
 import ComprehensionView from './components/ComprehensionView';
 import ListeningView from './components/ListeningView';
 
-const clozePassages = VOCAB_CLOZE;
-const grammarQuestions = GRAMMAR_MCQ;
+
 const spellingWords = SPELLING;
 const grammarClozePassages = GRAMMAR_CLOZE;
 const comprehensionPassages = COMPREHENSION;

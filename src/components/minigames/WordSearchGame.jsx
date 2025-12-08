@@ -190,16 +190,18 @@ export default function WordSearchGame({ engine, onBack }) {
 
     return (
         <div className="word-search-game" style={{
-            padding: spacing.xl,
-            paddingBottom: '100px',
+            padding: spacing.md,
+            paddingTop: '80px', // Explicit top padding to clear header
+            paddingBottom: spacing.sm,
             maxWidth: '1100px',
             margin: '0 auto',
-            minHeight: '100vh',
+            height: '100dvh', // Use dynamic viewport height
             display: 'flex',
             flexDirection: 'column',
             color: colors.dark,
             userSelect: 'none',
-            background: colors.light
+            background: colors.light,
+            overflow: 'hidden' // Prevent outer scrolling
         }} onMouseUp={handleMouseUp}>
             {/* Header */}
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.xl }}>
@@ -250,21 +252,29 @@ export default function WordSearchGame({ engine, onBack }) {
             {/* Main Content: Grid + Word List */}
             <div style={{
                 display: 'flex',
-                gap: spacing.xl,
-                flexDirection: 'row',
-                alignItems: 'flex-start',
-                flexWrap: 'wrap'
+                gap: spacing.md,
+                flexDirection: 'column', // Force column on mobile first
+                alignItems: 'center',
+                width: '100%',
+                maxWidth: '600px', // Constrain width for better mobile view
+                margin: '0 auto',
+                flex: 1, // Fill available space
+                minHeight: 0 // Allow shrinking
             }}>
                 {/* Grid Container */}
-                <div style={{ flex: '1 1 400px', minWidth: '300px', maxWidth: '500px' }}>
+                <div style={{
+                    width: '100%',
+                    maxWidth: '450px', // Don't let grid get too huge
+                    flex: '0 1 auto'
+                }}>
                     <div
                         className="word-search-grid"
                         style={{
                             display: 'grid',
                             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-                            gap: '3px',
+                            gap: '2px', // Tighter gap
                             background: colors.border,
-                            padding: '8px',
+                            padding: '6px',
                             borderRadius: borderRadius.lg,
                             cursor: 'pointer',
                             width: '100%',
@@ -325,7 +335,7 @@ export default function WordSearchGame({ engine, onBack }) {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         fontWeight: 'bold',
-                                        fontSize: 'clamp(0.9rem, 4vw, 1.3rem)',
+                                        fontSize: 'clamp(0.8rem, 3.5vw, 1.2rem)', // Slightly smaller font
                                         color: cellColor,
                                         transition: 'all 0.2s ease',
                                         borderRadius: borderRadius.sm,
@@ -339,50 +349,43 @@ export default function WordSearchGame({ engine, onBack }) {
                     </div>
                 </div>
 
-                {/* Word List - Right Side on Desktop */}
+                {/* Word List - Compact Horizontal Scroll or Grid */}
                 <div style={{
-                    flex: '0 0 auto',
-                    minWidth: '250px',
+                    width: '100%',
                     background: colors.white,
                     borderRadius: borderRadius.xl,
-                    padding: spacing.lg,
-                    boxShadow: shadows.md,
-                    position: 'sticky',
-                    top: spacing.xl
+                    padding: spacing.md,
+                    boxShadow: shadows.sm,
+                    overflowY: 'auto',
+                    maxHeight: '20vh', // Limit height to keep on one screen if possible
+                    borderTop: `1px solid ${colors.border}`
                 }}>
-                    <h3 style={{
-                        margin: '0 0 1rem 0',
-                        fontSize: '1.1rem',
-                        color: colors.dark,
-                        fontWeight: '700'
-                    }}>Find these words:</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.sm }}>
+                    <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: spacing.xs,
+                        justifyContent: 'center'
+                    }}>
                         {words.map(word => {
-                            // Find the question object for this word to get definition/example
-                            const question = engine.allQuestions.find(q => q.answer.toUpperCase() === word);
+                            // Find the question object for logic if needed (e.g. tooltip)
+                            // But for compact view, just show the word clearly
                             const colorData = foundWordCells[word];
+                            const isFound = foundWords.has(word);
 
                             return (
-                                <div key={word} className="tooltip-container" style={{
-                                    padding: spacing.sm,
-                                    borderRadius: borderRadius.md,
-                                    background: foundWords.has(word) ? `${colorData?.color || colors.light}` : colors.light,
-                                    fontSize: '1.1rem',
-                                    textDecoration: foundWords.has(word) ? 'line-through' : 'none',
-                                    color: foundWords.has(word) ? 'white' : colors.dark,
-                                    fontWeight: foundWords.has(word) ? 'normal' : '600',
-                                    position: 'relative',
-                                    cursor: 'help',
+                                <div key={word} style={{
+                                    padding: '6px 12px',
+                                    borderRadius: borderRadius.pill, // Pill shape for compact list
+                                    background: isFound ? `${colorData?.color || colors.light}` : colors.light,
+                                    fontSize: '0.9rem',
+                                    textDecoration: isFound ? 'line-through' : 'none',
+                                    color: isFound ? 'white' : colors.dark,
+                                    fontWeight: '600',
+                                    border: isFound ? 'none' : `1px solid ${colors.border}`,
+                                    opacity: isFound ? 0.7 : 1,
                                     transition: 'all 0.3s ease'
                                 }}>
                                     {word}
-                                    {question && question.example && (
-                                        <div className="tooltip">
-                                            <div style={{ fontSize: '0.85rem', fontStyle: 'italic', lineHeight: '1.4' }}>
-                                                {question.example}
-                                            </div>
-                                        </div>
-                                    )}
                                 </div>
                             );
                         })}

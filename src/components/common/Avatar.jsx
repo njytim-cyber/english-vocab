@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { colors, borderRadius, shadows } from '../../styles/designTokens';
+import { SHOP_ITEMS } from '../../engine/Economy';
 
 /**
  * Avatar - Display component for layered avatar
@@ -15,37 +16,50 @@ export default function Avatar({ avatarData, size = 'medium', showBorder = true,
 
     const currentSize = sizes[size];
 
-    // For now, render using emojis - will upgrade to images later
-    const baseEmoji = {
-        person: '🧑',
-        'person-fem': '👩',
-        'person-masc': '👨',
-        child: '🧒',
-        human: '🧑',
-        cat: '🐱',
-        dog: '🐶',
-        bear: '🐻',
-        fox: '🦊',
-        panda: '🐼'
-    }[avatarData?.base || 'human'];
+    // Helper to get emoji from ID (checking both defaults and shop)
+    const getIcon = (id, type) => {
+        if (!id) return null;
 
-    const hatEmoji = avatarData?.accessories?.hat ? {
-        cap: '🧢',
-        crown: '👑',
-        headphones: '🎧',
-        graduation: '🎓',
-        tophat: '🎩',
-        cowboy: '🤠'
-    }[avatarData.accessories.hat] : null;
+        // 1. Check Shop Items
+        const shopItem = SHOP_ITEMS.find(i => i.id === id);
+        if (shopItem) return shopItem.icon;
 
-    const eyesEmoji = avatarData?.face?.eyes === 'sunglasses' ? '😎' : null;
+        // 2. Check Defaults (Free Items)
+        const defaults = {
+            // Bases
+            person: '🧑', 'person-fem': '👩', 'person-masc': '👨', child: '🧒',
+            cat: '🐱', dog: '🐶', bear: '🐻', fox: '🦊', panda: '🐼',
+            // Hats
+            none: null,
+            // Eyes
+            default: null,
+            // Backgrounds
+            gradient1: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        };
+        return defaults[id] || defaults['person']; // Fallback
+    };
 
-    // Background gradient
-    const backgroundStyle = avatarData?.background && avatarData.background !== 'none' ? {
-        gradient1: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        gradient2: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        stars: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-    }[avatarData.background] : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    const baseEmoji = getIcon(avatarData?.base, 'avatar') || '🧑';
+    const hatEmoji = getIcon(avatarData?.accessories?.hat, 'hat');
+    const eyesEmoji = getIcon(avatarData?.face?.eyes, 'eyes');
+
+    // Background logic
+    let backgroundStyle = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    if (avatarData?.background && avatarData.background !== 'none') {
+        const shopBg = SHOP_ITEMS.find(i => i.id === avatarData.background);
+        // Special case for gradients which aren't just icons
+        if (avatarData.background === 'gradient1') {
+            backgroundStyle = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        } else if (shopBg && shopBg.type === 'theme') {
+            const themeMap = {
+                theme_ocean: 'linear-gradient(180deg, #4facfe 0%, #00f2fe 100%)',
+                theme_forest: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                theme_sunset: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                theme_galaxy: 'linear-gradient(to right, #434343 0%, black 100%)'
+            };
+            backgroundStyle = themeMap[avatarData.background] || backgroundStyle;
+        }
+    }
 
     return (
         <div

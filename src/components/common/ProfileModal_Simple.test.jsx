@@ -25,6 +25,7 @@ import ProfileModal from './ProfileModal';
 describe('ProfileModal Simplified', () => {
     it('renders with mocked dependencies', () => {
         render(<ProfileModal onClose={() => { }} />);
-        screen.getByText('Your Profile');
+        screen.getByText('Done');
+        screen.getByTestId('avatar-builder');
     });
 });

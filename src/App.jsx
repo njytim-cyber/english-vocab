@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { GameProvider } from './contexts/GameContext';
 import { NavigationProvider } from './contexts/NavigationContext';
 import Router from './Router';

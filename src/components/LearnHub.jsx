@@ -170,9 +170,9 @@ export default function LearnHub({ economy, onNavigate }) {
             {/* Action Cards Grid */}
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                gap: spacing.md,
-                padding: spacing.sm
+                gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                gap: spacing.sm,
+                padding: isMobile ? spacing.xs : spacing.sm
             }}>
                 {cards.filter(card => card.id !== 'listening').map((card) => {
                     const isRecommended = card.id === recommendedId;

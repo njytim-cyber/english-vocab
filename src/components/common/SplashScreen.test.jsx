@@ -41,8 +41,8 @@ describe('SplashScreen', () => {
             />
         );
 
-        const button = screen.getByRole('button', { name: /let's go/i });
-        fireEvent.click(button);
+        const buttons = screen.getAllByRole('button', { name: /let's go/i });
+        fireEvent.click(buttons[0]);
 
         // onClose should be called after animation delay
         setTimeout(() => {

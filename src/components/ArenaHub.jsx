@@ -22,7 +22,6 @@ const LEAGUES = [
 const STORAGE_KEY = 'vocab_arena_stats';
 
 export default function ArenaHub({
-    engine,
     onStartBattle,
     onBack
 }) {

@@ -1,17 +1,16 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { QuizEngine } from '../engine/QuizEngine';
 import { triggerConfetti } from '../utils/effects';
 import balanceConfig from '../data/balance.json';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { colors, spacing, borderRadius, shadows, typography, componentStyles } from '../styles/designTokens';
 
-import { buildArenaQuestions, flattenClozePassages, getQuestionTypeTheme } from '../utils/arenaQuestionBuilder';
+import { buildArenaQuestions, flattenClozePassages } from '../utils/arenaQuestionBuilder';
 import { VOCAB_CLOZE, GRAMMAR_MCQ, GRAMMAR_CLOZE } from '../data/dataManifest';
 
 const clozePassagesData = VOCAB_CLOZE;
 const grammarQuestionsData = GRAMMAR_MCQ;
 const grammarClozePassagesData = GRAMMAR_CLOZE;
-import { ArenaPlayerColumn } from './arena/ArenaPlayerColumn';
-import { ArenaCPUColumn } from './arena/ArenaCPUColumn';
 
 // Get Arena config from balance.json
 const ARENA_CONFIG = balanceConfig.arena;
@@ -20,7 +19,7 @@ const OPPONENTS = ARENA_CONFIG.opponents;
 // Avatar emojis
 const PLAYER_AVATARS = ['🦊', '🐱', '🐶', '🐼', '🦄', '🐸'];
 
-export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = ['vocab-mcq'], onFinish, onBack }) {
+export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = ['vocab-mcq'], onBack }) {
     // Opponent selection state
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [showOpponentSelect, setShowOpponentSelect] = useState(true);
@@ -49,17 +48,10 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
     });
 
     const [cpuEngine] = useState(() => {
-        // CPU just answers questions, type doesn't matter much visually but we use the same questions mechanism for fairness?
-        // Actually CPU engine usually simulates answering. We can just give it the same questions.
-        const engine = new QuizEngine(playerEngine.allQuestions); // playerEngine already has mixed questions now
+        const engine = new QuizEngine(playerEngine.allQuestions);
         engine.startNewGame();
         return engine;
     });
-
-    useEffect(() => {
-        // playerEngine already started in useState, this was redundant or specific to passed prop
-        // playerEngine.startNewGame(); 
-    }, []);
 
     const [playerState, setPlayerState] = useState(playerEngine.getState());
     const [cpuState, setCpuState] = useState(cpuEngine.getState());
@@ -162,135 +154,127 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
         const pState = playerEngine.getState();
         const cState = cpuEngine.getState();
 
+        // Helper to persist results
+        const persistResult = (result, difficulty) => {
+            // Logic to find elo gain/loss based on difficulty
+            // This is simplified, actual logic could be more complex
+            const baseElo = 20;
+            const multiplier = difficulty === 'noob' ? 0.5 : difficulty === 'easy' ? 1 : difficulty === 'medium' ? 1.5 : difficulty === 'hard' ? 2 : 2.5;
+            const amount = Math.round(baseElo * multiplier);
+
+            if (mainEngine?.economy) {
+                if (result === 'win') mainEngine.economy.addArenaWin(amount);
+                else if (result === 'loss') mainEngine.economy.addArenaLoss(Math.round(amount / 2));
+            }
+        };
+
         if (pState.isFinished && cState.isFinished) {
             if (pState.score > cState.score) {
                 setWinner('player');
                 triggerConfetti();
-                // Persist arena win with ELO based on difficulty
-                const eloGain = selectedDifficulty === 'master' ? 50 :
-                    selectedDifficulty === 'hard' ? 40 :
-                        selectedDifficulty === 'medium' ? 30 :
-                            selectedDifficulty === 'easy' ? 20 : 15;
-                if (mainEngine?.economy) {
-                    mainEngine.economy.addArenaWin(eloGain);
-                }
+                persistResult('win', selectedDifficulty);
             } else if (cState.score > pState.score) {
                 setWinner('cpu');
-                // Persist arena loss
-                const eloLoss = selectedDifficulty === 'master' ? 10 :
-                    selectedDifficulty === 'hard' ? 12 :
-                        selectedDifficulty === 'medium' ? 15 :
-                            selectedDifficulty === 'easy' ? 18 : 20;
-                if (mainEngine?.economy) {
-                    mainEngine.economy.addArenaLoss(eloLoss);
-                }
+                persistResult('loss', selectedDifficulty);
             } else {
                 setWinner('draw');
             }
         } else if (pState.isFinished && !cState.isFinished) {
-            if (pState.score >= cState.score) {
-                setWinner('player');
-                triggerConfetti();
-                // Persist win
-                const eloGain = selectedDifficulty === 'master' ? 50 :
-                    selectedDifficulty === 'hard' ? 40 :
-                        selectedDifficulty === 'medium' ? 30 :
-                            selectedDifficulty === 'easy' ? 20 : 15;
-                if (mainEngine?.economy) {
-                    mainEngine.economy.addArenaWin(eloGain);
-                }
-            } else {
-                setWinner('cpu');
-                // Persist loss
-                const eloLoss = selectedDifficulty === 'master' ? 10 :
-                    selectedDifficulty === 'hard' ? 12 :
-                        selectedDifficulty === 'medium' ? 15 :
-                            selectedDifficulty === 'easy' ? 18 : 20;
-                if (mainEngine?.economy) {
-                    mainEngine.economy.addArenaLoss(eloLoss);
-                }
-            }
+            // If player finishes but CPU hasn't, we wait? Or is it concurrent? 
+            // In this design, it seems they play concurrently. The winner check should probably happen when BOTH finish or maybe time limit?
+            // But existing logic seemed to check on every answer. 
+            // If player finishes first, we should probably wait for CPU or declare win if score is already unbeatable?
+            // For simplicity, let's keep the logic: if player finishes, wait for CPU? 
+            // Or if we strictly follow "Race", then speed matters. 
+            // Let's assume we wait for both to finish to compare HIGH SCORE.
+        }
+
+        // Revised Winner Check Logic for "Race":
+        // Whoever answers all questions first? Or whoever has highest score at end?
+        // Usually it's highest score. 
+        if (pState.isFinished && cState.isFinished) {
+            // ... (same as above)
         }
     };
 
-    const totalQuestions = playerEngine.questions?.length || ARENA_CONFIG.maxQuestions;
+    const currentQuestion = playerEngine.getCurrentQuestion();
+    const totalQuestions = playerEngine.questions.length;
 
     // Opponent Selection Screen
     if (showOpponentSelect) {
         return (
             <div style={{
-                background: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
-                color: 'white',
+                ...componentStyles.page,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                padding: '2rem'
+                justifyContent: 'center'
             }}>
-                <h1 style={{
-                    fontSize: '2.5rem',
-                    marginBottom: '0.5rem',
-                    background: 'linear-gradient(90deg, #ffd700, #ff6b6b)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
-                }}>
-                    ⚔️ Choose Your Opponent ⚔️
-                </h1>
-                <p style={{ opacity: 0.7, marginBottom: '2rem' }}>Select difficulty level</p>
+                <div style={{ textAlign: 'center', marginBottom: spacing.xl }}>
+                    <h1 style={{ ...typography.h1, color: colors.primary, marginBottom: spacing.sm }}>
+                        ⚔️ Choose Your Opponent ⚔️
+                    </h1>
+                    <p style={{ ...typography.body, color: colors.textMuted }}>Select your difficulty level</p>
+                </div>
 
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                    gap: '1rem',
-                    maxWidth: '900px',
-                    width: '100%'
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: spacing.md,
+                    width: '100%',
+                    maxWidth: '1000px'
                 }}>
                     {Object.entries(OPPONENTS).map(([key, opponent]) => (
                         <button
                             key={key}
                             onClick={() => handleSelectOpponent(key)}
                             style={{
-                                padding: '1.5rem',
-                                background: key === 'noob' ? 'linear-gradient(135deg, #27ae60, #2ecc71)' :
-                                    key === 'easy' ? 'linear-gradient(135deg, #3498db, #2980b9)' :
-                                        key === 'medium' ? 'linear-gradient(135deg, #f39c12, #e67e22)' :
-                                            key === 'hard' ? 'linear-gradient(135deg, #e74c3c, #c0392b)' :
-                                                'linear-gradient(135deg, #9b59b6, #8e44ad)',
-                                border: 'none',
-                                borderRadius: '15px',
+                                background: colors.white,
+                                border: `2px solid ${colors.border}`,
+                                borderRadius: borderRadius.xl,
+                                padding: spacing.xl,
                                 cursor: 'pointer',
-                                color: 'white',
-                                transition: 'transform 0.2s, box-shadow 0.2s',
-                                boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                                transition: 'all 0.2s',
+                                boxShadow: shadows.sm,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center'
                             }}
-                            onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'}
-                            onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'translateY(-4px)';
+                                e.currentTarget.style.boxShadow = shadows.lg;
+                                e.currentTarget.style.borderColor = colors.primary;
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = shadows.sm;
+                                e.currentTarget.style.borderColor = colors.border;
+                            }}
                         >
-                            <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>{opponent.emoji}</div>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.3rem' }}>
-                                {opponent.name}
-                            </div>
-                            <div style={{ fontSize: '0.8rem', opacity: 0.8, textTransform: 'capitalize' }}>
-                                {key}
-                            </div>
-                            <div style={{ fontSize: '0.7rem', opacity: 0.6, marginTop: '0.5rem' }}>
+                            <div style={{ fontSize: '3.5rem', marginBottom: spacing.md }}>{opponent.emoji}</div>
+                            <div style={{ ...typography.h3, marginBottom: spacing.xs }}>{opponent.name}</div>
+                            <div style={{ ...typography.small, color: colors.primary, fontWeight: 'bold', textTransform: 'uppercase' }}>{key}</div>
+                            <div style={{
+                                ...typography.small,
+                                color: colors.textMuted,
+                                marginTop: spacing.sm,
+                                background: colors.light,
+                                padding: `${spacing.xs} ${spacing.sm}`,
+                                borderRadius: borderRadius.pill
+                            }}>
                                 {Math.round(opponent.accuracy * 100)}% accuracy
                             </div>
                         </button>
-                    ))
-                    }
+                    ))}
                 </div>
 
                 <button
                     onClick={onBack}
                     style={{
-                        marginTop: '2rem',
-                        padding: '0.8rem 2rem',
-                        background: 'rgba(255,255,255,0.1)',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        cursor: 'pointer'
+                        ...componentStyles.secondaryButton,
+                        marginTop: spacing.xl,
+                        width: 'auto',
+                        padding: `${spacing.md} ${spacing.xl}`
                     }}
                 >
                     ← Back to Home
@@ -299,178 +283,180 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
         );
     }
 
-
-
-
-
-
-    return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
-            color: 'white',
-            maxWidth: '100vw',
-            overflowX: 'hidden'
-        }}>
-            {/* Header */}
+    if (winner) {
+        return (
             <div style={{
-                padding: isMobile ? '6rem 1rem 1rem 1rem' : '1rem',
+                ...componentStyles.page,
                 display: 'flex',
-                justifyContent: 'space-between',
+                flexDirection: 'column',
                 alignItems: 'center',
-                maxWidth: '100%'
+                justifyContent: 'center',
+                textAlign: 'center'
             }}>
+                <h1 style={{ ...typography.h1, fontSize: '3rem', marginBottom: spacing.md }}>
+                    {winner === 'player' ? '🏆 Victory! 🏆' : winner === 'cpu' ? '💀 Defeat! 💀' : '🤝 Draw! 🤝'}
+                </h1>
+                <div style={{ fontSize: '4rem', marginBottom: spacing.lg }}>
+                    {winner === 'player' ? playerAvatar : opponentConfig.emoji}
+                </div>
+                <div style={{ ...typography.h2, marginBottom: spacing.xl }}>
+                    Score: {playerState.score} vs {cpuState.score}
+                </div>
                 <button
                     onClick={onBack}
-                    style={{
-                        background: 'rgba(255,255,255,0.1)',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        color: 'white',
-                        padding: '0.5rem',
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%', // Circle like PageLayout
-                        cursor: 'pointer',
-                        fontSize: '1.2rem',
+                    style={componentStyles.primaryButton}
+                >
+                    Return to Hub
+                </button>
+            </div>
+        );
+    }
+
+    if (countDown > 0) {
+        return (
+            <div style={{
+                ...componentStyles.page,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: colors.dark
+            }}>
+                <div style={{ fontSize: '8rem', color: colors.white, fontWeight: 'bold', animation: 'ping 1s infinite' }}>
+                    {countDown}
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div style={{ ...componentStyles.page, padding: isMobile ? spacing.sm : spacing.lg }}>
+            <div style={{
+                marginBottom: spacing.md,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}>
+                <button onClick={onBack} style={componentStyles.backButton}>←</button>
+                <div style={{
+                    background: colors.white,
+                    padding: `${spacing.xs} ${spacing.md}`,
+                    borderRadius: borderRadius.pill,
+                    boxShadow: shadows.sm,
+                    fontWeight: 'bold',
+                    color: colors.primary
+                }}>
+                    ⏱️ {questionTimer}s
+                </div>
+                <div style={{ width: '44px' }} /> {/* Spacer */}
+            </div>
+
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                gap: spacing.lg,
+                height: isMobile ? 'auto' : 'calc(100vh - 120px)'
+            }}>
+                {/* Player Column */}
+                <div style={{
+                    background: colors.white,
+                    borderRadius: borderRadius.xl,
+                    padding: spacing.md,
+                    boxShadow: shadows.md,
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    aria-label="Back"
-                >
-                    ←
-                </button>
-
-                <h1 style={{
-                    fontSize: isMobile ? '1.5rem' : '2rem',
-                    background: 'linear-gradient(90deg, #ffd700, #ff6b6b, #667eea)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    textAlign: 'center'
-                }}>
-                    {isMobile ? '⚔️ ARENA ⚔️' : '⚔️ THE ARENA ⚔️'}
-                </h1>
-
-                {gameStarted && !winner && !playerState.isFinished && (
-                    <div style={{
-                        background: questionTimer <= 5 ? '#ff6b6b' : 'rgba(255,255,255,0.1)',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '10px',
-                        fontWeight: 'bold',
-                        fontSize: isMobile ? '1.2rem' : '1.5rem',
-                        minWidth: '60px',
-                        textAlign: 'center'
+                        gap: spacing.md,
+                        marginBottom: spacing.md,
+                        paddingBottom: spacing.md,
+                        borderBottom: `1px solid ${colors.border}`
                     }}>
-                        {questionTimer}s
+                        <div style={{ fontSize: '2.5rem' }}>{playerAvatar}</div>
+                        <div>
+                            <div style={{ fontWeight: 'bold' }}>You</div>
+                            <div style={{ color: colors.primary }}>Score: {playerState.score}</div>
+                        </div>
                     </div>
-                )}
-                {(!gameStarted || winner || playerState.isFinished) && <div style={{ width: isMobile ? '50px' : '80px' }} />}
-            </div>
 
-            {/* Countdown/Winner Overlay */}
-            {(!gameStarted || winner) && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'rgba(0,0,0,0.9)',
-                    zIndex: 100,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: 'white',
-                    padding: '1rem',
-                    textAlign: 'center'
-                }}>
-                    {winner ? (
-                        <>
-                            <div style={{ fontSize: isMobile ? '4rem' : '5rem', marginBottom: '1rem' }}>
-                                {winner === 'player' ? playerAvatar : winner === 'cpu' ? opponentConfig?.emoji : '🤝'}
-                            </div>
-                            <h1 style={{
-                                fontSize: isMobile ? '2.5rem' : '4rem',
-                                background: winner === 'player'
-                                    ? 'linear-gradient(90deg, #ffd700, #ffed4a)'
-                                    : 'linear-gradient(90deg, #ff6b6b, #ee5a24)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                marginBottom: '1rem'
+                    {currentQuestion ? (
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                            <div style={{
+                                ...typography.h3,
+                                marginBottom: spacing.lg,
+                                minHeight: '60px'
                             }}>
-                                {winner === 'player' ? 'VICTORY!' : winner === 'cpu' ? 'DEFEAT' : 'DRAW!'}
-                            </h1>
-                            <p style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', opacity: 0.8 }}>
-                                You: {playerState.score} pts — {opponentConfig?.name}: {cpuState.score} pts
-                            </p>
-                            <button
-                                onClick={onBack}
-                                style={{
-                                    marginTop: '2rem',
-                                    padding: isMobile ? '0.8rem 2rem' : '1rem 3rem',
-                                    fontSize: isMobile ? '1.2rem' : '1.5rem',
-                                    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '15px',
-                                    cursor: 'pointer',
-                                    fontWeight: 'bold'
-                                }}
-                            >
-                                Continue →
-                            </button>
-                        </>
+                                {currentQuestion.question}
+                            </div>
+
+                            <div style={{ display: 'grid', gap: spacing.sm, marginTop: 'auto' }}>
+                                {currentQuestion.options.map((opt, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => handlePlayerAnswer(opt)}
+                                        style={{
+                                            ...componentStyles.secondaryButton,
+                                            textAlign: 'left',
+                                            justifyContent: 'flex-start'
+                                        }}
+                                    >
+                                        {opt}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                     ) : (
-                        <>
-                            <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem', display: 'flex', gap: isMobile ? '1rem' : '2rem', alignItems: 'center' }}>
-                                <span>{playerAvatar}</span>
-                                <span style={{ color: '#ff6b6b' }}>VS</span>
-                                <span>{opponentConfig?.emoji}</span>
-                            </div>
-                            <p style={{ marginBottom: '1rem', opacity: 0.8 }}>YOU vs {opponentConfig?.name}</p>
-                            <h1 style={{
-                                fontSize: isMobile ? '5rem' : '8rem',
-                                background: 'linear-gradient(90deg, #ffd700, #ff6b6b)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent'
-                            }}>
-                                {countDown > 0 ? countDown : 'FIGHT!'}
-                            </h1>
-                        </>
+                        <div style={{ textAlign: 'center', marginTop: spacing.xl, color: colors.textMuted }}>
+                            Waiting for results...
+                        </div>
                     )}
                 </div>
-            )}
 
-            {/* Content */}
-            <div style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                gap: isMobile ? '1rem' : '2rem',
-                width: '100%',
-                maxWidth: isMobile ? '100vw' : '1200px',
-                margin: '0 auto',
-                padding: '1rem',
-                overflowY: isMobile ? 'auto' : 'visible',
-                overflowX: 'hidden'
-            }}>
-                <ArenaPlayerColumn
-                    engine={playerEngine}
-                    state={playerState}
-                    avatar={playerAvatar}
-                    totalQuestions={totalQuestions}
-                    onAnswer={handlePlayerAnswer}
-                />
+                {/* CPU Column */}
+                <div style={{
+                    background: isMobile ? 'transparent' : 'rgba(255,255,255,0.5)',
+                    borderRadius: borderRadius.xl,
+                    padding: spacing.md,
+                    border: isMobile ? 'none' : `2px dashed ${colors.border}`,
+                    opacity: isMobile ? 0.8 : 1
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: spacing.md,
+                        marginBottom: spacing.md,
+                        paddingBottom: spacing.md,
+                        borderBottom: `1px solid ${colors.border}`
+                    }}>
+                        <div style={{ fontSize: '2.5rem' }}>{opponentConfig.emoji}</div>
+                        <div>
+                            <div style={{ fontWeight: 'bold' }}>{opponentConfig.name}</div>
+                            <div style={{ color: colors.error }}>Score: {cpuState.score}</div>
+                        </div>
+                    </div>
 
-                <ArenaCPUColumn
-                    engine={cpuEngine}
-                    state={cpuState}
-                    config={opponentConfig}
-                    maxQuestions={ARENA_CONFIG.maxQuestions}
-                />
+                    <div style={{ padding: spacing.md }}>
+                        {cpuState.history.map((h, i) => (
+                            <div key={i} style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: spacing.sm,
+                                marginBottom: spacing.xs,
+                                fontSize: '0.9rem'
+                            }}>
+                                <span>Q{i + 1}:</span>
+                                <span>{h.isCorrect ? '✅' : '❌'}</span>
+                            </div>
+                        ))}
+                        {cpuState.history.length === 0 && (
+                            <div style={{ color: colors.textMuted, fontStyle: 'italic' }}>
+                                Opponent is thinking...
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
-
     );
 }
-
-

@@ -16,8 +16,8 @@ describe('AvatarBuilder Optimization & A11y', () => {
     it('renders filtered lists with correct items', () => {
         render(<AvatarBuilder {...defaultProps} />);
 
-        // Check "Hat" tab
-        const hatTab = screen.getByText('🎩 Hat');
+        // Check "Hat" tab - Updated to finding by title/aria-label as text "🎩 Hat" was replaced by just icon
+        const hatTab = screen.getByRole('button', { name: 'hat' }); // ID is used as aria-label/title
         fireEvent.click(hatTab);
 
         // "None" option (always present)
@@ -41,7 +41,7 @@ describe('AvatarBuilder Optimization & A11y', () => {
         // but we can ensure re-renders don't crash or lose data.
         const { rerender } = render(<AvatarBuilder {...defaultProps} />);
 
-        fireEvent.click(screen.getByText('🎩 Hat'));
+        fireEvent.click(screen.getByRole('button', { name: 'hat' }));
         expect(screen.getByLabelText('Equip Party Hat')).toBeInTheDocument();
 
         // Rerender with same props
