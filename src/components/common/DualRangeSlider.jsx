@@ -93,7 +93,8 @@ export default function DualRangeSlider({
                     background: colors.border,
                     borderRadius: '4px',
                     cursor: 'pointer',
-                    marginLeft: '4px',
+                    marginLeft: '14px',
+                    marginRight: '14px',
                     marginTop: '0.5rem'
                 }}
             >
