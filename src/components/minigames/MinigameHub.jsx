@@ -41,39 +41,66 @@ export default function MinigameHub({ onSelectGame, onBack }) {
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '1rem'
+                gap: '1.25rem'
             }}>
                 {games.map(game => (
                     <button
                         key={game.id}
                         onClick={() => onSelectGame(game.id)}
                         style={{
-                            background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
+                            background: colors.white,
                             color: colors.dark,
                             border: `2px solid ${colors.border}`,
-                            borderRadius: borderRadius.lg,
-                            padding: '1.5rem',
+                            borderRadius: borderRadius.xl,
+                            padding: '2rem 1.5rem',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: '0.6rem',
+                            gap: '0.75rem',
                             cursor: 'pointer',
-                            transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s',
+                            transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                             boxShadow: shadows.md,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            position: 'relative',
+                            overflow: 'hidden'
                         }}
                         onMouseEnter={e => {
-                            e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                            e.currentTarget.style.transform = 'translateY(-8px) scale(1.03)';
                             e.currentTarget.style.boxShadow = shadows.lg;
+                            e.currentTarget.style.borderColor = colors.primary;
                         }}
                         onMouseLeave={e => {
                             e.currentTarget.style.transform = 'translateY(0) scale(1)';
                             e.currentTarget.style.boxShadow = shadows.md;
+                            e.currentTarget.style.borderColor = colors.border;
                         }}
                     >
-                        <div style={{ fontSize: '3rem' }}>{game.icon}</div>
-                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: colors.dark }}>{game.title}</div>
-                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>{game.description}</div>
+                        {/* Subtle gradient overlay */}
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: `linear-gradient(135deg, ${colors.primary}05 0%, transparent 100%)`,
+                            pointerEvents: 'none'
+                        }} />
+
+                        <div style={{ fontSize: '3.5rem', position: 'relative', zIndex: 1 }}>{game.icon}</div>
+                        <div style={{
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            color: colors.dark,
+                            position: 'relative',
+                            zIndex: 1
+                        }}>{game.title}</div>
+                        <div style={{
+                            fontSize: '0.85rem',
+                            color: colors.textMuted,
+                            lineHeight: '1.4',
+                            position: 'relative',
+                            zIndex: 1
+                        }}>{game.description}</div>
                     </button>
                 ))}
             </div>
