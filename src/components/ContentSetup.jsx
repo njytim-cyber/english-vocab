@@ -1,8 +1,8 @@
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PageLayout from './common/PageLayout';
 import DualRangeSlider from './common/DualRangeSlider';
-import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
+import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 /**
  * ContentSetup - Generic setup screen for filtering content

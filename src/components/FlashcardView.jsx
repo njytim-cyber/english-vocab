@@ -38,6 +38,7 @@ export default function FlashcardView({
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFlipped, currentIndex]);
 
     const handleKnew = () => {

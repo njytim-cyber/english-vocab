@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { QuizEngine } from '../engine/QuizEngine';
 import { triggerConfetti } from '../utils/effects';
 import balanceConfig from '../data/balance.json';
@@ -103,7 +103,7 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
         }
 
         return () => clearTimeout(questionTimerRef.current);
-    }, [gameStarted, questionTimer, winner, playerState.isFinished]);
+    }, [gameStarted, questionTimer, winner, playerState.isFinished, checkWinner, playerEngine]);
 
     // CPU Logic - uses balance.json timing
     useEffect(() => {
@@ -136,7 +136,7 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
 
         playCpuTurn();
         return () => clearTimeout(cpuTimerRef.current);
-    }, [gameStarted, opponentConfig]);
+    }, [gameStarted, opponentConfig, checkWinner, cpuEngine]);
 
     const handlePlayerAnswer = (answer) => {
         if (!gameStarted || winner || playerState.isFinished) return;
@@ -150,7 +150,7 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
         }
     };
 
-    const checkWinner = () => {
+    const checkWinner = useCallback(() => {
         const pState = playerEngine.getState();
         const cState = cpuEngine.getState();
 
@@ -195,10 +195,9 @@ export default function ArenaView({ engine: mainEngine, selectedQuestionTypes = 
         if (pState.isFinished && cState.isFinished) {
             // ... (same as above)
         }
-    };
+    }, [playerEngine, cpuEngine, selectedDifficulty, mainEngine]);
 
     const currentQuestion = playerEngine.getCurrentQuestion();
-    const totalQuestions = playerEngine.questions.length;
 
     // Opponent Selection Screen
     if (showOpponentSelect) {

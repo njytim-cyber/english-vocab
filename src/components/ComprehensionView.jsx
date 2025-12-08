@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { colors, borderRadius, shadows, spacing, typography } from '../styles/designTokens';
+import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { triggerConfetti } from '../utils/effects';
 import BottomSheet from './common/BottomSheet';

@@ -1,26 +1,38 @@
 # Balance Data Schema
-Source: `src/data/balance.json` (Version 1.2)
+Source: `src/data/balance.json` (Version 1.3)
 
 ## Entities
 ### Player
 - `baseSpeed`: Base movement/action speed.
 
 ## Rewards
-### Quiz
-- `correctAnswer`: XP/Coins per correct answer.
-- `perfectBonus`: Bonus for perfect score.
-- `streakBonus`: Bonus for maintaining a streak.
+### Activities
+(vocabMCQ, grammarMCQ, vocabCloze, grammarCloze, comprehension, spelling, flashcards, srsReview)
+- `baseStars` / `starsPerBlank` / `starsPerQuestion` / `starsPerCard` / `starsPerWord`: Base star reward key varies by activity type.
+- `xpMultiplier`: Multiplier for XP calculation.
+- `learningValue`: qualitative tag (medium, high, very_high).
 
 ### Minigames
-(wordSearch, definitionMatch, letterDeduction, wordScramble, wordLadder)
+(wordSearch, definitionMatch, letterDeduction, wordScramble, wordLadder, sentenceMatch)
+- `baseStars`: Base stars for completing.
+- `starsPerCorrect`: Stars per correct item.
+- `maxBonus`: Maximum bonus stars.
 - `xp`: Experience points reward.
-- `stars`: Star rating reward.
-- `learningValue`: qualitative tag (low, medium, high).
+- `learningValue`: qualitative tag.
+
+### Arena
+Win/Loss/Draw rewards:
+- `stars`: Star reward.
+- `xp`: XP reward.
+- `winVs`: Tiered rewards based on opponent difficulty (noob to master).
 
 ### Daily Login
 - Array of rewards for consecutive days (7 days cycle).
 
-## Arena
+### Difficulty Multiplier
+- `formula`: Formula string for difficulty calculation.
+
+## Arena Settings
 - `questionTimeLimit`: Seconds per question.
 - `maxQuestions`: Questions per arena match.
 
@@ -34,6 +46,10 @@ Source: `src/data/balance.json` (Version 1.2)
 ## Game Settings
 - `questionsPerRound`: Number of questions in a standard session.
 - `retryDelay`: Delay (ms) before proceeding after feedback.
+
+## Streaks
+- `milestones`: Days required for streak tiers (fire, hot, legendary).
+- `colors`: Hex codes for streak tier visuals.
 
 ## Cloze Logic
 - `performanceThreshold`: Accuracy below which high probability is triggered.
