@@ -1,0 +1,23 @@
+{
+    "1.2.0": {
+        "title": "🎉 Welcome to Version 1.2!",
+        "tagline": "Enhanced Learning Experience",
+        "highlights": [
+            "🎨 Beautiful MD3 Design",
+            "🎮 Improved Minigames",
+            "🎧 Listening Comprehension"
+        ],
+        "background": "linear-gradient(135deg, #6750A4 0%, #7D5260 100%)"
+    },
+    "2.0.0": {
+        "title": "🚀 Welcome to Version 2.0!",
+        "tagline": "The Future of Learning",
+        "highlights": [
+            "⚔️ Arena Battle Mode",
+            "🎨 Avatar Customization",
+            "🎯 Skill Tree Progress",
+            "🎧 AI-Powered Listening"
+        ],
+        "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    }
+}

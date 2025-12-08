@@ -29,20 +29,23 @@ import NavBar from './components/NavBar';
 import DailyLogin from './components/DailyLogin';
 import AvatarHUD from './components/common/AvatarHUD';
 import ProfileModal from './components/common/ProfileModal';
+import SplashScreen from './components/common/SplashScreen';
 import ClozeView from "./components/ClozeView";
 import GrammarQuizView from './components/GrammarQuizView';
 import GrammarClozeView from './components/GrammarClozeView';
 import SpellingView from './components/SpellingView';
-import { VOCAB_CLOZE, GRAMMAR_MCQ, SPELLING, COMPREHENSION, GRAMMAR_CLOZE } from './data/dataManifest';
+import { VOCAB_CLOZE, GRAMMAR_MCQ, SPELLING, COMPREHENSION, GRAMMAR_CLOZE, LISTENING } from './data/dataManifest';
 import SpellingProgress from './engine/SpellingProgress';
 import GrammarSetup from './components/GrammarSetup';
 import ComprehensionView from './components/ComprehensionView';
+import ListeningView from './components/ListeningView';
 
 const clozePassages = VOCAB_CLOZE;
 const grammarQuestions = GRAMMAR_MCQ;
 const spellingWords = SPELLING;
 const grammarClozePassages = GRAMMAR_CLOZE;
 const comprehensionPassages = COMPREHENSION;
+const listeningPassages = LISTENING;
 import ReviseHub from './components/ReviseHub';
 import FlashcardView from './components/FlashcardView';
 import ProgressHub from './components/ProgressHub';
@@ -58,6 +61,9 @@ export default function Router() {
 
     const [showDailyLogin, setShowDailyLogin] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const [showSplash, setShowSplash] = useState(false);
+
+    const APP_VERSION = '1.2.0'; // Update this when releasing new versions
 
     const clozePassages = VOCAB_CLOZE;
     const grammarQuestions = GRAMMAR_MCQ;
@@ -66,12 +72,14 @@ export default function Router() {
     const [grammarClozeIndex, setGrammarClozeIndex] = useState(() => Math.floor(Math.random() * grammarClozePassages.length));
     const [grammarQuizQuestions, setGrammarQuizQuestions] = useState(null);
     const [comprehensionIndex, setComprehensionIndex] = useState(() => Math.floor(Math.random() * comprehensionPassages.length));
+    const [listeningIndex, setListeningIndex] = useState(() => Math.floor(Math.random() * listeningPassages.length));
     const [arenaSelectedTypes, setArenaSelectedTypes] = useState(['vocab-mcq']);
 
     // Filtered lists for setups
     const [filteredClozePassages, setFilteredClozePassages] = useState(null);
     const [filteredGrammarCloze, setFilteredGrammarCloze] = useState(null);
     const [filteredComprehension, setFilteredComprehension] = useState(null);
+    const [filteredListening, setFilteredListening] = useState(null);
     const [filteredSynthesis, setFilteredSynthesis] = useState(null);
     const [synthesisIndex, setSynthesisIndex] = useState(0);
 
@@ -98,6 +106,12 @@ export default function Router() {
         } else {
             // First time ever
             setShowDailyLogin(true);
+        }
+
+        // Check version splash
+        const lastSeenVersion = localStorage.getItem('vocab_last_seen_version');
+        if (!lastSeenVersion || lastSeenVersion !== APP_VERSION) {
+            setShowSplash(true);
         }
 
         return () => clearInterval(interval);
@@ -165,9 +179,15 @@ export default function Router() {
         setView('quiz');
     }, [setView]);
 
+    const handleCloseSplash = () => {
+        localStorage.setItem('vocab_last_seen_version', APP_VERSION);
+        setShowSplash(false);
+    };
+
     return (
         <div className="app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             {showDailyLogin && <DailyLogin economy={economy} onClose={() => setShowDailyLogin(false)} />}
+            {showSplash && <SplashScreen version={APP_VERSION} onClose={handleCloseSplash} show={showSplash} />}
             {showProfileModal && (
                 <ProfileModal
                     userProfile={userProfile}
@@ -266,6 +286,20 @@ export default function Router() {
                         />
                     )}
 
+                    {view === 'listening-setup' && (
+                        <ContentSetup
+                            title="Listening Comprehension Setup"
+                            data={listeningPassages}
+                            onStart={(filtered) => {
+                                setFilteredListening(filtered);
+                                setListeningIndex(0);
+                                setView('listening');
+                            }}
+                            onBack={() => setView('learn')}
+                            themeKey="theme"
+                        />
+                    )}
+
                     {view === 'synthesis-setup' && (
                         <ContentSetup
                             title="Synthesis & Transformation Setup"
@@ -328,6 +362,16 @@ export default function Router() {
                             passage={(filteredComprehension || comprehensionPassages)[comprehensionIndex]}
                             onComplete={() => setComprehensionIndex((i) => (i + 1) % (filteredComprehension || comprehensionPassages).length)}
                             onBack={() => setView('comprehension-setup')}
+                            economy={economy}
+                        />
+                    )}
+
+                    {view === 'listening' && (
+                        <ListeningView
+                            key={listeningIndex}
+                            passage={(filteredListening || listeningPassages)[listeningIndex]}
+                            onComplete={() => setListeningIndex((i) => (i + 1) % (filteredListening || listeningPassages).length)}
+                            onBack={() => setView('listening-setup')}
                             economy={economy}
                         />
                     )}

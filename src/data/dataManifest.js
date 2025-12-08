@@ -16,6 +16,7 @@ import grammarCloze from './grammar_cloze_full.json';
 import vocabCloze from './cloze_generated.json';
 import spelling from './spelling_words.json';
 import comprehension from './comprehension_full.json';
+import listening from './listening_passages.json';
 import balance from './balance.json';
 
 // ===== QUESTION COUNTS (for verification) =====
@@ -26,7 +27,8 @@ export const QUESTION_COUNTS = {
     GRAMMAR_CLOZE: grammarCloze.length,
     SPELLING: spelling.length,  // Now includes all spelling words (basic + advanced)
     SYNTHESIS: synthesisRaw.length,
-    COMPREHENSION: comprehension.length
+    COMPREHENSION: comprehension.length,
+    LISTENING: listening.length
 };
 
 // ===== EXPORTED DATA =====
@@ -36,6 +38,7 @@ export const VOCAB_CLOZE = vocabCloze;
 export const GRAMMAR_CLOZE = grammarCloze;
 export const SPELLING = spelling;  // Combined basic + advanced (1,526 words)
 export const COMPREHENSION = comprehension;
+export const LISTENING = listening;
 export const BALANCE = balance;
 
 // ===== SYNTHESIS QUESTIONS (with answerParts) =====
@@ -66,6 +69,8 @@ export function getQuestionsByType(type) {
             return getSynthesisQuestions();
         case 'comprehension':
             return COMPREHENSION;
+        case 'listening':
+            return LISTENING;
         default:
             throw new Error(`Unknown question type: ${type}`);
     }
@@ -79,7 +84,8 @@ export function getAllQuestions() {
         ...GRAMMAR_CLOZE,
         ...SPELLING,
         ...SYNTHESIS_ALL,
-        ...COMPREHENSION
+        ...COMPREHENSION,
+        ...LISTENING
     ];
 }
 
@@ -93,5 +99,6 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`  Spelling:            ${QUESTION_COUNTS.SPELLING.toLocaleString()}`);
     console.log(`  Synthesis:           ${QUESTION_COUNTS.SYNTHESIS.toLocaleString()}`);
     console.log(`  Comprehension:       ${QUESTION_COUNTS.COMPREHENSION.toLocaleString()}`);
+    console.log(`  Listening:           ${QUESTION_COUNTS.LISTENING.toLocaleString()}`);
     console.log(`  TOTAL:               ${getAllQuestions().length.toLocaleString()}`);
 }

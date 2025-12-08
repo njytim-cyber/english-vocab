@@ -56,6 +56,13 @@ export default function LearnHub({ economy, onNavigate }) {
             action: () => onNavigate('synthesis-setup')
         },
         {
+            id: 'listening',
+            title: 'Listening Comprehension',
+            subtitle: 'Master native accents with audio scenes',
+            icon: '🎧',
+            action: () => onNavigate('listening-setup')
+        },
+        {
             id: 'comprehension',
             title: 'Comprehension',
             subtitle: 'Reading passages',
@@ -69,6 +76,86 @@ export default function LearnHub({ economy, onNavigate }) {
     return (
         <PageLayout title="Learn" showBack={false} maxWidth="800px">
 
+            {/* PREMIUM HERO BANNER - Listening Comprehension */}
+            <div
+                onClick={() => onNavigate('listening-setup')}
+                style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: '100%',
+                    minHeight: '140px',
+                    marginBottom: spacing.xl,
+                    padding: `${spacing.lg} ${spacing.xl}`,
+                    borderRadius: borderRadius.xl,
+                    background: 'linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%)',
+                    color: colors.white,
+                    boxShadow: '0 0 0 1px rgba(255, 215, 0, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.5)',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255, 215, 0, 0.5), 0 15px 40px -10px rgba(0, 0, 0, 0.6)';
+                }}
+                onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255, 215, 0, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.5)';
+                }}
+            >
+                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.lg, flex: 1 }}>
+                    {/* Icon with PRO Badge */}
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div style={{
+                            background: '#ffd700',
+                            color: '#000',
+                            fontWeight: '800',
+                            fontSize: '0.7rem',
+                            padding: '4px 8px',
+                            borderRadius: borderRadius.sm,
+                            textTransform: 'uppercase',
+                            marginBottom: spacing.xs
+                        }}>
+                            PRO
+                        </div>
+                        <div style={{ fontSize: '3rem' }}>🎧</div>
+                    </div>
+
+                    {/* Text Content */}
+                    <div>
+                        <h2 style={{
+                            fontSize: '1.8rem',
+                            margin: 0,
+                            marginBottom: spacing.xs,
+                            fontWeight: 'bold',
+                            background: 'linear-gradient(to right, #fff, #ffd700)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text'
+                        }}>
+                            Listening Comprehension
+                        </h2>
+                        <p style={{
+                            opacity: 0.8,
+                            fontSize: '1rem',
+                            margin: 0
+                        }}>
+                            Master native accents with studio-quality audio scenes.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Arrow indicator */}
+                <div style={{
+                    fontSize: '1.5rem',
+                    opacity: 0.6,
+                    color: '#ffd700'
+                }}>
+                    →
+                </div>
+            </div>
+
             {/* Action Cards Grid */}
             <div style={{
                 display: 'grid',
@@ -76,7 +163,7 @@ export default function LearnHub({ economy, onNavigate }) {
                 gap: spacing.md,
                 padding: spacing.sm
             }}>
-                {cards.map((card) => {
+                {cards.filter(card => card.id !== 'listening').map((card) => {
                     const isRecommended = card.id === recommendedId;
                     const progress = userProgress.getProgressPercent(card.id);
                     const hasProgress = progress > 0;

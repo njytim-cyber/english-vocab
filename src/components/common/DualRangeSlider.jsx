@@ -78,24 +78,10 @@ export default function DualRangeSlider({
 
     return (
         <div style={{ width: '100%' }}>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '0.75rem'
-            }}>
+            {/* Label only - no range display */}
+            <div style={{ marginBottom: '0.75rem' }}>
                 <span style={{ fontSize: '0.95rem', fontWeight: 'bold', color: colors.dark }}>
-                    {label}
-                </span>
-                <span style={{
-                    fontSize: '0.9rem',
-                    color: colors.primary,
-                    fontWeight: 'bold',
-                    background: `${colors.primary}15`,
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: borderRadius.pill
-                }}>
-                    {minValue} — {maxValue}
+                    Difficulty
                 </span>
             </div>
 
@@ -119,7 +105,7 @@ export default function DualRangeSlider({
                     borderRadius: '4px'
                 }} />
 
-                {/* Min knob */}
+                {/* Min knob with number inside */}
                 <div
                     onMouseDown={handleMouseDown('min')}
                     onTouchStart={handleMouseDown('min')}
@@ -128,19 +114,27 @@ export default function DualRangeSlider({
                         left: `${minPercent}%`,
                         top: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '24px',
-                        height: '24px',
+                        width: '32px',
+                        height: '32px',
                         background: colors.white,
                         border: `3px solid ${colors.primary}`,
                         borderRadius: '50%',
                         cursor: 'grab',
                         boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
                         zIndex: dragging === 'min' ? 3 : 2,
-                        transition: dragging ? 'none' : 'left 0.1s'
+                        transition: dragging ? 'none' : 'left 0.1s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        color: colors.primary
                     }}
-                />
+                >
+                    {minValue}
+                </div>
 
-                {/* Max knob */}
+                {/* Max knob with number inside */}
                 <div
                     onMouseDown={handleMouseDown('max')}
                     onTouchStart={handleMouseDown('max')}
@@ -149,29 +143,25 @@ export default function DualRangeSlider({
                         left: `${maxPercent}%`,
                         top: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '24px',
-                        height: '24px',
+                        width: '32px',
+                        height: '32px',
                         background: colors.white,
                         border: `3px solid ${colors.primaryDark}`,
                         borderRadius: '50%',
                         cursor: 'grab',
                         boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
                         zIndex: dragging === 'max' ? 3 : 2,
-                        transition: dragging ? 'none' : 'left 0.1s'
+                        transition: dragging ? 'none' : 'left 0.1s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        color: colors.primaryDark
                     }}
-                />
-            </div>
-
-            {/* Scale labels */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: '0.5rem',
-                fontSize: '0.75rem',
-                color: colors.textMuted
-            }}>
-                <span>{min}</span>
-                <span>{max}</span>
+                >
+                    {maxValue}
+                </div>
             </div>
         </div>
     );

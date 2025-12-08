@@ -23,7 +23,7 @@ export default function ContentSetup({
 }) {
     const [selectedThemes, setSelectedThemes] = useState(['All']);
     const [minDifficulty, setMinDifficulty] = useState(1);
-    const [maxDifficulty, setMaxDifficulty] = useState(10); // Default to max range
+    const [maxDifficulty, setMaxDifficulty] = useState(9); // Default to max range
 
     // Extract unique themes/categories
     const availableThemes = useMemo(() => {
@@ -69,7 +69,7 @@ export default function ContentSetup({
                 <div style={{ marginBottom: '1.5rem' }}>
                     <DualRangeSlider
                         min={1}
-                        max={10}
+                        max={9}
                         minValue={minDifficulty}
                         maxValue={maxDifficulty}
                         onChange={(min, max) => { setMinDifficulty(min); setMaxDifficulty(max); }}
