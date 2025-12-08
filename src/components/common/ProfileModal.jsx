@@ -96,6 +96,7 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                             cursor: 'pointer',
                             color: colors.textMuted
                         }}
+                        aria-label="Close"
                     >
                         ✕
                     </button>

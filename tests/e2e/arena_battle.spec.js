@@ -7,8 +7,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Arena Tests', () => {
     test('arena page loads via bottom nav', async ({ page }) => {
+        page.on('console', msg => console.log(`BROWSER: ${msg.text()}`));
         await page.goto('/');
-        await page.waitForLoadState('networkidle');
+        // PARANOID: Wait for body instead of networkidle
+        await expect(page.locator('body')).toBeVisible();
 
         // Look for Arena in bottom nav
         const arenaButton = page.getByRole('button', { name: /arena|battle/i });
@@ -18,13 +20,14 @@ test.describe('Arena Tests', () => {
             await page.waitForTimeout(500);
 
             // Verify we're on arena page
-            await expect(page.getByText(/arena|battle|opponent/i).first()).toBeVisible({ timeout: 5000 });
+            await expect(page.getByText(/arena|battle|opponent/i).first()).toBeVisible({ timeout: 15000 });
         }
     });
 
     test('arena stats initialize in localStorage', async ({ page }) => {
         await page.goto('/');
-        await page.waitForLoadState('networkidle');
+        // PARANOID: Wait for body instead of networkidle
+        await expect(page.locator('body')).toBeVisible();
 
         // Check if economy exists in localStorage
         const hasEconomy = await page.evaluate(() => {

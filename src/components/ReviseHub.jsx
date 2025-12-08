@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { colors, borderRadius, shadows, spacing, typography } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
+import { VOCAB_MCQ, GRAMMAR_MCQ, SPELLING } from '../data/dataManifest';
 
 /**
  * ReviseHub - Comprehensive revision center
@@ -31,29 +32,71 @@ export default function ReviseHub({
     const [activeTab, setActiveTab] = useState('dashboard');
 
     // Get revision stats from engine
+    // Get revision stats from engine
     const stats = useMemo(() => {
         const spacedRep = engine?.spacedRep;
         if (!spacedRep) return null;
 
         const dueWords = spacedRep.getDueWords?.() || [];
         const allProgress = spacedRep.progress || {};
-        const wordCount = Object.keys(allProgress).length;
 
-        // Calculate mastery distribution
-        const masteryLevels = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-        Object.values(allProgress).forEach(p => {
-            const level = Math.min(5, Math.floor(p.correctStreak || 0));
-            masteryLevels[level]++;
-        });
+        // Helper to calculate distribution for a set of questions
+        const calculateDistribution = (questions) => {
+            const levels = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            let total = 0;
+            let mastered = 0;
 
-        // Spelling stats
-        const spellingStats = spellingProgress?.getStats?.() || { total: 0, mastered: 0 };
+            questions.forEach(q => {
+                const id = q.question_number || q.id;
+                // If ID collision exists between Vocab/Grammar, using the shared SR instance will return
+                // the same box for both. Ideally IDs should be unique.
+                const box = spacedRep.getBox(id);
+                const level = Math.min(5, Math.max(0, box)); // Box 1-5, but SR might return undefined->1.
+                // Note: getBox defaults to 1. If it's NEW (never seen), it's conceptually Level 0?
+                // SpacedRepetition.js: getBox returns progress[id]?.box || 1.
+                // If it's not in progress, it's "New".
+                const isStarted = !!allProgress[id];
+                const finalLevel = isStarted ? level : 0;
+
+                levels[finalLevel]++;
+                total++;
+                if (finalLevel >= 5) mastered++;
+            });
+            return { levels, total, mastered };
+        };
+
+        // Vocab Stats
+        const vocabDist = calculateDistribution(VOCAB_MCQ);
+
+        // Grammar Stats
+        const grammarDist = calculateDistribution(GRAMMAR_MCQ);
+
+        // Spelling Stats (from specialized engine)
+        const spellingStatsRaw = spellingProgress?.getStats?.() || {
+            total: 0, mastered: 0, confident: 0, familiar: 0, learning: 0
+        };
+        // Map Spelling "Level" (New=0, Learning=1, Familiar=2, Confident=3, Mastered=4) to our 0-5 scale
+        // We'll map Mastered (4) to 5 for consistency with Vocab/Grammar "Mastered"
+        const spellingLevels = {
+            0: spellingStatsRaw.total - (spellingStatsRaw.mastered + spellingStatsRaw.confident + spellingStatsRaw.familiar + spellingStatsRaw.learning),
+            1: spellingStatsRaw.learning,
+            2: spellingStatsRaw.familiar,
+            3: spellingStatsRaw.confident,
+            4: 0, // Gap
+            5: spellingStatsRaw.mastered
+        };
+        // Ensure accurate total if "total" in stats doesn't match sum
+        // Actually spellingStatsRaw.total should be reliable.
 
         return {
             dueCount: dueWords.length,
-            totalWords: wordCount,
-            masteryLevels,
-            spellingStats,
+            totalWords: vocabDist.total, // Default to Vocab count for "Total Words" card? Or sum? User probably thinks Vocab.
+            vocabStats: vocabDist,
+            grammarStats: grammarDist,
+            spellingStats: {
+                ...spellingStatsRaw,
+                levels: spellingLevels
+            },
             weakestAreas: getWeakestAreas(allProgress)
         };
     }, [engine, spellingProgress]);
@@ -111,20 +154,20 @@ export default function ReviseHub({
                     color={colors.primary}
                 />
                 <StatCard
-                    label="Mastered"
-                    value={stats?.masteryLevels?.[5] || 0}
+                    label="Vocab Mastered"
+                    value={stats?.vocabStats?.mastered || 0}
                     icon="⭐"
                     color={colors.success}
                 />
                 <StatCard
-                    label="Spelling"
+                    label="Spelling Mastered"
                     value={stats?.spellingStats?.mastered || 0}
                     icon="🔤"
                     color={colors.primary}
                 />
             </div>
 
-            {/* Mastery Distribution */}
+            {/* Vocab Mastery */}
             <div style={{
                 background: colors.white,
                 borderRadius: borderRadius.xl,
@@ -132,37 +175,35 @@ export default function ReviseHub({
                 boxShadow: shadows.md
             }}>
                 <h3 style={{ margin: 0, marginBottom: spacing.md, color: colors.dark }}>
-                    📈 Mastery Distribution
+                    📈 Vocab Mastery
                 </h3>
-                <div style={{ display: 'flex', gap: spacing.xs, alignItems: 'flex-end', height: '80px' }}>
-                    {[0, 1, 2, 3, 4, 5].map(level => {
-                        const count = stats?.masteryLevels?.[level] || 0;
-                        const maxCount = Math.max(...Object.values(stats?.masteryLevels || { 0: 1 }));
-                        const height = maxCount > 0 ? (count / maxCount) * 100 : 0;
+                <DistributionChart levels={stats?.vocabStats?.levels} />
+            </div>
 
-                        return (
-                            <div key={level} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <div style={{
-                                    width: '100%',
-                                    height: `${Math.max(height, 5)}%`,
-                                    background: `hsl(${level * 30 + 200}, 70%, 50%)`,
-                                    borderRadius: `${borderRadius.sm} ${borderRadius.sm} 0 0`,
-                                    transition: 'height 0.3s'
-                                }} />
-                                <div style={{
-                                    fontSize: '0.7rem',
-                                    color: colors.textMuted,
-                                    marginTop: spacing.xs
-                                }}>
-                                    L{level}
-                                </div>
-                                <div style={{ fontSize: '0.8rem', fontWeight: '600', color: colors.dark }}>
-                                    {count}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+            {/* Grammar Mastery */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
+            }}>
+                <h3 style={{ margin: 0, marginBottom: spacing.md, color: colors.dark }}>
+                    📐 Grammar Mastery
+                </h3>
+                <DistributionChart levels={stats?.grammarStats?.levels} />
+            </div>
+
+            {/* Spelling Mastery */}
+            <div style={{
+                background: colors.white,
+                borderRadius: borderRadius.xl,
+                padding: spacing.lg,
+                boxShadow: shadows.md
+            }}>
+                <h3 style={{ margin: 0, marginBottom: spacing.md, color: colors.dark }}>
+                    🔤 Spelling Mastery
+                </h3>
+                <DistributionChart levels={stats?.spellingStats?.levels} />
             </div>
 
             {/* Weak Areas */}
@@ -338,6 +379,48 @@ function StatCard({ label, value, icon, color }) {
             <div style={{ fontSize: '1.3rem', marginBottom: spacing.xs }}>{icon}</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color }}>{value}</div>
             <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{label}</div>
+        </div>
+    );
+}
+
+// Helper component for distribution charts
+function DistributionChart({ levels }) {
+    if (!levels) return null;
+
+    // Calculate max for scaling
+    // Note: levels can be {0: 10, 1: 5...}
+    const counts = [0, 1, 2, 3, 4, 5].map(l => levels[l] || 0);
+    const maxCount = Math.max(...counts, 1); // Avoid div by zero
+
+    return (
+        <div style={{ display: 'flex', gap: spacing.xs, alignItems: 'flex-end', height: '80px' }}>
+            {[0, 1, 2, 3, 4, 5].map(level => {
+                const count = levels[level] || 0;
+                const height = maxCount > 0 ? (count / maxCount) * 100 : 0;
+
+                return (
+                    <div key={level} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div style={{
+                            width: '100%',
+                            height: `${Math.max(height, 5)}%`,
+                            background: `hsl(${level * 30 + 200}, 70%, 50%)`,
+                            borderRadius: `${borderRadius.sm} ${borderRadius.sm} 0 0`,
+                            transition: 'height 0.3s',
+                            opacity: count === 0 ? 0.3 : 1
+                        }} />
+                        <div style={{
+                            fontSize: '0.7rem',
+                            color: colors.textMuted,
+                            marginTop: spacing.xs
+                        }}>
+                            L{level}
+                        </div>
+                        <div style={{ fontSize: '0.8rem', fontWeight: '600', color: colors.dark }}>
+                            {count}
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 }
