@@ -1,0 +1,417 @@
+{
+    "vocab": {
+        "name": "Vocabulary Journey",
+        "icon": "📚",
+        "layout": "vertical",
+        "nodes": [
+            {
+                "id": "basics",
+                "label": "Basics",
+                "icon": "🌱",
+                "x": 50,
+                "y": 10,
+                "prerequisites": [],
+                "themes": [
+                    "Animals",
+                    "Colors",
+                    "Numbers"
+                ]
+            },
+            {
+                "id": "daily-life",
+                "label": "Daily Life",
+                "icon": "🏠",
+                "x": 30,
+                "y": 25,
+                "prerequisites": [
+                    "basics"
+                ],
+                "themes": [
+                    "Home",
+                    "Family",
+                    "Food"
+                ]
+            },
+            {
+                "id": "social",
+                "label": "Social",
+                "icon": "👥",
+                "x": 70,
+                "y": 25,
+                "prerequisites": [
+                    "basics"
+                ],
+                "themes": [
+                    "Friends",
+                    "School",
+                    "Work"
+                ]
+            },
+            {
+                "id": "travel",
+                "label": "Travel",
+                "icon": "✈️",
+                "x": 50,
+                "y": 40,
+                "prerequisites": [
+                    "daily-life",
+                    "social"
+                ],
+                "themes": [
+                    "Travel",
+                    "Places",
+                    "Transportation"
+                ]
+            },
+            {
+                "id": "nature",
+                "label": "Nature",
+                "icon": "🌿",
+                "x": 20,
+                "y": 55,
+                "prerequisites": [
+                    "daily-life"
+                ],
+                "themes": [
+                    "Weather",
+                    "Nature",
+                    "Environment"
+                ]
+            },
+            {
+                "id": "abstract",
+                "label": "Abstract",
+                "icon": "💭",
+                "x": 80,
+                "y": 55,
+                "prerequisites": [
+                    "social"
+                ],
+                "themes": [
+                    "Emotions",
+                    "Ideas",
+                    "Concepts"
+                ]
+            },
+            {
+                "id": "advanced",
+                "label": "Advanced",
+                "icon": "🎓",
+                "x": 50,
+                "y": 70,
+                "prerequisites": [
+                    "travel",
+                    "nature",
+                    "abstract"
+                ],
+                "themes": [
+                    "Academic",
+                    "Professional",
+                    "Technical"
+                ]
+            }
+        ],
+        "connections": [
+            {
+                "from": "basics",
+                "to": "daily-life"
+            },
+            {
+                "from": "basics",
+                "to": "social"
+            },
+            {
+                "from": "daily-life",
+                "to": "travel"
+            },
+            {
+                "from": "social",
+                "to": "travel"
+            },
+            {
+                "from": "daily-life",
+                "to": "nature"
+            },
+            {
+                "from": "social",
+                "to": "abstract"
+            },
+            {
+                "from": "travel",
+                "to": "advanced"
+            },
+            {
+                "from": "nature",
+                "to": "advanced"
+            },
+            {
+                "from": "abstract",
+                "to": "advanced"
+            }
+        ]
+    },
+    "grammar": {
+        "name": "Grammar Path",
+        "icon": "✏️",
+        "layout": "vertical",
+        "nodes": [
+            {
+                "id": "tenses",
+                "label": "Tenses",
+                "icon": "⏰",
+                "x": 50,
+                "y": 15,
+                "prerequisites": [],
+                "concepts": [
+                    "Present",
+                    "Past",
+                    "Future"
+                ]
+            },
+            {
+                "id": "articles",
+                "label": "Articles",
+                "icon": "📰",
+                "x": 30,
+                "y": 35,
+                "prerequisites": [
+                    "tenses"
+                ],
+                "concepts": [
+                    "A/An",
+                    "The",
+                    "Zero Article"
+                ]
+            },
+            {
+                "id": "prepositions",
+                "label": "Prepositions",
+                "icon": "📍",
+                "x": 70,
+                "y": 35,
+                "prerequisites": [
+                    "tenses"
+                ],
+                "concepts": [
+                    "Time",
+                    "Place",
+                    "Movement"
+                ]
+            },
+            {
+                "id": "conditionals",
+                "label": "Conditionals",
+                "icon": "🔀",
+                "x": 50,
+                "y": 55,
+                "prerequisites": [
+                    "articles",
+                    "prepositions"
+                ],
+                "concepts": [
+                    "If-Clauses",
+                    "Modals",
+                    "Hypotheticals"
+                ]
+            },
+            {
+                "id": "advanced-grammar",
+                "label": "Advanced",
+                "icon": "🎯",
+                "x": 50,
+                "y": 75,
+                "prerequisites": [
+                    "conditionals"
+                ],
+                "concepts": [
+                    "Passive Voice",
+                    "Reported Speech",
+                    "Complex Structures"
+                ]
+            }
+        ],
+        "connections": [
+            {
+                "from": "tenses",
+                "to": "articles"
+            },
+            {
+                "from": "tenses",
+                "to": "prepositions"
+            },
+            {
+                "from": "articles",
+                "to": "conditionals"
+            },
+            {
+                "from": "prepositions",
+                "to": "conditionals"
+            },
+            {
+                "from": "conditionals",
+                "to": "advanced-grammar"
+            }
+        ]
+    },
+    "listening": {
+        "name": "Listening Skills",
+        "icon": "🎧",
+        "layout": "linear",
+        "nodes": [
+            {
+                "id": "beginner",
+                "label": "Beginner",
+                "icon": "🔤",
+                "x": 50,
+                "y": 20,
+                "prerequisites": [],
+                "passages": [
+                    1,
+                    2
+                ]
+            },
+            {
+                "id": "intermediate",
+                "label": "Intermediate",
+                "icon": "🗣️",
+                "x": 50,
+                "y": 50,
+                "prerequisites": [
+                    "beginner"
+                ],
+                "passages": [
+                    3,
+                    4,
+                    5
+                ]
+            },
+            {
+                "id": "advanced",
+                "label": "Advanced",
+                "icon": "🎤",
+                "x": 50,
+                "y": 80,
+                "prerequisites": [
+                    "intermediate"
+                ],
+                "passages": [
+                    6,
+                    7,
+                    8
+                ]
+            }
+        ],
+        "connections": [
+            {
+                "from": "beginner",
+                "to": "intermediate"
+            },
+            {
+                "from": "intermediate",
+                "to": "advanced"
+            }
+        ]
+    },
+    "spelling": {
+        "name": "Spelling Mastery",
+        "icon": "🔤",
+        "layout": "vertical",
+        "nodes": [
+            {
+                "id": "short-vowels",
+                "label": "Short Vowels",
+                "icon": "📝",
+                "x": 50,
+                "y": 12,
+                "prerequisites": [],
+                "patterns": [
+                    "CVC",
+                    "CVCC"
+                ]
+            },
+            {
+                "id": "long-vowels",
+                "label": "Long Vowels",
+                "icon": "📖",
+                "x": 30,
+                "y": 30,
+                "prerequisites": [
+                    "short-vowels"
+                ],
+                "patterns": [
+                    "CVCe",
+                    "CVVC"
+                ]
+            },
+            {
+                "id": "consonant-blends",
+                "label": "Blends",
+                "icon": "🔗",
+                "x": 70,
+                "y": 30,
+                "prerequisites": [
+                    "short-vowels"
+                ],
+                "patterns": [
+                    "Initial",
+                    "Final",
+                    "Double"
+                ]
+            },
+            {
+                "id": "digraphs",
+                "label": "Digraphs",
+                "icon": "✌️",
+                "x": 50,
+                "y": 50,
+                "prerequisites": [
+                    "long-vowels",
+                    "consonant-blends"
+                ],
+                "patterns": [
+                    "ch",
+                    "sh",
+                    "th",
+                    "ph"
+                ]
+            },
+            {
+                "id": "multisyllabic",
+                "label": "Multi-Syllable",
+                "icon": "🎵",
+                "x": 50,
+                "y": 70,
+                "prerequisites": [
+                    "digraphs"
+                ],
+                "patterns": [
+                    "Compound",
+                    "Prefix/Suffix",
+                    "Complex"
+                ]
+            }
+        ],
+        "connections": [
+            {
+                "from": "short-vowels",
+                "to": "long-vowels"
+            },
+            {
+                "from": "short-vowels",
+                "to": "consonant-blends"
+            },
+            {
+                "from": "long-vowels",
+                "to": "digraphs"
+            },
+            {
+                "from": "consonant-blends",
+                "to": "digraphs"
+            },
+            {
+                "from": "digraphs",
+                "to": "multisyllabic"
+            }
+        ]
+    }
+}
