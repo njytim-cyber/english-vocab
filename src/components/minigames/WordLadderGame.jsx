@@ -4,6 +4,8 @@ import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
 import balance from '../../data/balance.json';
+import GameLayout from '../common/GameLayout';
+import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 
 export default function WordLadderGame({ engine, onBack }) {
     const [currentLadder, setCurrentLadder] = useState(null);
@@ -113,63 +115,32 @@ export default function WordLadderGame({ engine, onBack }) {
         }
     };
 
-    if (!currentLadder) return <div>Loading...</div>;
-
     return (
-        <div className="word-ladder-game" style={{
-            padding: '2rem',
-            maxWidth: '600px',
-            margin: '0 auto',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            color: 'var(--dark)'
-        }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <button onClick={() => { sfx.playClick(); onBack(); }} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>
-                    ← Back
-                </button>
-                <button
-                    onClick={() => { sfx.playClick(); setShowTutorial(true); }}
-                    style={{
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '36px',
-                        height: '36px',
-                        cursor: 'pointer',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        color: '#4ECDC4',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                    }}
-                >
-                    ?
-                </button>
-            </div>
-
-            <h2 style={{ marginBottom: '1rem' }}>Word Ladder 🪜</h2>
-
-            <div className="card" style={{ padding: '2rem', width: '100%', textAlign: 'center', marginBottom: '2rem' }}>
-                <div style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Transform</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)' }}>{currentLadder.start}</div>
-                <div style={{ fontSize: '1.2rem', margin: '1rem 0' }}>to</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--secondary)' }}>{currentLadder.end}</div>
+        <GameLayout
+            title="Word Ladder"
+            icon="🪜"
+            onBack={onBack}
+            onHelp={() => setShowTutorial(true)}
+        >
+            <div className="card" style={{ padding: spacing.xl, width: '100%', textAlign: 'center', marginBottom: spacing.xl, background: colors.white, borderRadius: borderRadius.xl, boxShadow: shadows.md }}>
+                <div style={{ fontSize: '1.2rem', marginBottom: spacing.md, color: colors.text }}>Transform</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: colors.primary }}>{currentLadder.start}</div>
+                <div style={{ fontSize: '1.2rem', margin: `${spacing.md} 0`, color: colors.textMuted }}>to</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: colors.success }}>{currentLadder.end}</div>
             </div>
 
             {/* Steps */}
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: spacing.sm, marginBottom: spacing.xl }}>
                 {userSteps.map((step, idx) => (
                     <div key={idx} className="animate-pop" style={{
-                        padding: '1rem',
-                        background: 'white',
-                        borderRadius: '10px',
+                        padding: spacing.lg,
+                        background: colors.white,
+                        borderRadius: borderRadius.lg,
                         textAlign: 'center',
                         fontSize: '1.5rem',
                         fontWeight: 'bold',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                        border: idx === 0 ? '2px solid var(--primary)' : '1px solid #eee'
+                        boxShadow: shadows.sm,
+                        border: idx === 0 ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`
                     }}>
                         {step}
                     </div>
@@ -178,7 +149,7 @@ export default function WordLadderGame({ engine, onBack }) {
 
             {/* Input */}
             {gameStatus === 'playing' ? (
-                <form onSubmit={handleSubmitStep} style={{ width: '100%', display: 'flex', gap: '0.5rem' }}>
+                <form onSubmit={handleSubmitStep} style={{ width: '100%', display: 'flex', gap: spacing.sm }}>
                     <input
                         ref={inputRef}
                         type="text"
@@ -188,10 +159,10 @@ export default function WordLadderGame({ engine, onBack }) {
                         maxLength={currentLadder.start.length}
                         style={{
                             flex: 1,
-                            padding: '1rem',
+                            padding: spacing.lg,
                             fontSize: '1.2rem',
-                            borderRadius: '10px',
-                            border: '2px solid #ddd',
+                            borderRadius: borderRadius.lg,
+                            border: `2px solid ${colors.border}`,
                             textAlign: 'center',
                             textTransform: 'uppercase'
                         }}
@@ -201,11 +172,11 @@ export default function WordLadderGame({ engine, onBack }) {
                         type="submit"
                         disabled={currentInput.length !== currentLadder.start.length}
                         style={{
-                            padding: '0 1.5rem',
-                            background: 'var(--dark)',
-                            color: 'white',
+                            padding: `0 ${spacing.xl}`,
+                            background: colors.dark,
+                            color: colors.white,
                             border: 'none',
-                            borderRadius: '10px',
+                            borderRadius: borderRadius.lg,
                             cursor: 'pointer',
                             fontSize: '1.5rem'
                         }}
@@ -216,13 +187,13 @@ export default function WordLadderGame({ engine, onBack }) {
             ) : (
                 !showSummary && (
                     <div className="animate-pop" style={{ textAlign: 'center' }}>
-                        <h3 style={{ color: 'green', fontSize: '2rem' }}>Goal Reached!</h3>
+                        <h3 style={{ color: colors.success, fontSize: '2rem' }}>Goal Reached!</h3>
                         <p>Steps: {userSteps.length - 1}</p>
                     </div>
                 )
             )}
 
-            {message && <div style={{ color: 'red', marginTop: '1rem' }}>{message}</div>}
+            {message && <div style={{ color: colors.error, marginTop: spacing.md }}>{message}</div>}
 
             {/* Tutorial Modal */}
             {showTutorial && (
@@ -248,6 +219,6 @@ export default function WordLadderGame({ engine, onBack }) {
                     onBack={onBack}
                 />
             )}
-        </div>
+        </GameLayout>
     );
 }

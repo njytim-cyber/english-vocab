@@ -5,6 +5,8 @@ import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
 import balance from '../../data/balance.json';
+import GameLayout from '../common/GameLayout';
+import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 
 export default function LetterDeductionGame({ engine, onBack }) {
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -98,55 +100,26 @@ export default function LetterDeductionGame({ engine, onBack }) {
         );
     };
 
-    if (!currentQuestion) return <div>Loading...</div>;
-
     return (
-        <div className="letter-deduction-game" style={{
-            padding: '2rem',
-            maxWidth: '800px',
-            margin: '0 auto',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            color: 'var(--dark)'
-        }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <button onClick={() => { sfx.playClick(); onBack(); }} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>
-                    ← Back
-                </button>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <button
-                        onClick={() => { sfx.playClick(); setShowTutorial(true); }}
-                        style={{
-                            background: 'white',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '36px',
-                            height: '36px',
-                            cursor: 'pointer',
-                            fontSize: '1.2rem',
-                            fontWeight: 'bold',
-                            color: '#4ECDC4',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                        }}
-                    >
-                        ?
-                    </button>
-                </div>
+        <GameLayout
+            title="Letter Deduction"
+            icon="🕵️"
+            onBack={onBack}
+            onHelp={() => setShowTutorial(true)}
+        >
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: spacing.lg, fontSize: '1.2rem' }}>
+                Lives: {'❤️'.repeat(MAX_LIVES - wrongGuesses)}
             </div>
-            <div style={{ fontSize: '1.2rem', alignSelf: 'flex-end', marginRight: '1rem' }}>Lives: {'❤️'.repeat(MAX_LIVES - wrongGuesses)}</div>
 
-            <h2 style={{ marginBottom: '1rem' }}>Letter Deduction 🕵️</h2>
-            <p style={{ fontStyle: 'italic', marginBottom: '2rem', textAlign: 'center' }}>
+            <p style={{ fontStyle: 'italic', marginBottom: spacing.xl, textAlign: 'center', fontSize: '1.1rem', color: colors.text }}>
                 Hint: {currentQuestion.question.replace(currentQuestion.answer, '_____')}
             </p>
 
             {/* Word Display */}
             <div className="word-display" style={{
                 display: 'flex',
-                gap: '0.5rem',
-                marginBottom: '3rem',
+                gap: spacing.sm,
+                marginBottom: spacing.xxl,
                 flexWrap: 'wrap',
                 justifyContent: 'center'
             }}>
@@ -154,13 +127,13 @@ export default function LetterDeductionGame({ engine, onBack }) {
                     <div key={idx} style={{
                         width: '40px',
                         height: '50px',
-                        borderBottom: '3px solid var(--primary)',
+                        borderBottom: `3px solid ${colors.primary}`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontSize: '2rem',
                         fontWeight: 'bold',
-                        color: wrongGuesses >= MAX_LIVES && !guessedLetters.has(currentQuestion.answer[idx].toUpperCase()) ? 'red' : 'inherit'
+                        color: wrongGuesses >= MAX_LIVES && !guessedLetters.has(currentQuestion.answer[idx].toUpperCase()) ? colors.error : 'inherit'
                     }}>
                         {char}
                     </div>
@@ -169,26 +142,26 @@ export default function LetterDeductionGame({ engine, onBack }) {
 
             {/* Game Over / Win Message */}
             {gameStatus !== 'playing' && !showSummary && (
-                <div className="animate-pop" style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                    <h3 style={{ fontSize: '2rem', color: gameStatus === 'won' ? 'green' : 'red' }}>
+                <div className="animate-pop" style={{ marginBottom: spacing.xl, textAlign: 'center' }}>
+                    <h3 style={{ fontSize: '2rem', color: gameStatus === 'won' ? colors.success : colors.error }}>
                         {gameStatus === 'won' ? 'You Got It!' : 'Out of Lives!'}
                     </h3>
                 </div>
             )}
 
             {/* Keyboard */}
-            <div className="keyboard" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
+            <div className="keyboard" style={{ display: 'flex', flexDirection: 'column', gap: spacing.sm, alignItems: 'center' }}>
                 {keyboardLayout.map((row, rowIdx) => (
-                    <div key={rowIdx} style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div key={rowIdx} style={{ display: 'flex', gap: spacing.sm }}>
                         {row.split('').map(char => {
                             const isGuessed = guessedLetters.has(char);
                             const isCorrect = currentQuestion.answer.toUpperCase().includes(char);
 
-                            let bg = 'white';
-                            let color = 'var(--dark)';
+                            let bg = colors.white;
+                            let color = colors.dark;
                             if (isGuessed) {
-                                bg = isCorrect ? '#4caf50' : '#e0e0e0';
-                                color = isCorrect ? 'white' : '#9e9e9e';
+                                bg = isCorrect ? colors.success : colors.border;
+                                color = isCorrect ? colors.white : colors.textMuted;
                             }
 
                             return (
@@ -199,14 +172,15 @@ export default function LetterDeductionGame({ engine, onBack }) {
                                     style={{
                                         width: '40px',
                                         height: '50px',
-                                        borderRadius: '8px',
-                                        border: '1px solid #ddd',
+                                        borderRadius: borderRadius.md,
+                                        border: `2px solid ${isGuessed && isCorrect ? colors.success : colors.border}`,
                                         background: bg,
                                         color: color,
                                         fontSize: '1.2rem',
                                         fontWeight: 'bold',
                                         cursor: isGuessed ? 'default' : 'pointer',
-                                        boxShadow: isGuessed ? 'none' : '0 2px 4px rgba(0,0,0,0.1)'
+                                        boxShadow: isGuessed ? 'none' : shadows.sm,
+                                        transition: 'all 0.2s ease'
                                     }}
                                 >
                                     {char}
@@ -223,7 +197,7 @@ export default function LetterDeductionGame({ engine, onBack }) {
                     title="How to Play"
                     instructions={[
                         "Guess the hidden word one letter at a time.",
-                        "Type on your keyboard or tap the screen.",
+                        "Type on your keyboard or tap letters on screen.",
                         "Use the hint sentence for clues.",
                         "You have 6 lives (hearts).",
                         "Incorrect guesses lose a life!"
@@ -242,6 +216,6 @@ export default function LetterDeductionGame({ engine, onBack }) {
                     onBack={onBack}
                 />
             )}
-        </div>
+        </GameLayout>
     );
 }

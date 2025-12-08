@@ -5,6 +5,8 @@ import { sfx } from '../../utils/soundEffects';
 import GameTutorialModal from '../common/GameTutorialModal';
 import GameSummaryModal from '../common/GameSummaryModal';
 import balance from '../../data/balance.json';
+import GameLayout from '../common/GameLayout';
+import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
 
 export default function WordScrambleGame({ engine, onBack }) {
     const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -104,59 +106,30 @@ export default function WordScrambleGame({ engine, onBack }) {
 
 
 
-    if (!currentQuestion) return <div>Loading...</div>;
-
     return (
-        <div className="word-scramble-game" style={{
-            padding: '2rem',
-            maxWidth: '800px',
-            margin: '0 auto',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            color: 'var(--dark)'
-        }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <button onClick={() => { sfx.playClick(); onBack(); }} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>
-                    ← Back
-                </button>
-                <button
-                    onClick={() => { sfx.playClick(); setShowTutorial(true); }}
-                    style={{
-                        background: 'white',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '36px',
-                        height: '36px',
-                        cursor: 'pointer',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        color: '#4ECDC4',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                    }}
-                >
-                    ?
-                </button>
-            </div>
-
-            <h2 style={{ marginBottom: '1rem' }}>Word Scramble 🌪️</h2>
-            <p style={{ fontStyle: 'italic', marginBottom: '3rem', textAlign: 'center' }}>
+        <GameLayout
+            title="Word Scramble"
+            icon="🌪️"
+            onBack={onBack}
+            onHelp={() => setShowTutorial(true)}
+        >
+            <p style={{ fontStyle: 'italic', marginBottom: spacing.xxl, textAlign: 'center', fontSize: '1.1rem', color: colors.text }}>
                 Hint: {currentQuestion.question.replace(currentQuestion.answer, '_____')}
             </p>
 
             {/* User Guess Area */}
             <div style={{
                 display: 'flex',
-                gap: '0.5rem',
-                marginBottom: '2rem',
+                gap: spacing.sm,
+                marginBottom: spacing.xl,
                 minHeight: '60px',
-                padding: '1rem',
-                background: '#f5f5f5',
-                borderRadius: '10px',
+                padding: spacing.lg,
+                background: colors.light,
+                borderRadius: borderRadius.xl,
                 flexWrap: 'wrap',
                 justifyContent: 'center',
-                width: '100%'
+                width: '100%',
+                boxShadow: shadows.sm
             }}>
                 {userGuess.map(l => (
                     <button
@@ -166,14 +139,15 @@ export default function WordScrambleGame({ engine, onBack }) {
                         style={{
                             width: '50px',
                             height: '50px',
-                            borderRadius: '8px',
+                            borderRadius: borderRadius.md,
                             border: 'none',
-                            background: 'var(--primary)',
-                            color: 'white',
+                            background: colors.primary,
+                            color: colors.white,
                             fontSize: '1.5rem',
                             fontWeight: 'bold',
                             cursor: 'pointer',
-                            boxShadow: '0 4px 0 #2c3e50'
+                            boxShadow: `0 4px 0 ${colors.primaryDark}`,
+                            transition: 'all 0.2s ease'
                         }}
                     >
                         {l.char}
@@ -184,8 +158,8 @@ export default function WordScrambleGame({ engine, onBack }) {
             {/* Scrambled Letters Area */}
             <div style={{
                 display: 'flex',
-                gap: '0.5rem',
-                marginBottom: '3rem',
+                gap: spacing.sm,
+                marginBottom: spacing.xxl,
                 flexWrap: 'wrap',
                 justifyContent: 'center'
             }}>
@@ -197,14 +171,15 @@ export default function WordScrambleGame({ engine, onBack }) {
                         style={{
                             width: '50px',
                             height: '50px',
-                            borderRadius: '8px',
-                            border: '1px solid #ddd',
-                            background: 'white',
-                            color: 'var(--dark)',
+                            borderRadius: borderRadius.md,
+                            border: `2px solid ${colors.border}`,
+                            background: colors.white,
+                            color: colors.dark,
                             fontSize: '1.5rem',
                             fontWeight: 'bold',
                             cursor: 'pointer',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                            boxShadow: shadows.sm,
+                            transition: 'all 0.2s ease'
                         }}
                     >
                         {l.char}
@@ -215,21 +190,23 @@ export default function WordScrambleGame({ engine, onBack }) {
             {/* Controls */}
             {gameStatus === 'won' && !showSummary ? (
                 <div className="animate-pop" style={{ textAlign: 'center' }}>
-                    <h3 style={{ fontSize: '2rem', color: 'green', marginBottom: '1rem' }}>Correct!</h3>
+                    <h3 style={{ fontSize: '2rem', color: colors.success, marginBottom: spacing.md }}>Correct!</h3>
                 </div>
             ) : (
                 <button
                     onClick={checkAnswer}
                     disabled={userGuess.length === 0}
                     style={{
-                        padding: '1rem 3rem',
+                        padding: `${spacing.md} ${spacing.xxl}`,
                         fontSize: '1.2rem',
-                        background: userGuess.length > 0 ? 'var(--secondary)' : '#ccc',
-                        color: 'white',
+                        background: userGuess.length > 0 ? colors.primaryGradient : colors.textMuted,
+                        color: colors.white,
                         border: 'none',
-                        borderRadius: '20px',
+                        borderRadius: borderRadius.xl,
                         cursor: userGuess.length > 0 ? 'pointer' : 'not-allowed',
-                        transition: 'all 0.2s'
+                        transition: 'all 0.3s ease',
+                        boxShadow: userGuess.length > 0 ? shadows.primary : 'none',
+                        fontWeight: 'bold'
                     }}
                 >
                     Check Answer
@@ -242,9 +219,9 @@ export default function WordScrambleGame({ engine, onBack }) {
                     title="How to Play"
                     instructions={[
                         "Unscramble the letters to form the correct word.",
-                        "Type letters to move them up.",
-                        "Backspace to remove them.",
-                        "Enter to submit.",
+                        "Tap letters to move them to your answer.",
+                        "Type letters or use backspace on keyboard.",
+                        "Press Enter or 'Check Answer' to submit.",
                         "Use the hint sentence for help!"
                     ]}
                     onClose={closeTutorial}
@@ -261,6 +238,6 @@ export default function WordScrambleGame({ engine, onBack }) {
                     onBack={onBack}
                 />
             )}
-        </div>
+        </GameLayout>
     );
 }
