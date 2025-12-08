@@ -90,7 +90,7 @@ export function getAllQuestions() {
 }
 
 // ===== DATA VALIDATION =====
-if (process.env.NODE_ENV !== 'production') {
+if (import.meta.env.MODE !== 'production') {
     console.log('📊 Question Bank Loaded:');
     console.log(`  Vocab MCQ:           ${QUESTION_COUNTS.VOCAB_MCQ.toLocaleString()}`);
     console.log(`  Grammar MCQ:         ${QUESTION_COUNTS.GRAMMAR_MCQ.toLocaleString()}`);
@@ -102,3 +102,4 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`  Listening:           ${QUESTION_COUNTS.LISTENING.toLocaleString()}`);
     console.log(`  TOTAL:               ${getAllQuestions().length.toLocaleString()}`);
 }
+

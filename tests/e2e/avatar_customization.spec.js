@@ -70,6 +70,9 @@ test.describe('Avatar Customization System', () => {
 
         // Wait for modal
         await expect(page.getByText('Your Profile')).toBeVisible();
+
+        // Base tab should be active by default - verify base options are visible
+        const catButton = page.getByRole('button', { name: /Cat|🐱/i });
         await expect(catButton).toBeVisible();
     });
 

@@ -15,7 +15,7 @@ const SKILL_TYPES = [
     { id: 'comprehension-setup', name: 'Reading', icon: '📰', color: colors.tertiary }
 ];
 
-// Memoized sub-components (without displayName to avoid GitHub secret scanner)
+// Memoized sub-components
 const ContinueTab = memo(({ actionData, onNavigate }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
         {actionData?.lastActivity && (
@@ -148,6 +148,7 @@ const ContinueTab = memo(({ actionData, onNavigate }) => (
         )}
     </div>
 ));
+ContinueTab.displayName = 'ContinueTab';
 
 const PracticeTab = memo(({ onNavigate, onHoverEnter, onHoverLeave }) => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: spacing.md }}>
@@ -194,6 +195,7 @@ const PracticeTab = memo(({ onNavigate, onHoverEnter, onHoverLeave }) => (
         ))}
     </div>
 ));
+PracticeTab.displayName = 'PracticeTab';
 
 const FlashcardsTab = memo(({ onNavigate }) => (
     <div style={{
@@ -228,6 +230,7 @@ const FlashcardsTab = memo(({ onNavigate }) => (
         </button>
     </div>
 ));
+FlashcardsTab.displayName = 'FlashcardsTab';
 
 export default function ReviseHub({
     engine,
