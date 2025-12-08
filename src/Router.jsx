@@ -29,18 +29,20 @@ import NavBar from './components/NavBar';
 import DailyLogin from './components/DailyLogin';
 import AvatarHUD from './components/common/AvatarHUD';
 import ProfileModal from './components/common/ProfileModal';
-import ClozeView from './components/ClozeView';
-import clozePassages from './data/cloze_sample.json';
+import ClozeView from "./components/ClozeView";
 import GrammarQuizView from './components/GrammarQuizView';
-import grammarQuestions from './data/grammar_questions.json';
 import GrammarClozeView from './components/GrammarClozeView';
-import grammarClozePassages from './data/grammar_cloze_full.json';
 import SpellingView from './components/SpellingView';
-import spellingWords from './data/spelling_words.json';
+import { VOCAB_CLOZE, GRAMMAR_MCQ, SPELLING, COMPREHENSION, GRAMMAR_CLOZE } from './data/dataManifest';
 import SpellingProgress from './engine/SpellingProgress';
 import GrammarSetup from './components/GrammarSetup';
 import ComprehensionView from './components/ComprehensionView';
-import comprehensionPassages from './data/comprehension_full.json';
+
+const clozePassages = VOCAB_CLOZE;
+const grammarQuestions = GRAMMAR_MCQ;
+const spellingWords = SPELLING;
+const grammarClozePassages = GRAMMAR_CLOZE;
+const comprehensionPassages = COMPREHENSION;
 import ReviseHub from './components/ReviseHub';
 import FlashcardView from './components/FlashcardView';
 import ProgressHub from './components/ProgressHub';
@@ -56,6 +58,9 @@ export default function Router() {
 
     const [showDailyLogin, setShowDailyLogin] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
+
+    const clozePassages = VOCAB_CLOZE;
+    const grammarQuestions = GRAMMAR_MCQ;
 
     const [clozePassageIndex, setClozePassageIndex] = useState(() => Math.floor(Math.random() * clozePassages.length));
     const [grammarClozeIndex, setGrammarClozeIndex] = useState(() => Math.floor(Math.random() * grammarClozePassages.length));

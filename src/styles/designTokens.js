@@ -4,26 +4,26 @@
  */
 
 export const colors = {
-    // Primary brand gradient
-    primaryGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    primary: '#667eea',
-    primaryDark: '#764ba2',
+    // Primary brand (Material Design 3 - muted purple)
+    primaryGradient: 'linear-gradient(135deg, #6750A4 0%, #625B71 100%)',
+    primary: '#6750A4',
+    primaryDark: '#625B71',
 
-    // Semantic colors
-    success: '#2ecc71',
-    warning: '#f1c40f',
-    error: '#e74c3c',
+    // Semantic colors (WCAG AA compliant)
+    success: '#6B8E23',      // Olive green
+    warning: '#B8860B',      // Dark goldenrod
+    error: '#C9302C',        // Muted red
 
     // Neutrals
-    dark: '#2c3e50',
-    text: '#34495e',
-    textMuted: '#7f8c8d',
-    border: '#e0e0e0',
+    dark: '#1C1B1F',         // Material on-surface
+    text: '#49454F',         // Material on-surface-variant
+    textMuted: '#79747E',    // Material outline
+    border: '#E7E0EC',       // Material outline-variant
 
     // Backgrounds
-    light: '#f8f9fa',
-    white: '#ffffff',
-    cardShadow: 'rgba(0, 0, 0, 0.08)'
+    light: '#F3EDF7',        // Material surface-variant
+    white: '#FFFBFE',        // Material surface
+    cardShadow: 'rgba(0, 0, 0, 0.05)'
 };
 
 // Icons and symbols - learning-focused, no monetary connotations
@@ -52,19 +52,19 @@ export const spacing = {
 };
 
 export const borderRadius = {
-    sm: '8px',
-    md: '12px',
-    lg: '15px',
-    xl: '20px',
+    sm: '6px',             // Reduced from 8px
+    md: '10px',            // Reduced from 12px
+    lg: '12px',            // Reduced from 15px
+    xl: '16px',            // Reduced from 20px
     round: '50%',
     pill: '50px'
 };
 
 export const shadows = {
-    sm: '0 2px 8px rgba(0, 0, 0, 0.08)',
-    md: '0 4px 15px rgba(0, 0, 0, 0.1)',
-    lg: '0 8px 25px rgba(0, 0, 0, 0.12)',
-    primary: '0 4px 15px rgba(102, 126, 234, 0.3)'
+    sm: '0 1px 3px rgba(0, 0, 0, 0.05)',      // Flatter, reduced from 2px 8px
+    md: '0 2px 6px rgba(0, 0, 0, 0.08)',      // Reduced from 4px 15px
+    lg: '0 4px 12px rgba(0, 0, 0, 0.1)',      // Reduced from 8px 25px
+    primary: '0 2px 8px rgba(103, 80, 164, 0.2)'  // Softer primary shadow
 };
 
 export const typography = {

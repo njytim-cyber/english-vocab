@@ -3,6 +3,7 @@ import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { triggerConfetti } from '../utils/effects';
 import { sfx } from '../utils/soundEffects';
+import DragDropAnswerInput from './common/DragDropAnswerInput';
 
 /**
  * SynthesisView - Synthesis & Transformation Quiz Component
@@ -22,15 +23,26 @@ export default function SynthesisView({
     const [isCorrect, setIsCorrect] = useState(false);
     const [showHint, setShowHint] = useState(false);
 
+    // Normalize text for comparison (lenient on whitespace/capitalization/contractions)
+    const normalizeText = (text) => {
+        return text
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, ' ')  // normalize whitespace
+            .replace(/n't/g, ' not')  // expand contractions
+            .replace(/'/g, '')  // remove apostrophes for consistency
+            .trim();
+    };
+
     const handleSubmit = () => {
         if (!userAnswer.trim()) {
             alert('Please enter your answer before submitting.');
             return;
         }
 
-        // Normalize both answers for comparison (trim, lowercase, remove extra spaces)
-        const normalizedUserAnswer = userAnswer.trim().toLowerCase().replace(/\s+/g, ' ');
-        const normalizedCorrectAnswer = currentQuestion.answer.trim().toLowerCase().replace(/\s+/g, ' ');
+        // Normalize both answers for comparison (LENIENT: ignore punctuation, whitespace, capitalization)
+        const normalizedUserAnswer = normalizeText(userAnswer).replace(/[.,!?;:]/g, '');
+        const normalizedCorrectAnswer = normalizeText(currentQuestion.answer).replace(/[.,!?;:]/g, '');
 
         const correct = normalizedUserAnswer === normalizedCorrectAnswer;
         setIsCorrect(correct);
@@ -170,7 +182,7 @@ export default function SynthesisView({
                     background: colors.light,
                     padding: spacing.lg,
                     borderRadius: borderRadius.lg,
-                    marginBottom: spacing.lg
+                    marginBottom: spacing.md
                 }}>
                     <p style={{
                         fontSize: '1.15rem',
@@ -183,8 +195,35 @@ export default function SynthesisView({
                     </p>
                 </div>
 
+                {/* Constraint / Trigger Word */}
+                {(currentQuestion.trigger_used || (currentQuestion.triggers && currentQuestion.triggers.length > 0)) && (
+                    <div style={{
+                        marginBottom: spacing.lg,
+                        padding: spacing.md,
+                        background: '#e3f2fd',
+                        borderRadius: borderRadius.lg,
+                        borderLeft: `4px solid ${colors.primary}`,
+                        color: '#0d47a1',
+                        fontSize: '1rem',
+                        fontWeight: '500'
+                    }}>
+                        <strong>Constraint:</strong> Use the word
+                        <span style={{
+                            background: 'white',
+                            padding: '2px 8px',
+                            borderRadius: '4px',
+                            margin: '0 6px',
+                            border: '1px solid #bbdefb',
+                            fontWeight: 'bold'
+                        }}>
+                            {currentQuestion.trigger_used || currentQuestion.triggers[0]}
+                        </span>
+                        in your answer.
+                    </div>
+                )}
+
                 {/* Hint Button */}
-                {!submitted && (
+                {!submitted && currentQuestion.logic && (
                     <button
                         onClick={() => setShowHint(!showHint)}
                         style={{
@@ -203,7 +242,7 @@ export default function SynthesisView({
                 )}
 
                 {/* Hint Display */}
-                {showHint && !submitted && (
+                {showHint && !submitted && currentQuestion.logic && (
                     <div style={{
                         background: '#fff3cd',
                         padding: spacing.md,
@@ -213,8 +252,6 @@ export default function SynthesisView({
                         color: '#856404'
                     }}>
                         <strong>Logic:</strong> {currentQuestion.logic}
-                        <br />
-                        <strong>Try using:</strong> {currentQuestion.trigger_used || currentQuestion.triggers?.join(', ')}
                     </div>
                 )}
 
@@ -229,34 +266,42 @@ export default function SynthesisView({
                     }}>
                         Your Answer:
                     </label>
-                    <textarea
-                        value={userAnswer}
-                        onChange={(e) => setUserAnswer(e.target.value)}
-                        disabled={submitted}
-                        placeholder="Type your combined sentence here..."
-                        style={{
-                            width: '100%',
-                            minHeight: '100px',
-                            padding: spacing.md,
-                            fontSize: '1.05rem',
-                            borderRadius: borderRadius.lg,
-                            border: `2px solid ${submitted
+                    {currentQuestion.answerParts ? (
+                        <DragDropAnswerInput
+                            answerParts={currentQuestion.answerParts}
+                            onChange={setUserAnswer}
+                            disabled={submitted}
+                        />
+                    ) : (
+                        <textarea
+                            value={userAnswer}
+                            onChange={(e) => setUserAnswer(e.target.value)}
+                            disabled={submitted}
+                            placeholder="Type your combined sentence here..."
+                            style={{
+                                width: '100%',
+                                minHeight: '100px',
+                                padding: spacing.md,
+                                fontSize: '1.05rem',
+                                borderRadius: borderRadius.lg,
+                                border: `2px solid ${submitted
                                     ? isCorrect
                                         ? colors.success
                                         : colors.error
                                     : colors.border
-                                }`,
-                            background: submitted
-                                ? isCorrect
-                                    ? '#d4edda'
-                                    : '#f8d7da'
-                                : colors.white,
-                            color: colors.dark,
-                            resize: 'vertical',
-                            fontFamily: 'inherit',
-                            lineHeight: '1.6'
-                        }}
-                    />
+                                    }`,
+                                background: submitted
+                                    ? isCorrect
+                                        ? '#d4edda'
+                                        : '#f8d7da'
+                                    : colors.white,
+                                color: colors.dark,
+                                resize: 'vertical',
+                                fontFamily: 'inherit',
+                                lineHeight: '1.6'
+                            }}
+                        />
+                    )}
                 </div>
 
                 {/* Feedback */}

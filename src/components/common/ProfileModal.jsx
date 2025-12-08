@@ -1,6 +1,30 @@
+import { useState, useEffect } from 'react';
+import { colors, borderRadius, shadows, spacing } from '../../styles/designTokens';
+import { sfx } from '../../utils/soundEffects';
+import AvatarBuilder from './AvatarBuilder';
+import { DEFAULT_AVATAR } from '../../data/avatarTypes';
+
+/**
+ * ProfileModal - User profile customization
+ * Allows editing name, avatar, and settings
+ */
 export default function ProfileModal({ userProfile, economy, onClose, onSave }) {
-    const [name, setName] = useState(userProfile?.getName() || '');
-    const [avatarData, setAvatarData] = useState(userProfile?.getAvatarData() || DEFAULT_AVATAR);
+    const [name, setName] = useState(() => {
+        try {
+            return userProfile?.getName?.() || '';
+        } catch (e) {
+            console.error('Error getting name from profile:', e);
+            return '';
+        }
+    });
+    const [avatarData, setAvatarData] = useState(() => {
+        try {
+            return userProfile?.getAvatarData?.() || DEFAULT_AVATAR;
+        } catch (e) {
+            console.error('Error getting avatar data:', e);
+            return DEFAULT_AVATAR;
+        }
+    });
     const [soundEnabled, setSoundEnabled] = useState(true);
 
     useEffect(() => {
@@ -77,27 +101,6 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                     </button>
                 </div>
 
-                {/* Current Avatar Display */}
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginBottom: spacing.lg
-                }}>
-                    <div style={{
-                        width: '100px',
-                        height: '100px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '3.5rem',
-                        boxShadow: shadows.md
-                    }}>
-                        {avatar}
-                    </div>
-                </div>
-
                 {/* Name Input */}
                 <div style={{ marginBottom: spacing.lg }}>
                     <label style={{
@@ -141,7 +144,7 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                     </label>
                     <AvatarBuilder
                         avatarData={avatarData}
-                        ownedItems={economy?.getInventory() || []}
+                        ownedItems={economy?.getInventory?.() || []}
                         onChange={handleAvatarChange}
                     />
                 </div>
@@ -186,6 +189,6 @@ export default function ProfileModal({ userProfile, economy, onClose, onSave }) 
                     Save Profile
                 </button>
             </div>
-        </div>
+        </div >
     );
 }

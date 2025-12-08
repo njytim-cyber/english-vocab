@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SHOP_ITEMS } from '../engine/Economy';
 import { speak } from '../utils/audio';
 import PageLayout from './common/PageLayout';
@@ -7,7 +7,8 @@ import { colors, borderRadius, shadows } from '../styles/designTokens';
 
 export default function ShopView({ economy, userProfile, onBack }) {
     const [coins, setCoins] = useState(economy.getCoins());
-    const [inventory, setInventory] = useState(economy.state.inventory);
+    // Optimization: Use getter instead of direct state access
+    const [inventory, setInventory] = useState(economy.getInventory());
     const [message, setMessage] = useState(null);
     const [activeCategory, setActiveCategory] = useState('accessory');
     const [equipped, setEquipped] = useState(userProfile ? userProfile.getEquippedItems() : {});
@@ -32,7 +33,8 @@ export default function ShopView({ economy, userProfile, onBack }) {
         const result = economy.buyItem(item.id);
         if (result.success) {
             setCoins(economy.getCoins());
-            setInventory([...economy.state.inventory]);
+            // Update using getter
+            setInventory([...economy.getInventory()]);
             speak("Purchased!");
             setMessage(`Bought ${item.name}!`);
 
@@ -61,7 +63,10 @@ export default function ShopView({ economy, userProfile, onBack }) {
         { id: 'theme', label: 'Themes' }
     ];
 
-    const filteredItems = SHOP_ITEMS.filter(item => item.type === activeCategory);
+    // Optimization: Memoize filtered list to prevent re-calc on unrelated renders
+    const filteredItems = useMemo(() => {
+        return SHOP_ITEMS.filter(item => item.type === activeCategory);
+    }, [activeCategory]);
 
     return (
         <PageLayout
@@ -145,7 +150,9 @@ export default function ShopView({ economy, userProfile, onBack }) {
                                         fontWeight: 'bold',
                                         fontSize: '0.85rem',
                                         marginTop: '0.5rem'
-                                    }}>
+                                    }}
+                                        aria-label={`Equipped: ${item.name}`}
+                                    >
                                         Equipped
                                     </button>
                                 ) : (
@@ -162,6 +169,7 @@ export default function ShopView({ economy, userProfile, onBack }) {
                                             marginTop: '0.5rem',
                                             cursor: 'pointer'
                                         }}
+                                        aria-label={`Equip ${item.name}`}
                                     >
                                         Equip
                                     </button>
@@ -184,6 +192,7 @@ export default function ShopView({ economy, userProfile, onBack }) {
                                         boxShadow: canAfford ? shadows.primary : 'none',
                                         marginTop: '0.5rem'
                                     }}
+                                    aria-label={`Buy ${item.name} for ${item.cost} coins`}
                                 >
                                     Buy
                                 </button>

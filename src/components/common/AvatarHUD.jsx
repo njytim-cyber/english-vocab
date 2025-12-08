@@ -7,7 +7,7 @@ import Avatar from './Avatar';
  * Shows: Stars (currency, clickable → Shop) | Avatar + Name
  * Clicking avatar opens the profile modal
  */
-export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenShop }) {
+export default function AvatarHUD({ userProfile, economy, onOpenProfile = () => console.warn('onOpenProfile not provided'), onOpenShop }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isCurrencyHovered, setIsCurrencyHovered] = useState(false);
     const [stats, setStats] = useState({
@@ -36,8 +36,21 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
         return unsubscribe;
     }, [economy]);
 
-    const avatarData = userProfile?.getAvatarData() || null;
-    const name = userProfile?.getName() || 'Learner';
+    const avatarData = (() => {
+        try {
+            return userProfile?.getAvatarData?.() || null;
+        } catch (e) {
+            console.error('AvatarHUD data error:', e);
+            return null;
+        }
+    })();
+    const name = (() => {
+        try {
+            return userProfile?.getName?.() || 'Learner';
+        } catch (e) {
+            return 'Learner';
+        }
+    })();
 
     // XP Progress Calculation
     const currentLevelBaseXP = Math.pow(stats.level - 1, 2) * 100;
@@ -51,6 +64,7 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                 onClick={onOpenProfile}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
+                aria-label="Open Profile"
                 style={{
                     position: 'fixed',
                     top: spacing.md,
@@ -99,6 +113,7 @@ export default function AvatarHUD({ userProfile, economy, onOpenProfile, onOpenS
                 onClick={onOpenShop}
                 onMouseEnter={() => setIsCurrencyHovered(true)}
                 onMouseLeave={() => setIsCurrencyHovered(false)}
+                aria-label="Open Rewards Shop"
                 style={{
                     position: 'fixed',
                     top: spacing.md,

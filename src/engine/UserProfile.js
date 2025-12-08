@@ -98,7 +98,39 @@ export class UserProfile {
     equipItem(itemId, itemType) {
         if (this.state.equippedItems[itemType] !== undefined) {
             this.state.equippedItems[itemType] = itemId;
-            this.save();
+
+            // Sync to avatarData for visual update
+            const eyesList = ['sunglasses', 'glasses', 'star_eyes', 'default'];
+            const hatsList = ['cap', 'crown', 'headphones', 'graduation', 'tophat', 'cowboy', 'party_hat', 'wizard_hat', 'halo'];
+
+            const currentData = this.getAvatarData();
+            const newData = {
+                ...currentData,
+                face: { ...currentData.face },
+                accessories: { ...currentData.accessories }
+            };
+
+            // If it's a shop accessory, we enforce mutual exclusivity
+            // Reset both potential slots first
+            if (itemType === 'accessory') {
+                if (eyesList.includes(newData.face?.eyes)) {
+                    newData.face.eyes = 'default';
+                }
+                newData.accessories.hat = null;
+            }
+
+            if (eyesList.includes(itemId)) {
+                newData.face.eyes = itemId;
+            } else if (hatsList.includes(itemId)) {
+                newData.accessories.hat = itemId;
+            }
+
+            // For skins/backgrounds
+            if (itemType === 'theme' || itemId.startsWith('theme_') || itemId.startsWith('bg_')) {
+                // Approximate mapping for themes if needed
+            }
+
+            this.setAvatarData(newData);
             return true;
         }
         return false;

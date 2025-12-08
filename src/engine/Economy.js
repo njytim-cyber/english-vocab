@@ -2,14 +2,14 @@ const STORAGE_KEY = 'vocab_quest_economy';
 
 export const SHOP_ITEMS = [
     // Accessories - Top layer items
-    { id: 'sunglasses', name: 'Cool Shades', cost: 100, icon: '🕶️', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
-    { id: 'party_hat', name: 'Party Hat', cost: 150, icon: '🎉', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
-    { id: 'top_hat', name: 'Top Hat', cost: 200, icon: '🎩', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
-    { id: 'crown', name: 'Royal Crown', cost: 500, icon: '👑', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
-    { id: 'wizard_hat', name: 'Wizard Hat', cost: 400, icon: '🧙‍♂️', type: 'accessory', layer: { zIndex: 4, position: 'top' } },
-    { id: 'headphones', name: 'Headphones', cost: 250, icon: '🎧', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
-    { id: 'halo', name: 'Angel Halo', cost: 600, icon: '😇', type: 'accessory', layer: { zIndex: 5, position: 'top' } },
-    { id: 'star_eyes', name: 'Star Eyes', cost: 300, icon: '🤩', type: 'accessory', layer: { zIndex: 3, position: 'center' } },
+    { id: 'sunglasses', name: 'Cool Shades', cost: 100, icon: '🕶️', type: 'accessory', subtype: 'eyes', layer: { zIndex: 3, position: 'center' } },
+    { id: 'party_hat', name: 'Party Hat', cost: 150, icon: '🎉', type: 'accessory', subtype: 'hat', layer: { zIndex: 4, position: 'top' } },
+    { id: 'top_hat', name: 'Top Hat', cost: 200, icon: '🎩', type: 'accessory', subtype: 'hat', layer: { zIndex: 4, position: 'top' } },
+    { id: 'crown', name: 'Royal Crown', cost: 500, icon: '👑', type: 'accessory', subtype: 'hat', layer: { zIndex: 4, position: 'top' } },
+    { id: 'wizard_hat', name: 'Wizard Hat', cost: 400, icon: '🧙‍♂️', type: 'accessory', subtype: 'hat', layer: { zIndex: 4, position: 'top' } },
+    { id: 'headphones', name: 'Headphones', cost: 250, icon: '🎧', type: 'accessory', subtype: 'hat', layer: { zIndex: 3, position: 'center' } },
+    { id: 'halo', name: 'Angel Halo', cost: 600, icon: '😇', type: 'accessory', subtype: 'hat', layer: { zIndex: 5, position: 'top' } },
+    { id: 'star_eyes', name: 'Star Eyes', cost: 300, icon: '🤩', type: 'accessory', subtype: 'eyes', layer: { zIndex: 3, position: 'center' } },
 
     // Skins/Effects
     { id: 'gold_skin', name: 'Gold Aura', cost: 1000, icon: '✨', type: 'skin', layer: { zIndex: 0, position: 'center' } },
@@ -101,6 +101,10 @@ export class Economy {
 
     getEventTokens() {
         return this.state.eventTokens || 0;
+    }
+
+    getInventory() {
+        return [...(this.state.inventory || [])];
     }
 
     addCoins(amount) {

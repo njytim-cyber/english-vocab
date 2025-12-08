@@ -8,7 +8,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the library was crowded"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she managed to find a quiet spot"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 2,
@@ -19,7 +41,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "he studied hard for the test"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he still didn't get the best score"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 3,
@@ -30,7 +74,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the food was very expensive"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we enjoyed the delicious meal"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 4,
@@ -41,7 +107,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the sun was shining brightly"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we decided to stay indoors"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 5,
@@ -52,7 +140,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "the movie was quite long"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the children remained engaged"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 6,
@@ -63,7 +173,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "he was feeling tired"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he continued to help his neighbour"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 7,
@@ -74,7 +206,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the road was under construction"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we arrived on time"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 8,
@@ -85,7 +239,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "the question was challenging"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she answered it correctly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 9,
@@ -96,7 +272,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the weather was bad"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they still went to the beach"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 10,
@@ -107,7 +305,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "she had a headache"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she still finished her homework"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 11,
@@ -118,7 +338,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "the team was losing"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they never gave up hope"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 12,
@@ -129,7 +371,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the instructions were unclear"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he managed to assemble the toy"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 13,
@@ -140,7 +404,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the cake was burnt"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it still tasted quite nice"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 14,
@@ -151,7 +437,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "she was feeling nervous"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she gave a great presentation"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 15,
@@ -162,7 +470,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the game was boring"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they watched it until the end"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 16,
@@ -173,7 +503,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the car was old"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it ran very smoothly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 17,
@@ -184,7 +536,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "he had a lot of homework"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he made time to play football"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 18,
@@ -195,7 +569,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the prices were high"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the shop was very busy"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 19,
@@ -206,7 +602,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the phone was outdated"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it still worked well"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 20,
@@ -217,7 +635,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "she didn't like the taste"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she ate all of her vegetables"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 21,
@@ -228,7 +668,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "he felt unwell"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he still went to school"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 22,
@@ -239,7 +701,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the shirt was too small"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he continued to wear it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 23,
@@ -250,7 +734,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "the lesson was difficult to understand"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she tried her best"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 24,
@@ -261,7 +767,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the test was long"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they finished on time"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 25,
@@ -272,7 +800,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the music was loud"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they managed to concentrate"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 26,
@@ -283,7 +833,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "she was afraid of heights"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she climbed the rock wall"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 27,
@@ -294,7 +866,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the project was very time-consuming"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he enjoyed working on it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 28,
@@ -305,7 +899,29 @@
     "difficulty": 2,
     "trigger_used": "Although",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Although"
+      },
+      {
+        "type": "blank",
+        "expected": "the chair was uncomfortable"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he sat there for hours"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 29,
@@ -316,7 +932,29 @@
     "difficulty": 2,
     "trigger_used": "Even though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Even though"
+      },
+      {
+        "type": "blank",
+        "expected": "the soup was cold"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they still ate it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 30,
@@ -327,7 +965,29 @@
     "difficulty": 2,
     "trigger_used": "Though",
     "type": "synthesis",
-    "logic": "Direct combining using connectors that take a Subject + Verb."
+    "logic": "Direct combining using connectors that take a Subject + Verb.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Though"
+      },
+      {
+        "type": "blank",
+        "expected": "the answer was obvious"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "nobody noticed it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 31,
@@ -338,7 +998,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his lack of practice"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he won the competition"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 32,
@@ -349,7 +1031,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the unclear instructions"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she managed to assemble the furniture"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 33,
@@ -360,7 +1064,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "the terrible weather"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they went for a picnic"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 34,
@@ -371,7 +1097,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "his feeling unwell"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he attended the school event"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 35,
@@ -382,7 +1130,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her headache"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she focused on her studies"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 36,
@@ -393,7 +1163,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the very long queue"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they waited patiently"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 37,
@@ -404,7 +1196,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "the boring movie"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he watched it until the end"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 38,
@@ -415,7 +1229,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the challenging task"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she completed it successfully"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 39,
@@ -426,7 +1262,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his lack of experience"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he got the job"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 40,
@@ -437,7 +1295,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the expensive food"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they ate there"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 41,
@@ -448,7 +1328,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her fear of heights"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she climbed the mountain"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 42,
@@ -459,7 +1361,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the heavy traffic"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he arrived on time"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 43,
@@ -470,7 +1394,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his cold"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he went to school"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 44,
@@ -481,7 +1427,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the old computer"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it worked perfectly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 45,
@@ -492,7 +1460,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her dislike of vegetables"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she ate them all"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 46,
@@ -503,7 +1493,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the distracting noise"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he concentrated on his work"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 47,
@@ -514,7 +1526,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his feeling down"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he cheered up his friend"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 48,
@@ -525,7 +1559,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the very long book"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she read it in one day"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 49,
@@ -536,7 +1592,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his very little money"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he donated some to charity"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 50,
@@ -547,7 +1625,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the difficult test"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she scored very well"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 51,
@@ -558,7 +1658,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her little talent"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she became a famous singer"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 52,
@@ -569,7 +1691,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the tiring journey"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they enjoyed the sights"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 53,
@@ -580,7 +1724,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his feeling nervous"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he gave a fantastic presentation"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 54,
@@ -591,7 +1757,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the high price"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they bought it anyway"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 55,
@@ -602,7 +1790,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her lack of confidence"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she volunteered to speak"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 56,
@@ -613,7 +1823,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the messy room"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he found his keys quickly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 57,
@@ -624,7 +1856,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "his injury"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he continued playing the game"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 58,
@@ -635,7 +1889,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the bad news"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she remained positive"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 59,
@@ -646,7 +1922,29 @@
     "difficulty": 6,
     "trigger_used": "In spite of",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "In spite of"
+      },
+      {
+        "type": "blank",
+        "expected": "her little sleep"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she felt energetic"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 60,
@@ -657,7 +1955,29 @@
     "difficulty": 6,
     "trigger_used": "Despite",
     "type": "synthesis",
-    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund."
+    "logic": "Requires transforming a verb or adjective clause into a noun phrase or gerund.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Despite"
+      },
+      {
+        "type": "blank",
+        "expected": "the difficult situation"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he handled it with grace"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 61,
@@ -668,7 +1988,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "the library was closed"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we couldn't borrow any books"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 62,
@@ -679,7 +2021,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "he studied hard"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he passed the exam"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 63,
@@ -690,7 +2054,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the sun was shining brightly"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we went to the beach"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 64,
@@ -701,7 +2087,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "I was feeling unwell"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I stayed home from school"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 65,
@@ -712,7 +2120,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "the cake was delicious"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "everyone ate it quickly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 66,
@@ -723,7 +2153,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the traffic was heavy"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we were late for the movie"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 67,
@@ -734,7 +2186,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "she practised the piano daily"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she became very good at it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 68,
@@ -745,7 +2219,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "he forgot his wallet"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he couldn't buy lunch"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 69,
@@ -756,7 +2252,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the shop was having a sale"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it was very crowded"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 70,
@@ -767,7 +2285,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "the plant needed water"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it started to wilt"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 71,
@@ -778,7 +2318,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "I lost my phone"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I couldn't contact my parents"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 72,
@@ -789,7 +2351,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the wind was strong"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the trees were swaying"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 73,
@@ -800,7 +2384,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "she listened carefully to the instructions"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she completed the task easily"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 74,
@@ -811,7 +2417,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "he ate too much candy"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he got a stomachache"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 75,
@@ -822,7 +2450,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the concert was starting soon"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "people were rushing to their seats"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 76,
@@ -833,7 +2483,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "it was a public holiday"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "many shops were closed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 77,
@@ -844,7 +2516,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "the electricity was out"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we used candles for light"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 78,
@@ -855,7 +2549,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the birds were chirping loudly"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it was early morning"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 79,
@@ -866,7 +2582,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "she studied very hard for the Science test"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she got a good score"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 80,
@@ -877,7 +2615,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "he was feeling tired"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he went to bed early"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 81,
@@ -888,7 +2648,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the weather was getting colder"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we put on our jackets"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 82,
@@ -899,7 +2681,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "they had no money"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they could not buy a new car"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 83,
@@ -910,7 +2714,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "the restaurant was full"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we had to wait for a table"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 84,
@@ -921,7 +2747,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the bell rang"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it was time for recess"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 85,
@@ -932,7 +2780,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "the cat was hungry"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it meowed loudly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 86,
@@ -943,7 +2813,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "he didn't do his homework"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he got detention"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 87,
@@ -954,7 +2846,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the water was cold"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I couldn't swim in the pool"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 88,
@@ -965,7 +2879,29 @@
     "difficulty": 1,
     "trigger_used": "Since",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Since"
+      },
+      {
+        "type": "blank",
+        "expected": "the computer was broken"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I couldn't finish my assignment"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 89,
@@ -976,7 +2912,29 @@
     "difficulty": 1,
     "trigger_used": "Because",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Because"
+      },
+      {
+        "type": "blank",
+        "expected": "she helped her neighbour"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she felt happy"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 90,
@@ -987,7 +2945,29 @@
     "difficulty": 1,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Standard causal linking."
+    "logic": "Standard causal linking.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the sky was dark"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it was going to rain"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 91,
@@ -1328,7 +3308,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the chef cooked dinner"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the waiter set the table"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 122,
@@ -1339,7 +3341,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "she studied for her exams"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "her brother watched television"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 123,
@@ -1350,7 +3374,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the sun began to rise"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the birds chirped loudly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 124,
@@ -1361,7 +3407,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "he practiced his football skills"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "his friends cheered him on"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 125,
@@ -1372,7 +3440,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the teacher lectured"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the students took notes"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 126,
@@ -1383,7 +3473,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "she watered the plants"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he swept the floor"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 127,
@@ -1394,7 +3506,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the rain poured down"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the wind howled"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 128,
@@ -1405,7 +3539,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "he played his guitar"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she sang along"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 129,
@@ -1416,7 +3572,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the postman delivered the mail"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the dog barked"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 130,
@@ -1427,7 +3605,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the baby slept soundly"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the mother did the laundry"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 131,
@@ -1438,7 +3638,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "I listened to music"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I did my homework"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 132,
@@ -1449,7 +3671,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the athletes ran the race"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the crowd cheered"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 133,
@@ -1460,7 +3704,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "she wrote the report"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he proofread it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 134,
@@ -1471,7 +3737,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the construction workers built the building"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the architect oversaw the project"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 135,
@@ -1482,7 +3770,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "he surfed the waves"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she sunbathed on the beach"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 136,
@@ -1493,7 +3803,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the chef chopped the vegetables"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the sous chef prepared the sauce"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 137,
@@ -1504,7 +3836,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "she created the artwork"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he framed it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 138,
@@ -1515,7 +3869,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the children played in the park"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the parents relaxed on the benches"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 139,
@@ -1526,7 +3902,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the musicians tuned their instruments"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the conductor waited patiently"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 140,
@@ -1537,7 +3935,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "he studied his vocabulary"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she reviewed her grammar"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 141,
@@ -1548,7 +3968,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "the oven preheated"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the baker kneaded the dough"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 142,
@@ -1559,7 +4001,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the comedian told jokes"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the audience laughed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 143,
@@ -1570,7 +4034,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "she ironed the clothes"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he folded them"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 144,
@@ -1581,7 +4067,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the gardeners planted flowers"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the landscapers trimmed the hedges"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 145,
@@ -1592,7 +4100,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "he fixed the car"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she cleaned the garage"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 146,
@@ -1603,7 +4133,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the actors rehearsed their lines"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the stagehands built the set"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 147,
@@ -1614,7 +4166,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "she knitted a scarf"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he read a book"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 148,
@@ -1625,7 +4199,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the birds sang"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the leaves rustled in the wind"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 149,
@@ -1636,7 +4232,29 @@
     "difficulty": 2,
     "trigger_used": "As",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "As"
+      },
+      {
+        "type": "blank",
+        "expected": "he painted the wall"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she chose the curtains"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 150,
@@ -1647,7 +4265,29 @@
     "difficulty": 2,
     "trigger_used": "While",
     "type": "synthesis",
-    "logic": "Actions happening at the same time."
+    "logic": "Actions happening at the same time.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "While"
+      },
+      {
+        "type": "blank",
+        "expected": "the children played their video games"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "their parents relaxed on the sofa"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 151,
@@ -1658,7 +4298,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "finished her piano practice"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she watched TV"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 152,
@@ -1669,7 +4331,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "eaten its food"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the dog went to sleep"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 153,
@@ -1680,7 +4364,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "packed his suitcase"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "John left for the airport"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 154,
@@ -1691,7 +4397,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "planted the seeds"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they watered the garden"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 155,
@@ -1702,7 +4430,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "prepared the ingredients"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the chef started cooking the meal"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 156,
@@ -1713,7 +4463,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "completed the race"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he felt very tired"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 157,
@@ -1724,7 +4496,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "learned the formula"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she solved the problem easily"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 158,
@@ -1735,7 +4529,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "finished their exam"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the students celebrated with a party"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 159,
@@ -1746,7 +4562,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "cleaned his room"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he went downstairs for dinner"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 160,
@@ -1757,7 +4595,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "fixed the car"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the mechanic returned it to the owner"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 161,
@@ -1768,7 +4628,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "read the book"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she understood the story"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 162,
@@ -1779,7 +4661,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "hunted its prey"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the lion ate it quickly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 163,
@@ -1790,7 +4694,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "completed the project"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he submitted it to his teacher"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 164,
@@ -1801,7 +4727,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "exercised for an hour"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she took a shower"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 165,
@@ -1812,7 +4760,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "painted the picture"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the artist signed his name"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 166,
@@ -1823,7 +4793,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "washed the dishes"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he dried them with a towel"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 167,
@@ -1834,7 +4826,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "practiced her singing"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she performed on stage"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 168,
@@ -1845,7 +4859,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "climbed the tree"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the cat looked down at the birds"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 169,
@@ -1856,7 +4892,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "finished his drawing"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he showed it to his mother"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 170,
@@ -1867,7 +4925,29 @@
     "difficulty": 6,
     "trigger_used": "Having",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Having"
+      },
+      {
+        "type": "blank",
+        "expected": "written the letter"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she posted it immediately"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 171,
@@ -1878,7 +4958,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "waking up early"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she went for a jog"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 172,
@@ -1889,7 +4991,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "winning the game"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they celebrated their victory"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 173,
@@ -1900,7 +5024,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "building its nest"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the bird laid its eggs"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 174,
@@ -1911,7 +5057,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "studying hard"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he passed the test"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 175,
@@ -1922,7 +5090,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "baking the cake"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he decorated it beautifully"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 176,
@@ -1933,7 +5123,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "the rain stopped"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the sun came out"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 177,
@@ -1944,7 +5156,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "finishing her homework"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she could play with her friends"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 178,
@@ -1955,7 +5189,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "watering all the plants"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he rested in the shade"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 179,
@@ -1966,7 +5222,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "eating her lunch"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she went back to work"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 180,
@@ -1977,7 +5255,29 @@
     "difficulty": 6,
     "trigger_used": "After",
     "type": "synthesis",
-    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having')."
+    "logic": "Requires dropping the subject and converting the first verb to a participle (often 'Having').",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "After"
+      },
+      {
+        "type": "blank",
+        "expected": "boarding the plane"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he fastened his seatbelt"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 181,
@@ -3968,7 +7268,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she studies hard"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will fail her exams"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 362,
@@ -3979,7 +7301,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he apologises"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will not forgive him"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 363,
@@ -3990,7 +7334,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you wear a jacket"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "you will get cold"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 364,
@@ -4001,7 +7367,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "they practice regularly"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they will not win the competition"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 365,
@@ -4012,7 +7400,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "the rain stops"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the picnic will be cancelled"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 366,
@@ -4023,7 +7433,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you listen to instructions"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "you will make mistakes"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 367,
@@ -4034,7 +7466,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he eats his vegetables"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he will not grow strong"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 368,
@@ -4045,7 +7499,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she finishes her homework"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will be punished"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 369,
@@ -4056,7 +7532,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "the bus arrives on time"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "we will be late for school"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 370,
@@ -4067,7 +7565,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you clean your room"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "your mother will be angry"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 371,
@@ -4078,7 +7598,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he waters the lawn"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it will turn brown"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 372,
@@ -4089,7 +7631,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she tells the truth"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will get into trouble"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 373,
@@ -4100,7 +7664,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you save energy"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "you will waste money"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 374,
@@ -4111,7 +7697,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "they cooperate"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the project will fail"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 375,
@@ -4122,7 +7730,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "the dog gets a walk"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it will bark all day"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 376,
@@ -4133,7 +7763,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you recycle"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "you will harm the environment"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 377,
@@ -4144,7 +7796,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he apologises to his sister"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will remain upset"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 378,
@@ -4155,7 +7829,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she takes her medicine"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will not get better"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 379,
@@ -4166,7 +7862,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you bring an umbrella"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "you will get wet in the rain"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 380,
@@ -4177,7 +7895,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "they arrive on time"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they will miss the flight"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 381,
@@ -4188,7 +7928,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "the government acts soon"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the wildlife will be endangered"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 382,
@@ -4199,7 +7961,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you replace the broken bulb"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "it will be dark in the room"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 383,
@@ -4210,7 +7994,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he wears his helmet"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he will get injured"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 384,
@@ -4221,7 +8027,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she remembers her lines"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she will fail in the play"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 385,
@@ -4232,7 +8060,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you keep your pets inside"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they will be hit by a car"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 386,
@@ -4243,7 +8093,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "they fix the leaky faucet"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they will waste water"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 387,
@@ -4254,7 +8126,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "the computer is fixed"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I cannot do my work"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 388,
@@ -4265,7 +8159,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "you follow the recipe"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the cake will not turn out right"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 389,
@@ -4276,7 +8192,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "he eats his dinner"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he will be hungry later"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 390,
@@ -4287,7 +8225,29 @@
     "difficulty": 5,
     "trigger_used": "Unless",
     "type": "synthesis",
-    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause."
+    "logic": "The 'Double Negative' trap. Removing 'not' from the conditional clause.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Unless"
+      },
+      {
+        "type": "blank",
+        "expected": "she waters her plants"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "they will die"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 391,
@@ -4298,7 +8258,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the teacher"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would give everyone an extra break"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 392,
@@ -4309,7 +8291,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a bird"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would fly away to a tropical island"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 393,
@@ -4320,7 +8324,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the principal"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would cancel all exams this week"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 394,
@@ -4331,7 +8357,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "rich"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would buy a huge house with a swimming pool"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 395,
@@ -4342,7 +8390,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a doctor"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would dedicate my life to helping others"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 396,
@@ -4353,7 +8423,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "an artist"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would paint beautiful landscapes all day"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 397,
@@ -4364,7 +8456,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the coach"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would make sure everyone gets a chance to play"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 398,
@@ -4375,7 +8489,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a superhero"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would use my powers for good"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 399,
@@ -4386,7 +8522,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a famous singer"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would perform in stadiums around the world"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 400,
@@ -4397,7 +8555,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "you"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would complain to the manager about the service"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 401,
@@ -4408,7 +8588,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a tree"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would stand tall and provide shade for everyone"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 402,
@@ -4419,7 +8621,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a fish"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would swim freely in the ocean"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 403,
@@ -4430,7 +8654,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the librarian"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would organise the books by genre"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 404,
@@ -4441,7 +8687,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a chef"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would create delicious and healthy meals"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 405,
@@ -4452,7 +8720,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "an astronaut"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would explore outer space and discover new planets"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 406,
@@ -4463,7 +8753,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a pilot"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would fly a plane around the world"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 407,
@@ -4474,7 +8786,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a judge"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would always be fair and just"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 408,
@@ -4485,7 +8819,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the President"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would work towards world peace"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 409,
@@ -4496,7 +8852,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a professional gamer"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would compete in tournaments and win prizes"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 410,
@@ -4507,7 +8885,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "you"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would tell him how I truly feel"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 411,
@@ -4518,7 +8918,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a cloud"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would float freely in the sky"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 412,
@@ -4529,7 +8951,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a parent"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would let my child stay up late sometimes"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 413,
@@ -4540,7 +8984,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a taxi driver"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would know all the shortcuts in Singapore"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 414,
@@ -4551,7 +9017,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a florist"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would create beautiful bouquets for special occasions"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 415,
@@ -4562,7 +9050,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the shop owner"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would give discounts to all the students"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 416,
@@ -4573,7 +9083,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a professional athlete"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would train hard every day to be the best"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 417,
@@ -4584,7 +9116,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a baker"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would bake delicious cakes and pastries"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 418,
@@ -4595,7 +9149,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "the government"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would invest more in education"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 419,
@@ -4606,7 +9182,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "a gardener"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would plant a beautiful garden full of flowers"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 420,
@@ -4617,7 +9215,29 @@
     "difficulty": 6,
     "trigger_used": "If I were",
     "type": "synthesis",
-    "logic": "Imaginary situations using 'If I were'."
+    "logic": "Imaginary situations using 'If I were'.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "If I were"
+      },
+      {
+        "type": "blank",
+        "expected": "you"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "I would apologise for my mistake"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 421,
@@ -5618,7 +10238,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "crestfallenness of the supporters"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the team lost the final game"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 512,
@@ -5629,7 +10271,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "dejection of Mary"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she did not receive a birthday present"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 513,
@@ -5640,7 +10304,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "dismay of the fans"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the concert was cancelled"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 514,
@@ -5651,7 +10337,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "frustration of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he couldn't find his wallet"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 515,
@@ -5662,7 +10370,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "peeve of the customer"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the hawker stall closed early"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 516,
@@ -5673,7 +10403,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "irritation of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the internet was down all day"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 517,
@@ -5684,7 +10436,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disheartenment of the gardener"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the plants died from lack of water"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 518,
@@ -5695,7 +10469,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "worry of them"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "their flight was delayed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 519,
@@ -5706,7 +10502,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "annoyance of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the bubble tea shop was closed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 520,
@@ -5717,7 +10535,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disappointment of the teacher"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the exam results were poor"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 521,
@@ -5728,7 +10568,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "infuriation of commuters"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the MRT broke down during peak hour"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 522,
@@ -5739,7 +10601,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "vexation of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she received a parking fine"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 523,
@@ -5750,7 +10634,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disgruntlement of shoppers"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the bakery ran out of bread"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 524,
@@ -5761,7 +10667,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "crestfallenness of the director"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the movie was a flop"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 525,
@@ -5772,7 +10700,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "exasperation of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he spilled coffee on his new shirt"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 526,
@@ -5783,7 +10733,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "anxiety of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she lost her lucky charm"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 527,
@@ -5794,7 +10766,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "dismay of the baker"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the cake burnt in the oven"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 528,
@@ -5805,7 +10799,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "dejection of them"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "their team lost the competition"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 529,
@@ -5816,7 +10832,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disappointment of the family"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the picnic was rained out"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 530,
@@ -5827,7 +10865,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "worry of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he forgot his homework"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 531,
@@ -5838,7 +10898,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "irritation of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "she missed the bus"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 532,
@@ -5849,7 +10931,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "peeve of the customer"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the shop was closed for renovations"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 533,
@@ -5860,7 +10964,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "frustration of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the computer crashed before he saved his work"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 534,
@@ -5871,7 +10997,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "infuriation of them"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the car broke down on the expressway"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 535,
@@ -5882,7 +11030,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "vexation of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the cat scratched the sofa"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 536,
@@ -5893,7 +11063,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disgruntlement of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the item she ordered was out of stock"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 537,
@@ -5904,7 +11096,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "disheartenment of them"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the show was sold out"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 538,
@@ -5915,7 +11129,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "annoyance of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "he received a bad haircut"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 539,
@@ -5926,7 +11162,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "exasperation of her"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the food was too spicy"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 540,
@@ -5937,7 +11195,29 @@
     "difficulty": 7,
     "trigger_used": "Much to the",
     "type": "synthesis",
-    "logic": "Fixed phrase structure: 'Much to the [noun]...'"
+    "logic": "Fixed phrase structure: 'Much to the [noun]...'",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Much to the"
+      },
+      {
+        "type": "blank",
+        "expected": "anxiety of him"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "the phone bill was very high"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 541,
@@ -6938,7 +12218,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did she suspect he was planning a surprise party"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "or she would have been more careful"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 632,
@@ -6949,7 +12251,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did he realise the importance of his studies"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "or he would regret it later in life"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 633,
@@ -6960,7 +12284,21 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they expect to see the principal in the canteen when they were all chatting very loudly"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 634,
@@ -6971,7 +12309,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did she think the test would be so difficult"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "or she would have studied harder"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 635,
@@ -6982,7 +12342,21 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did he go to the library; he preferred to study at home"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 636,
@@ -6993,7 +12367,21 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did she eat fast food; she tried to maintain a healthy diet"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 637,
@@ -7004,7 +12392,21 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did he know that his friend was feeling unwell when he kept asking him to play football"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 638,
@@ -7015,7 +12417,29 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did the team win a match"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "and they were often disappointed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 639,
@@ -7026,7 +12450,29 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did she visit her grandparents"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "as she was always busy with schoolwork"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 640,
@@ -7037,7 +12483,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they imagine the queue would be so long"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "or they would have arrived earlier and not almost missed the movie"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 641,
@@ -7048,7 +12516,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did he expect his parents to buy him a new phone"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "so he was extremely surprised"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 642,
@@ -7059,7 +12549,29 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did she see the sunrise"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "as she usually slept in late"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 643,
@@ -7070,7 +12582,29 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did he help with the chores"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "as he was always playing games"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 644,
@@ -7081,7 +12615,21 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they suspect the weather would change so quickly when they were caught in a heavy downpour"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 645,
@@ -7092,7 +12640,21 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did she go cycling in the park; she preferred to read a book"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 646,
@@ -7103,7 +12665,21 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did he forget his homework; he was a very organised student"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 647,
@@ -7114,7 +12690,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did she realise how much effort he had put into the project"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "so she apologised for her harsh criticism"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 648,
@@ -7125,7 +12723,29 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did they see such a beautiful sunset"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "so they took many photos"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 649,
@@ -7136,7 +12756,21 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did he complain about the food; he was always polite and grateful"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 650,
@@ -7147,7 +12781,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did she know that the museum was closed on Mondays"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "resulting in a wasted trip"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 651,
@@ -7158,7 +12814,29 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did he exercise"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "even though he knew he should make more time for it"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 652,
@@ -7169,7 +12847,21 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did she watch television; she preferred to read books or do art"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 653,
@@ -7180,7 +12872,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they anticipate the traffic jam"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "resulting in them being late for their appointment"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 654,
@@ -7191,7 +12905,21 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did he speak during class; he was a shy student"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 655,
@@ -7202,7 +12930,29 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did she visit the zoo"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "as she was afraid of the animals"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 656,
@@ -7213,7 +12963,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they know that the tickets were sold out"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "leaving them very disappointed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 657,
@@ -7224,7 +12996,21 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did he eat vegetables; his mother always had to force him"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 658,
@@ -7235,7 +13021,21 @@
     "difficulty": 8,
     "trigger_used": "Seldom",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Seldom"
+      },
+      {
+        "type": "blank",
+        "expected": "did she go to the beach; she preferred the swimming pool"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 659,
@@ -7246,7 +13046,29 @@
     "difficulty": 8,
     "trigger_used": "Little",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Little"
+      },
+      {
+        "type": "blank",
+        "expected": "did they imagine the hike would be so challenging"
+      },
+      {
+        "type": "locked",
+        "text": ","
+      },
+      {
+        "type": "blank",
+        "expected": "and they were completely exhausted afterwards"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 660,
@@ -7257,7 +13079,21 @@
     "difficulty": 8,
     "trigger_used": "Rarely",
     "type": "synthesis",
-    "logic": "Inverting the auxiliary verb for emphasis."
+    "logic": "Inverting the auxiliary verb for emphasis.",
+    "answerParts": [
+      {
+        "type": "locked",
+        "text": "Rarely"
+      },
+      {
+        "type": "blank",
+        "expected": "did he wake up early; he always struggled to get out of bed"
+      },
+      {
+        "type": "locked",
+        "text": "."
+      }
+    ]
   },
   {
     "id": 661,

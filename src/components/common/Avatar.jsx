@@ -17,6 +17,10 @@ export default function Avatar({ avatarData, size = 'medium', showBorder = true,
 
     // For now, render using emojis - will upgrade to images later
     const baseEmoji = {
+        person: '🧑',
+        'person-fem': '👩',
+        'person-masc': '👨',
+        child: '🧒',
         human: '🧑',
         cat: '🐱',
         dog: '🐶',

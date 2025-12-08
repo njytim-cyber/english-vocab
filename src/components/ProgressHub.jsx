@@ -3,7 +3,8 @@ import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { ACHIEVEMENTS } from '../engine/Achievements';
 import { GRAMMAR_CATEGORIES } from './GrammarSetup';
-import clozePassages from '../data/cloze_sample.json';
+import { VOCAB_CLOZE } from '../data/dataManifest';
+const clozePassages = VOCAB_CLOZE;
 import { StatCard } from './progress/StatCard';
 import { StatRow } from './progress/StatRow';
 import { SkillProgress } from './progress/SkillProgress';
@@ -102,7 +103,7 @@ export default function ProgressHub({
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
             {/* Hero Stats */}
             <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: colors.primaryGradient,
                 borderRadius: borderRadius.xl,
                 padding: spacing.xl,
                 color: 'white',
@@ -136,10 +137,10 @@ export default function ProgressHub({
 
             {/* Quick Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: spacing.sm }}>
-                <StatCard icon="🔥" label="Day Streak" value={stats.streak} color="#ef4444" />
-                <StatCard icon="⭐" label="Stars" value={stats.coins} color="#eab308" />
-                <StatCard icon="📚" label="Words Learned" value={stats.masteredWords} color="#10b981" />
-                <StatCard icon="🎯" label="Accuracy" value={`${stats.accuracy}%`} color="#3b82f6" />
+                <StatCard icon="🔥" label="Day Streak" value={stats.streak} color={colors.error} />
+                <StatCard icon="⭐" label="Stars" value={stats.coins} color={colors.warning} />
+                <StatCard icon="📚" label="Words Learned" value={stats.masteredWords} color={colors.success} />
+                <StatCard icon="🎯" label="Accuracy" value={`${stats.accuracy}%`} color={colors.primary} />
             </div>
 
             {/* Mastery Ring */}
@@ -170,7 +171,7 @@ export default function ProgressHub({
                         <path
                             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                             fill="none"
-                            stroke="#10b981"
+                            stroke={colors.success}
                             strokeWidth="3"
                             strokeDasharray={`${stats.masteryPercentage}, 100`}
                         />
@@ -287,7 +288,7 @@ export default function ProgressHub({
                 <div style={{
                     marginTop: spacing.sm,
                     padding: spacing.sm,
-                    background: '#e0f2fe',
+                    background: `${colors.primary}15`,
                     borderRadius: borderRadius.lg,
                     textAlign: 'center',
                     fontSize: '0.85rem',

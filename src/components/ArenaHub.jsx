@@ -82,12 +82,13 @@ export default function ArenaHub({
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
             {/* Player Card */}
             <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: colors.primaryGradient,
                 borderRadius: borderRadius.xl,
                 padding: spacing.lg,
                 color: 'white',
                 textAlign: 'center',
-                boxShadow: shadows.lg
+                boxShadow: shadows.xl,
+                border: '3px solid rgba(255,255,255,0.2)'
             }}>
                 <div style={{
                     fontSize: '4rem',
@@ -149,13 +150,14 @@ export default function ArenaHub({
 
             {/* Question Type Selection */}
             <div style={{
-                background: colors.white,
+                background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
                 borderRadius: borderRadius.xl,
                 padding: spacing.md,
-                boxShadow: shadows.sm
+                boxShadow: shadows.md,
+                border: `2px solid ${colors.border}`
             }}>
                 <h4 style={{ margin: 0, marginBottom: spacing.sm, color: colors.dark, fontSize: '0.9rem' }}>
-                    📋 Question Types (select at least 1)
+                    📋 Question Types
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: spacing.xs }}>
                     {QUESTION_TYPES.map(type => {
@@ -209,19 +211,28 @@ export default function ArenaHub({
                 onClick={handleStartBattle}
                 style={{
                     padding: spacing.lg,
-                    background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
+                    background: colors.errorGradient,
                     color: 'white',
                     border: 'none',
                     borderRadius: borderRadius.xl,
                     fontSize: '1.5rem',
                     fontWeight: 'bold',
                     cursor: 'pointer',
-                    boxShadow: `0 8px 30px rgba(238, 90, 36, 0.4)`,
+                    boxShadow: `0 10px 35px rgba(255, 61, 0, 0.5)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: spacing.md,
-                    transition: 'transform 0.2s'
+                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    transform: 'scale(1)'
+                }}
+                onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05) translateY(-4px)';
+                    e.currentTarget.style.boxShadow = `0 15px 50px rgba(255, 61, 0, 0.6)`;
+                }}
+                onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 10px 35px rgba(255, 61, 0, 0.5)`;
                 }}
             >
                 <span style={{ fontSize: '2rem' }}>⚔️</span>
@@ -374,7 +385,7 @@ export default function ArenaHub({
                 display: 'flex',
                 gap: spacing.xs,
                 marginBottom: spacing.lg,
-                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                background: colors.light,
                 padding: spacing.xs,
                 borderRadius: borderRadius.lg
             }}>
@@ -385,12 +396,13 @@ export default function ArenaHub({
                         style={{
                             flex: 1,
                             padding: spacing.sm,
-                            background: activeTab === tab.id ? 'rgba(255,255,255,0.15)' : 'transparent',
+                            background: activeTab === tab.id ? colors.white : 'transparent',
                             border: 'none',
                             borderRadius: borderRadius.md,
                             cursor: 'pointer',
                             fontWeight: activeTab === tab.id ? '600' : '400',
-                            color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.6)',
+                            color: activeTab === tab.id ? colors.dark : colors.textMuted,
+                            boxShadow: activeTab === tab.id ? shadows.sm : 'none',
                             transition: 'all 0.2s'
                         }}
                     >
@@ -411,12 +423,23 @@ export default function ArenaHub({
 function QuickStat({ label, value, color, icon }) {
     return (
         <div style={{
-            background: colors.white,
+            background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
             borderRadius: borderRadius.lg,
             padding: spacing.md,
             textAlign: 'center',
-            boxShadow: shadows.sm
-        }}>
+            boxShadow: shadows.md,
+            border: `2px solid ${colors.border}`,
+            transition: 'transform 0.2s, box-shadow 0.2s'
+        }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = shadows.lg;
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = shadows.md;
+            }}
+        >
             <div style={{ fontSize: '1rem', marginBottom: spacing.xs }}>{icon}</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color }}>{value}</div>
             <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{label}</div>

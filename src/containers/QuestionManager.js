@@ -2,12 +2,11 @@
  * QuestionManager - Handles question pool, filtering, and selection
  * Extracted from QuizEngine for single responsibility
  */
-import questions from '../data/questions.json';
-import clozePassages from '../data/cloze_sample.json';
+import { VOCAB_MCQ, VOCAB_CLOZE } from '../data/dataManifest';
 import { EventService } from '../services/EventService';
 
 export class QuestionManager {
-    constructor(questionData = questions, clozeData = clozePassages) {
+    constructor(questionData = VOCAB_MCQ, clozeData = VOCAB_CLOZE) {
         this.allQuestions = questionData;
         this.clozePassages = clozeData;
         this.eventService = new EventService();

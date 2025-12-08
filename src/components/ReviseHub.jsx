@@ -72,7 +72,7 @@ export default function ReviseHub({
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
             {/* Due for Review Card */}
             <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: colors.primaryGradient,
                 borderRadius: borderRadius.xl,
                 padding: spacing.lg,
                 color: 'white',
@@ -114,13 +114,13 @@ export default function ReviseHub({
                     label="Mastered"
                     value={stats?.masteryLevels?.[5] || 0}
                     icon="⭐"
-                    color="#10b981"
+                    color={colors.success}
                 />
                 <StatCard
                     label="Spelling"
                     value={stats?.spellingStats?.mastered || 0}
                     icon="🔤"
-                    color="#3b82f6"
+                    color={colors.primary}
                 />
             </div>
 

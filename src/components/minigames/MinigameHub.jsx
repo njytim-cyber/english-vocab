@@ -8,36 +8,31 @@ export default function MinigameHub({ onSelectGame, onBack }) {
             id: 'game-wordsearch',
             title: 'Word Search',
             icon: '🔍',
-            description: 'Find hidden words in the grid.',
-            gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            description: 'Find hidden words in the grid.'
         },
         {
             id: 'game-definition',
             title: 'Sentence Match',
             icon: '🧠',
-            description: 'Match words to the correct sentence.',
-            gradient: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)'
+            description: 'Match words to the correct sentence.'
         },
         {
             id: 'game-hangman',
             title: 'Letter Deduction',
             icon: '🕵️',
-            description: 'Guess the word letter by letter.',
-            gradient: 'linear-gradient(135deg, #667eea 0%, #a855f7 100%)'
+            description: 'Guess the word letter by letter.'
         },
         {
             id: 'game-scramble',
             title: 'Word Scramble',
             icon: '🌪️',
-            description: 'Unscramble the jumbled letters.',
-            gradient: 'linear-gradient(135deg, #a855f7 0%, #764ba2 100%)'
+            description: 'Unscramble the jumbled letters.'
         },
         {
             id: 'game-ladder',
             title: 'Word Ladder',
             icon: '🪜',
-            description: 'Transform one word to another.',
-            gradient: 'linear-gradient(135deg, #764ba2 0%, #a855f7 100%)'
+            description: 'Transform one word to another.'
         }
     ];
 
@@ -53,9 +48,9 @@ export default function MinigameHub({ onSelectGame, onBack }) {
                         key={game.id}
                         onClick={() => onSelectGame(game.id)}
                         style={{
-                            background: game.gradient,
-                            color: 'white',
-                            border: 'none',
+                            background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
+                            color: colors.dark,
+                            border: `2px solid ${colors.border}`,
                             borderRadius: borderRadius.lg,
                             padding: '1.5rem',
                             display: 'flex',
@@ -63,22 +58,22 @@ export default function MinigameHub({ onSelectGame, onBack }) {
                             alignItems: 'center',
                             gap: '0.6rem',
                             cursor: 'pointer',
-                            transition: 'transform 0.2s, box-shadow 0.2s',
+                            transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s',
                             boxShadow: shadows.md,
                             textAlign: 'center'
                         }}
                         onMouseEnter={e => {
-                            e.currentTarget.style.transform = 'translateY(-4px)';
-                            e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                            e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                            e.currentTarget.style.boxShadow = shadows.lg;
                         }}
                         onMouseLeave={e => {
-                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
                             e.currentTarget.style.boxShadow = shadows.md;
                         }}
                     >
                         <div style={{ fontSize: '3rem' }}>{game.icon}</div>
-                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{game.title}</div>
-                        <div style={{ fontSize: '0.8rem', opacity: 0.9 }}>{game.description}</div>
+                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: colors.dark }}>{game.title}</div>
+                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>{game.description}</div>
                     </button>
                 ))}
             </div>

@@ -127,29 +127,6 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
 
     return (
         <PageLayout title="New Quiz 📝" onBack={onBack} maxWidth="600px">
-            {/* Revision Block - Show if words need practice */}
-            {revisionCount > 0 && (
-                <button
-                    onClick={onStartRevision}
-                    style={{
-                        marginBottom: '1.5rem',
-                        width: '100%',
-                        padding: '1rem',
-                        background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
-                        borderRadius: borderRadius.lg,
-                        color: 'white',
-                        boxShadow: shadows.sm,
-                        border: 'none',
-                        cursor: 'pointer',
-                        textAlign: 'left'
-                    }}
-                >
-                    <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🔄 Need Practice?</h3>
-                    <p style={{ margin: '0.3rem 0 0 0', opacity: 0.9, fontSize: '0.85rem' }}>
-                        {revisionCount} words ready for review
-                    </p>
-                </button>
-            )}
 
             <div style={{ background: colors.white, padding: '1.5rem', borderRadius: borderRadius.lg, boxShadow: shadows.sm }}>
                 {/* Theme Selection */}

@@ -8,52 +8,82 @@ import { DEFAULT_AVATAR } from '../../data/avatarTypes';
  * AvatarBuilder - Interactive avatar customization component
  * Allows users to customize their avatar by selecting from owned items
  */
+import { SHOP_ITEMS } from '../../engine/Economy';
+
+/**
+ * AvatarBuilder - Interactive avatar customization component
+ * Allows users to customize their avatar by selecting from owned items
+ */
 export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, readonly = false }) {
+    // Defensive copy with defaults
+    console.log('AvatarBuilder ownedItems:', ownedItems);
+    const safeAvatarData = {
+        ...DEFAULT_AVATAR,
+        ...(avatarData || {}),
+        face: { ...DEFAULT_AVATAR.face, ...(avatarData?.face || {}) },
+        accessories: { ...DEFAULT_AVATAR.accessories, ...(avatarData?.accessories || {}) }
+    };
+
     const [activeTab, setActiveTab] = useState('base');
-    const [currentAvatar, setCurrentAvatar] = useState(avatarData || DEFAULT_AVATAR);
+    const [currentAvatar, setCurrentAvatar] = useState(safeAvatarData);
 
     // Available bases (always unlocked)
-    const bases = [
-        { id: 'human', name: 'Human', emoji: '🧑' },
-        { id: 'cat', name: 'Cat', emoji: '🐱' },
-        { id: 'dog', name: 'Dog', emoji: '🐶' },
-        { id: 'bear', name: 'Bear', emoji: '🐻' },
-        { id: 'fox', name: 'Fox', emoji: '🦊' },
-        { id: 'panda', name: 'Panda', emoji: '🐼' }
-    ];
 
-    // Available hats (shop items)
-    const hats = [
-        { id: null, name: 'None', emoji: '❌', free: true },
-        { id: 'cap', name: 'Cap', emoji: '🧢', shopItem: 'cap' },
-        { id: 'crown', name: 'Crown', emoji: '👑', shopItem: 'crown' },
-        { id: 'headphones', name: 'Headphones', emoji: '🎧', shopItem: 'headphones' },
-        { id: 'graduation', name: 'Grad Cap', emoji: '🎓', shopItem: 'graduation_cap' },
-        { id: 'tophat', name: 'Top Hat', emoji: '🎩', shopItem: 'tophat' },
-        { id: 'cowboy', name: 'Cowboy', emoji: '🤠', shopItem: 'cowboy_hat' }
-    ];
+    // Memoize derived lists for performance
+    const { bases, hats, eyes, backgrounds } = React.useMemo(() => {
+        // Shop -> Avatar Mappings
+        const shopAvatars = SHOP_ITEMS
+            .filter(i => i.type === 'avatar')
+            .map(i => ({ id: i.id, name: i.name, emoji: i.icon, shopItem: i.id }));
 
-    // Eye accessories  
-    const eyes = [
-        { id: 'default', name: 'Default', emoji: '👀', free: true },
-        { id: 'sunglasses', name: 'Sunglasses', emoji: '😎', shopItem: 'sunglasses' },
-        { id: 'glasses', name: 'Glasses', emoji: '🤓', shopItem: 'glasses' }
-    ];
+        const shopHats = SHOP_ITEMS
+            .filter(i => i.type === 'accessory' && i.subtype === 'hat')
+            .map(i => ({ id: i.id, name: i.name, emoji: i.icon, shopItem: i.id }));
 
-    // Backgrounds
-    const backgrounds = [
-        { id: 'none', name: 'None', free: true },
-        { id: 'gradient1', name: 'Purple', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', free: true },
-        { id: 'gradient2', name: 'Pink', color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', shopItem: 'bg_pink' },
-        { id: 'stars', name: 'Stars', color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', shopItem: 'bg_stars' }
-    ];
+        const shopEyes = SHOP_ITEMS
+            .filter(i => i.type === 'accessory' && i.subtype === 'eyes')
+            .map(i => ({ id: i.id, name: i.name, emoji: i.icon, shopItem: i.id }));
 
-    const tabs = [
+        const shopBackgrounds = SHOP_ITEMS.filter(i => i.type === 'theme').map(i => ({
+            id: i.id, name: i.name, shopItem: i.id, color: 'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)'
+        }));
+
+        return {
+            bases: [
+                // Diverse human options (gender-neutral)
+                { id: 'person', name: 'Person', emoji: '🧑', free: true },
+                { id: 'person-fem', name: 'Person (Feminine)', emoji: '👩', free: true },
+                { id: 'person-masc', name: 'Person (Masculine)', emoji: '👨', free: true },
+                { id: 'child', name: 'Child', emoji: '🧒', free: true },
+                // Animal options (inherently gender-neutral)
+                { id: 'cat', name: 'Cat', emoji: '🐱', free: true },
+                { id: 'dog', name: 'Dog', emoji: '🐶', free: true },
+                { id: 'bear', name: 'Bear', emoji: '🐻', free: true },
+                { id: 'fox', name: 'Fox', emoji: '🦊', free: true },
+                { id: 'panda', name: 'Panda', emoji: '🐼', free: true },
+                ...shopAvatars
+            ],
+            hats: [
+                { id: null, name: 'None', emoji: '❌', free: true },
+                ...shopHats
+            ],
+            eyes: [
+                { id: 'default', name: 'Default', emoji: '👀', free: true },
+                ...shopEyes
+            ],
+            backgrounds: [
+                { id: 'gradient1', name: 'Purple', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', free: true },
+                ...shopBackgrounds
+            ]
+        };
+    }, []); // Empty dependency array as SHOP_ITEMS is static constant
+
+    const tabs = React.useMemo(() => [
         { id: 'base', name: '👤 Base', items: bases },
         { id: 'eyes', name: '👓 Eyes', items: eyes },
         { id: 'hat', name: '🎩 Hat', items: hats },
         { id: 'bg', name: '🎨 Background', items: backgrounds }
-    ];
+    ], [bases, eyes, hats, backgrounds]);
 
     const handleItemSelect = (tabId, itemId) => {
         if (readonly) return;
@@ -81,6 +111,10 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
     const isItemOwned = (item) => {
         if (item.free) return true;
+        // Check shop cost automatically
+        const shopItemDef = SHOP_ITEMS.find(i => i.id === item.shopItem);
+        if (shopItemDef && shopItemDef.cost === 0) return true;
+
         if (!item.shopItem) return false;
         return ownedItems.includes(item.shopItem);
     };
@@ -128,39 +162,77 @@ export default function AvatarBuilder({ avatarData, ownedItems = [], onChange, r
 
             {/* Items Grid */}
             <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))',
+                display: 'flex',
                 gap: spacing.sm,
-                maxHeight: '200px',
-                overflowY: 'auto',
-                padding: spacing.xs
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                padding: spacing.xs,
+                scrollbarWidth: 'thin',
+                scrollbarColor: `${colors.primary} ${colors.light}`,
+                WebkitOverflowScrolling: 'touch',
+                scrollSnapType: 'x mandatory'
             }}>
-                {currentTabData?.items.map(item => {
+                {(currentTabData?.items || []).map(item => {
+                    if (!item) return null;
                     const owned = isItemOwned(item);
                     const isSelected = activeTab === 'base' ? currentAvatar.base === item.id
                         : activeTab === 'eyes' ? currentAvatar.face?.eyes === item.id
                             : activeTab === 'hat' ? currentAvatar.accessories?.hat === item.id
                                 : currentAvatar.background === item.id;
 
+                    const isLocked = !owned;
+                    const ariaLabel = `${owned ? 'Equip' : 'Locked:'} ${item.name}`;
+
                     return (
                         <button
                             key={item.id || 'none'}
                             onClick={() => owned && handleItemSelect(activeTab, item.id)}
                             disabled={!owned || readonly}
+                            aria-label={ariaLabel}
+                            title={ariaLabel}
                             style={{
+                                minWidth: '70px',
+                                flexShrink: 0,
+                                scrollSnapAlign: 'start',
                                 padding: spacing.sm,
                                 borderRadius: borderRadius.md,
                                 border: isSelected ? `2px solid ${colors.primary}` : `1px solid ${colors.border}`,
                                 background: isSelected ? `${colors.primary}10` : owned ? colors.white : colors.light,
                                 cursor: owned && !readonly ? 'pointer' : 'not-allowed',
-                                opacity: owned ? 1 : 0.4,
+                                opacity: 1,  // Always 1, we'll use overlay instead
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 gap: spacing.xs,
+                                position: 'relative',
                                 transition: 'all 0.2s',
-                                position: 'relative'
+                                boxShadow: isSelected ? shadows.sm : 'none'
                             }}
+                        >
+                            {/* Locked Overlay - WCAG AA Compliant */}
+                            {isLocked && (
+                                <>
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        background: 'rgba(0, 0, 0, 0.6)',  // High contrast overlay
+                                        borderRadius: borderRadius.md,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        zIndex: 1
+                                    }}>
+                                        <span style={{
+                                            fontSize: '1.5rem',
+                                            filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.8))'  // Glow for visibility
+                                        }}>🔒</span>
+                                    </div>
+                                </>
+                            )}
+
                         >
                             {activeTab === 'bg' && item.color ? (
                                 <div style={{

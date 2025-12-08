@@ -48,10 +48,10 @@ export default function NavBar({ currentView, onViewChange }) {
                         aria-label={item.label}
                         aria-current={active ? 'page' : undefined}
                         style={{
-                            background: active ? colors.primaryGradient : 'transparent',
-                            color: active ? colors.white : colors.textMuted,
+                            background: active ? `${colors.primary}15` : 'transparent',
+                            color: active ? colors.primary : colors.textMuted,
                             padding: '0.4rem 0.5rem',
-                            borderRadius: borderRadius.lg,
+                            borderRadius: borderRadius.sm,
                             fontSize: '0.7rem',
                             display: 'flex',
                             flexDirection: 'column',
@@ -61,7 +61,6 @@ export default function NavBar({ currentView, onViewChange }) {
                             cursor: 'pointer',
                             transition: 'all 0.2s ease',
                             fontWeight: active ? '600' : '500',
-                            boxShadow: active ? shadows.primary : 'none',
                             minWidth: '50px'
                         }}
                     >

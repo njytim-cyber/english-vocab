@@ -5,9 +5,11 @@ import balanceConfig from '../data/balance.json';
 import { useIsMobile } from '../hooks/useIsMobile';
 
 import { buildArenaQuestions, flattenClozePassages, getQuestionTypeTheme } from '../utils/arenaQuestionBuilder';
-import clozePassagesData from '../data/cloze_sample.json';
-import grammarQuestionsData from '../data/grammar_questions.json';
-import grammarClozePassagesData from '../data/grammar_cloze_full.json';
+import { VOCAB_CLOZE, GRAMMAR_MCQ, GRAMMAR_CLOZE } from '../data/dataManifest';
+
+const clozePassagesData = VOCAB_CLOZE;
+const grammarQuestionsData = GRAMMAR_MCQ;
+const grammarClozePassagesData = GRAMMAR_CLOZE;
 import { ArenaPlayerColumn } from './arena/ArenaPlayerColumn';
 import { ArenaCPUColumn } from './arena/ArenaCPUColumn';
 
