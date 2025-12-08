@@ -1,0 +1,289 @@
+[
+    {
+        "id": 1,
+        "level": 1,
+        "theme": "Home & Family",
+        "title": "The Lost Toy",
+        "duration_seconds": 45,
+        "word_count": 65,
+        "audio_url": "/audio/listening/passage_001.mp3",
+        "voice_pool": "A",
+        "voices": [
+            "en-US-Studio-O",
+            "en-GB-Studio-B"
+        ],
+        "ambience_recipe": {
+            "scene": "home",
+            "stems": [
+                "home_ambience.mp3"
+            ],
+            "duck_volume": 0.10
+        },
+        "transcript": {
+            "full_text": "Mom: Tommy, have you seen your red car? Child: No, Mom. I can't find it anywhere! Mom: Let's look under the bed together. Child: It's not there either. Mom: What about behind the sofa? Child: I found it! It was next to the cushions!",
+            "sentences": [
+                {
+                    "start_time": 0.0,
+                    "end_time": 2.5,
+                    "text": "Tommy, have you seen your red car?",
+                    "speaker": "Mom"
+                },
+                {
+                    "start_time": 3.0,
+                    "end_time": 5.5,
+                    "text": "No, Mom. I can't find it anywhere!",
+                    "speaker": "Child"
+                },
+                {
+                    "start_time": 6.0,
+                    "end_time": 8.5,
+                    "text": "Let's look under the bed together.",
+                    "speaker": "Mom"
+                },
+                {
+                    "start_time": 9.0,
+                    "end_time": 11.0,
+                    "text": "It's not there either.",
+                    "speaker": "Child"
+                },
+                {
+                    "start_time": 11.5,
+                    "end_time": 13.5,
+                    "text": "What about behind the sofa?",
+                    "speaker": "Mom"
+                },
+                {
+                    "start_time": 14.0,
+                    "end_time": 17.0,
+                    "text": "I found it! It was next to the cushions!",
+                    "speaker": "Child"
+                }
+            ]
+        },
+        "questions": [
+            {
+                "id": "q1_001",
+                "cluster": 1,
+                "question": "What is Tommy looking for?",
+                "options": {
+                    "1": "A red car",
+                    "2": "A blue ball",
+                    "3": "A green truck",
+                    "4": "A yellow plane"
+                },
+                "answer": "A red car",
+                "answer_index": 1,
+                "evidence_timestamp": 0.0,
+                "evidence_duration": 5.0,
+                "explanation": "Mom asks 'Have you seen your red car, Tommy?' at the beginning."
+            },
+            {
+                "id": "q1_002",
+                "cluster": 1,
+                "question": "Where did they NOT look for the toy?",
+                "options": {
+                    "1": "Under the bed",
+                    "2": "Behind the sofa",
+                    "3": "In the toy box",
+                    "4": "Next to cushions"
+                },
+                "answer": "In the toy box",
+                "answer_index": 3,
+                "evidence_timestamp": 6.0,
+                "evidence_duration": 8.0,
+                "explanation": "They looked under the bed and behind the sofa, but never mentioned the toy box."
+            },
+            {
+                "id": "q1_003",
+                "cluster": 2,
+                "question": "How does Tommy feel at the beginning?",
+                "options": {
+                    "1": "Happy",
+                    "2": "Worried",
+                    "3": "Angry",
+                    "4": "Sleepy"
+                },
+                "answer": "Worried",
+                "answer_index": 2,
+                "evidence_timestamp": 3.0,
+                "evidence_duration": 3.0,
+                "explanation": "Tommy says 'I can't find it anywhere!' which shows he's worried."
+            },
+            {
+                "id": "q1_004",
+                "cluster": 2,
+                "question": "Who suggested looking behind the sofa?",
+                "options": {
+                    "1": "Tommy",
+                    "2": "Mom",
+                    "3": "Dad",
+                    "4": "Sister"
+                },
+                "answer": "Mom",
+                "answer_index": 2,
+                "evidence_timestamp": 11.5,
+                "evidence_duration": 2.5,
+                "explanation": "Mom asks 'What about behind the sofa?'"
+            },
+            {
+                "id": "q1_005",
+                "cluster": 3,
+                "question": "Where was the car finally found?",
+                "options": {
+                    "1": "Under the bed",
+                    "2": "Behind the sofa",
+                    "3": "Next to the cushions",
+                    "4": "On the table"
+                },
+                "answer": "Next to the cushions",
+                "answer_index": 3,
+                "evidence_timestamp": 14.0,
+                "evidence_duration": 3.0,
+                "explanation": "Tommy says 'It was next to the cushions!'"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "level": 5,
+        "theme": "Art & Music",
+        "title": "The Museum Audio Guide",
+        "duration_seconds": 65,
+        "word_count": 95,
+        "audio_url": "/audio/listening/passage_002.mp3",
+        "voice_pool": "B",
+        "voices": [
+            "en-GB-Studio-F"
+        ],
+        "ambience_recipe": {
+            "scene": "museum",
+            "stems": [
+                "museum_ambience.mp3"
+            ],
+            "duck_volume": 0.15
+        },
+        "transcript": {
+            "full_text": "Welcome to Gallery Four, where we showcase the Impressionist collection. The painting before you is Claude Monet's Water Lilies, created in 1916. Notice the vibrant blues and greens, capturing the reflection of the sky on water. Monet painted this series in his garden at Giverny, France. He was exploring how light changes throughout the day. The brushstrokes are loose and expressive, a hallmark of the Impressionist style.",
+            "sentences": [
+                {
+                    "start_time": 0.0,
+                    "end_time": 4.0,
+                    "text": "Welcome to Gallery Four, where we showcase the Impressionist collection.",
+                    "speaker": "Guide"
+                },
+                {
+                    "start_time": 4.5,
+                    "end_time": 9.0,
+                    "text": "The painting before you is Claude Monet's Water Lilies, created in 1916.",
+                    "speaker": "Guide"
+                },
+                {
+                    "start_time": 9.5,
+                    "end_time": 14.0,
+                    "text": "Notice the vibrant blues and greens, capturing the reflection of the sky on water.",
+                    "speaker": "Guide"
+                },
+                {
+                    "start_time": 14.5,
+                    "end_time": 18.0,
+                    "text": "Monet painted this series in his garden at Giverny, France.",
+                    "speaker": "Guide"
+                },
+                {
+                    "start_time": 18.5,
+                    "end_time": 22.0,
+                    "text": "He was exploring how light changes throughout the day.",
+                    "speaker": "Guide"
+                },
+                {
+                    "start_time": 22.5,
+                    "end_time": 27.0,
+                    "text": "The brushstrokes are loose and expressive, a hallmark of the Impressionist style.",
+                    "speaker": "Guide"
+                }
+            ]
+        },
+        "questions": [
+            {
+                "id": "q2_001",
+                "cluster": 1,
+                "question": "What is the name of the painting?",
+                "options": {
+                    "1": "Starry Night",
+                    "2": "Water Lilies",
+                    "3": "Sunflowers",
+                    "4": "The Scream"
+                },
+                "answer": "Water Lilies",
+                "answer_index": 2,
+                "evidence_timestamp": 4.5,
+                "evidence_duration": 4.5,
+                "explanation": "The guide states 'The painting before you is Claude Monet's Water Lilies.'"
+            },
+            {
+                "id": "q2_002",
+                "cluster": 1,
+                "question": "When was the painting created?",
+                "options": {
+                    "1": "1816",
+                    "2": "1876",
+                    "3": "1916",
+                    "4": "1956"
+                },
+                "answer": "1916",
+                "answer_index": 3,
+                "evidence_timestamp": 4.5,
+                "evidence_duration": 4.5,
+                "explanation": "The guide says it was 'created in 1916.'"
+            },
+            {
+                "id": "q2_003",
+                "cluster": 2,
+                "question": "What colors are primarily mentioned?",
+                "options": {
+                    "1": "Blues and greens",
+                    "2": "Reds and yellows",
+                    "3": "Black and white",
+                    "4": "Purple and orange"
+                },
+                "answer": "Blues and greens",
+                "answer_index": 1,
+                "evidence_timestamp": 9.5,
+                "evidence_duration": 4.5,
+                "explanation": "The guide describes 'vibrant blues and greens.'"
+            },
+            {
+                "id": "q2_004",
+                "cluster": 3,
+                "question": "Where did Monet paint this series?",
+                "options": {
+                    "1": "Paris",
+                    "2": "London",
+                    "3": "Giverny",
+                    "4": "Lyon"
+                },
+                "answer": "Giverny",
+                "answer_index": 3,
+                "evidence_timestamp": 14.5,
+                "evidence_duration": 3.5,
+                "explanation": "The guide states 'Monet painted this series in his garden at Giverny, France.'"
+            },
+            {
+                "id": "q2_005",
+                "cluster": 4,
+                "question": "What was Monet exploring in this work?",
+                "options": {
+                    "1": "Human emotions",
+                    "2": "Changes in light",
+                    "3": "Political themes",
+                    "4": "Historical events"
+                },
+                "answer": "Changes in light",
+                "answer_index": 2,
+                "evidence_timestamp": 18.5,
+                "evidence_duration": 3.5,
+                "explanation": "The guide explains 'He was exploring how light changes throughout the day.'"
+            }
+        ]
+    }
+]
