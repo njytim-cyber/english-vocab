@@ -79,7 +79,7 @@ export default function DualRangeSlider({
     return (
         <div style={{ width: '100%' }}>
             {/* Label only - no range display */}
-            <div style={{ marginBottom: '0.75rem' }}>
+            <div style={{ marginBottom: '1rem' }}>
                 <span style={{ fontSize: '0.95rem', fontWeight: 'bold', color: colors.dark }}>
                     Difficulty
                 </span>
@@ -92,7 +92,9 @@ export default function DualRangeSlider({
                     height: '8px',
                     background: colors.border,
                     borderRadius: '4px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    marginLeft: '4px',
+                    marginTop: '0.5rem'
                 }}
             >
                 {/* Active range */}
@@ -114,8 +116,8 @@ export default function DualRangeSlider({
                         left: `${minPercent}%`,
                         top: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '32px',
-                        height: '32px',
+                        width: '28px',
+                        height: '28px',
                         background: colors.white,
                         border: `3px solid ${colors.primary}`,
                         borderRadius: '50%',
@@ -126,7 +128,7 @@ export default function DualRangeSlider({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '0.75rem',
+                        fontSize: '0.7rem',
                         fontWeight: 'bold',
                         color: colors.primary
                     }}
@@ -143,8 +145,8 @@ export default function DualRangeSlider({
                         left: `${maxPercent}%`,
                         top: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '32px',
-                        height: '32px',
+                        width: '28px',
+                        height: '28px',
                         background: colors.white,
                         border: `3px solid ${colors.primaryDark}`,
                         borderRadius: '50%',
@@ -155,7 +157,7 @@ export default function DualRangeSlider({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '0.75rem',
+                        fontSize: '0.7rem',
                         fontWeight: 'bold',
                         color: colors.primaryDark
                     }}

@@ -11,7 +11,7 @@ import { colors, borderRadius, shadows, icons } from '../styles/designTokens';
  */
 export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mode = 'new' }) {
     console.log('QuizSetup rendered', { engineExists: !!engine, mode });
-    const [theme, setTheme] = useState(['All']);
+    const [theme, setTheme] = useState([]);
     const [minDifficulty, setMinDifficulty] = useState(1);
     const [maxDifficulty, setMaxDifficulty] = useState(9);
     const [themes, setThemes] = useState(['All']);
@@ -19,7 +19,11 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
 
     useEffect(() => {
         if (engine) {
-            setThemes(engine.getThemes());
+            const availableThemes = engine.getThemes();
+            setThemes(availableThemes);
+            // Set default to first two themes (skip 'All')
+            const defaultThemes = availableThemes.filter(t => t !== 'All').slice(0, 2);
+            setTheme(defaultThemes.length > 0 ? defaultThemes : ['All']);
             setRevisionCount(engine.getRevisionList().length);
         }
     }, [engine]);
@@ -132,7 +136,7 @@ export default function QuizSetup({ onStart, onStartRevision, onBack, engine, mo
                 {/* Theme Selection */}
                 <div style={{ marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 'bold', fontSize: '1.1rem', color: colors.dark }}>
-                        Select Themes (Multi-select)
+                        Themes ({Array.isArray(theme) ? theme.length : 1})
                     </label>
                     <div style={{
                         display: 'grid',
