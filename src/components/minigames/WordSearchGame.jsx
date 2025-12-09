@@ -202,7 +202,7 @@ export default function WordSearchGame({ engine, onBack }) {
             userSelect: 'none',
             background: colors.light,
             overflow: 'hidden' // Prevent outer scrolling
-        }} onMouseUp={handleMouseUp}>
+        }} onMouseUp={handleMouseUp} onTouchEnd={handleMouseUp}>
             {/* Header */}
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.xl }}>
                 <button
