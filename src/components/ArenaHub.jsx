@@ -1,14 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { colors, borderRadius, shadows, spacing } from '../styles/designTokens';
 import PageLayout from './common/PageLayout';
 import { QUESTION_TYPES } from '../utils/arenaQuestionBuilder';
+
 /**
  * ArenaHub - Enhanced Arena lobby with leaderboard and battle history
- * Features:
- * - Battle lobby with opponent selection
- * - Player ranking/league system
- * - Battle history
- * - Season rewards
+ * Optimized: extracted memoized components, improved a11y, consolidated styles
  */
 
 const LEAGUES = [
@@ -21,63 +18,44 @@ const LEAGUES = [
 
 const STORAGE_KEY = 'vocab_arena_stats';
 
-export default function ArenaHub({
-    onStartBattle,
-    onBack
+// Consolidated style patterns
+const cardStyle = {
+    background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
+    borderRadius: borderRadius.xl,
+    boxShadow: shadows.md,
+    border: `2px solid ${colors.border}`
+};
+
+// Memoized QuickStat - pure presentational, no interactive handlers on div
+const QuickStat = memo(function QuickStat({ label, value, color, icon }) {
+    return (
+        <div
+            style={{
+                ...cardStyle,
+                padding: spacing.md,
+                textAlign: 'center'
+            }}
+            role="group"
+            aria-label={`${label}: ${value}`}
+        >
+            <div style={{ fontSize: '1rem', marginBottom: spacing.xs }}>{icon}</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color }}>{value}</div>
+            <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{label}</div>
+        </div>
+    );
+});
+
+// Memoized Battle Tab Content
+const BattleTab = memo(function BattleTab({
+    arenaStats,
+    currentLeague,
+    nextLeague,
+    progressToNext,
+    selectedTypes,
+    toggleQuestionType,
+    handleStartBattle
 }) {
-    const [activeTab, setActiveTab] = useState('battle');
-    const [selectedTypes, setSelectedTypes] = useState(new Set(['vocab-mcq']));
-
-    const toggleQuestionType = (typeId) => {
-        setSelectedTypes(prev => {
-            const next = new Set(prev);
-            if (next.has(typeId)) {
-                // Don't allow deselecting if it's the only one
-                if (next.size > 1) {
-                    next.delete(typeId);
-                }
-            } else {
-                next.add(typeId);
-            }
-            return next;
-        });
-    };
-
-    const handleStartBattle = () => {
-        onStartBattle(Array.from(selectedTypes));
-    };
-
-    // Load arena stats from localStorage
-    const arenaStats = useMemo(() => {
-        try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) return JSON.parse(saved);
-        } catch (e) { /* ignore */ }
-
-        return {
-            elo: 1000,
-            wins: 0,
-            losses: 0,
-            draws: 0,
-            streak: 0,
-            bestStreak: 0,
-            history: []
-        };
-    }, []);
-
-    const currentLeague = LEAGUES.find(l => arenaStats.elo >= l.minElo && arenaStats.elo <= l.maxElo) || LEAGUES[0];
-    const nextLeague = LEAGUES.find(l => l.minElo > arenaStats.elo) || null;
-    const progressToNext = nextLeague
-        ? Math.round(((arenaStats.elo - currentLeague.minElo) / (nextLeague.minElo - currentLeague.minElo)) * 100)
-        : 100;
-
-    const tabs = [
-        { id: 'battle', label: 'Battle', icon: '⚔️' },
-        { id: 'ranking', label: 'Ranking', icon: '🏆' },
-        { id: 'history', label: 'History', icon: '📜' }
-    ];
-
-    const renderBattle = () => (
+    return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
             {/* Player Card */}
             <div style={{
@@ -89,13 +67,7 @@ export default function ArenaHub({
                 boxShadow: shadows.xl,
                 border: '3px solid rgba(255,255,255,0.2)'
             }}>
-                <div style={{
-                    fontSize: '4rem',
-                    marginBottom: spacing.sm,
-                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
-                }}>
-                    🦊
-                </div>
+                <div style={{ fontSize: '4rem', marginBottom: spacing.sm }}>🦊</div>
                 <h2 style={{ margin: 0, fontSize: '1.5rem' }}>Champion</h2>
                 <div style={{
                     display: 'flex',
@@ -107,15 +79,10 @@ export default function ArenaHub({
                     <span style={{ fontSize: '1.5rem' }}>{currentLeague.icon}</span>
                     <span style={{ fontWeight: 'bold' }}>{currentLeague.name} League</span>
                 </div>
-                <div style={{
-                    fontSize: '2rem',
-                    fontWeight: 'bold',
-                    marginTop: spacing.sm
-                }}>
+                <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: spacing.sm }}>
                     {arenaStats.elo} ELO
                 </div>
 
-                {/* Progress to next league */}
                 {nextLeague && (
                     <div style={{ marginTop: spacing.md }}>
                         <div style={{
@@ -142,19 +109,18 @@ export default function ArenaHub({
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: spacing.sm }}>
                 <QuickStat label="Wins" value={arenaStats.wins} color="#10b981" icon="✓" />
                 <QuickStat label="Losses" value={arenaStats.losses} color="#ef4444" icon="✗" />
-                <QuickStat label="Win Rate" value={`${arenaStats.wins + arenaStats.losses > 0
-                    ? Math.round((arenaStats.wins / (arenaStats.wins + arenaStats.losses)) * 100)
-                    : 0}%`} color="#3b82f6" icon="📊" />
+                <QuickStat
+                    label="Win Rate"
+                    value={`${arenaStats.wins + arenaStats.losses > 0
+                        ? Math.round((arenaStats.wins / (arenaStats.wins + arenaStats.losses)) * 100)
+                        : 0}%`}
+                    color="#3b82f6"
+                    icon="📊"
+                />
             </div>
 
             {/* Question Type Selection */}
-            <div style={{
-                background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
-                borderRadius: borderRadius.xl,
-                padding: spacing.md,
-                boxShadow: shadows.md,
-                border: `2px solid ${colors.border}`
-            }}>
+            <div style={{ ...cardStyle, padding: spacing.md }}>
                 <h4 style={{ margin: 0, marginBottom: spacing.sm, color: colors.dark, fontSize: '0.9rem' }}>
                     📋 Question Types
                 </h4>
@@ -165,6 +131,7 @@ export default function ArenaHub({
                             <button
                                 key={type.id}
                                 onClick={() => toggleQuestionType(type.id)}
+                                aria-pressed={isSelected}
                                 style={{
                                     padding: spacing.sm,
                                     background: isSelected ? `${type.color}15` : colors.light,
@@ -217,21 +184,12 @@ export default function ArenaHub({
                     fontSize: '1.5rem',
                     fontWeight: 'bold',
                     cursor: 'pointer',
-                    boxShadow: `0 10px 35px rgba(255, 61, 0, 0.5)`,
+                    boxShadow: '0 10px 35px rgba(255, 61, 0, 0.5)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: spacing.md,
-                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                    transform: 'scale(1)'
-                }}
-                onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05) translateY(-4px)';
-                    e.currentTarget.style.boxShadow = `0 15px 50px rgba(255, 61, 0, 0.6)`;
-                }}
-                onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 10px 35px rgba(255, 61, 0, 0.5)`;
+                    transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
             >
                 <span style={{ fontSize: '2rem' }}>⚔️</span>
@@ -253,10 +211,12 @@ export default function ArenaHub({
             )}
         </div>
     );
+});
 
-    const renderRanking = () => (
+// Memoized Ranking Tab
+const RankingTab = memo(function RankingTab({ arenaStats, currentLeague }) {
+    return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.md }}>
-            {/* League Ladder */}
             <h3 style={{ margin: 0, color: colors.dark }}>🏆 League Ladder</h3>
 
             {LEAGUES.slice().reverse().map(league => {
@@ -274,12 +234,8 @@ export default function ArenaHub({
                     }}>
                         <span style={{ fontSize: '2rem' }}>{league.icon}</span>
                         <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 'bold', color: colors.dark }}>
-                                {league.name}
-                            </div>
-                            <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>
-                                {league.minElo}+ ELO
-                            </div>
+                            <div style={{ fontWeight: 'bold', color: colors.dark }}>{league.name}</div>
+                            <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>{league.minElo}+ ELO</div>
                         </div>
                         {isCurrent && (
                             <span style={{
@@ -312,73 +268,110 @@ export default function ArenaHub({
             </div>
         </div>
     );
+});
 
-    const renderHistory = () => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.sm }}>
-            {arenaStats.history.length > 0 ? (
-                arenaStats.history.slice(-10).reverse().map((match, i) => (
-                    <div key={i} style={{
-                        background: colors.white,
-                        borderRadius: borderRadius.lg,
-                        padding: spacing.md,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: spacing.md,
-                        boxShadow: shadows.sm,
-                        borderLeft: `4px solid ${match.result === 'win' ? '#10b981' : match.result === 'loss' ? '#ef4444' : '#eab308'}`
-                    }}>
-                        <span style={{ fontSize: '2rem' }}>{match.opponentEmoji || '🤖'}</span>
-                        <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: '600', color: colors.dark }}>
-                                vs {match.opponentName || 'CPU'}
-                            </div>
-                            <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>
-                                {match.playerScore} - {match.opponentScore}
-                            </div>
-                        </div>
-                        <div style={{
-                            padding: `${spacing.xs} ${spacing.sm}`,
-                            background: match.result === 'win' ? '#d1fae5' : match.result === 'loss' ? '#fee2e2' : '#fef3c7',
-                            color: match.result === 'win' ? '#059669' : match.result === 'loss' ? '#dc2626' : '#d97706',
-                            borderRadius: borderRadius.md,
-                            fontWeight: 'bold',
-                            fontSize: '0.8rem',
-                            textTransform: 'uppercase'
-                        }}>
-                            {match.result}
-                        </div>
-                        <div style={{
-                            fontSize: '0.9rem',
-                            fontWeight: 'bold',
-                            color: match.eloChange >= 0 ? '#10b981' : '#ef4444'
-                        }}>
-                            {match.eloChange >= 0 ? '+' : ''}{match.eloChange}
-                        </div>
-                    </div>
-                ))
-            ) : (
-                <div style={{
-                    background: colors.light,
-                    borderRadius: borderRadius.xl,
-                    padding: spacing.xl,
-                    textAlign: 'center'
-                }}>
-                    <div style={{ fontSize: '3rem', marginBottom: spacing.md }}>⚔️</div>
-                    <p style={{ color: colors.textMuted, margin: 0 }}>
-                        No battles yet! Enter the arena to start your journey.
-                    </p>
-                </div>
-            )}
-        </div>
-    );
+// Memoized History Tab
+const HistoryTab = memo(function HistoryTab({ history }) {
+    if (history.length === 0) {
+        return (
+            <div style={{
+                background: colors.light,
+                borderRadius: borderRadius.xl,
+                padding: spacing.xl,
+                textAlign: 'center'
+            }}>
+                <div style={{ fontSize: '3rem', marginBottom: spacing.md }}>⚔️</div>
+                <p style={{ color: colors.textMuted, margin: 0 }}>
+                    No battles yet! Enter the arena to start your journey.
+                </p>
+            </div>
+        );
+    }
 
     return (
-        <PageLayout
-            title="Arena"
-            showBack={true}
-            onBack={onBack}
-            maxWidth="700px"
-        >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.sm }}>
+            {history.slice(-10).reverse().map((match, i) => (
+                <div key={i} style={{
+                    background: colors.white,
+                    borderRadius: borderRadius.lg,
+                    padding: spacing.md,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: spacing.md,
+                    boxShadow: shadows.sm,
+                    borderLeft: `4px solid ${match.result === 'win' ? '#10b981' : match.result === 'loss' ? '#ef4444' : '#eab308'}`
+                }}>
+                    <span style={{ fontSize: '2rem' }}>{match.opponentEmoji || '🤖'}</span>
+                    <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '600', color: colors.dark }}>vs {match.opponentName || 'CPU'}</div>
+                        <div style={{ fontSize: '0.8rem', color: colors.textMuted }}>{match.playerScore} - {match.opponentScore}</div>
+                    </div>
+                    <div style={{
+                        padding: `${spacing.xs} ${spacing.sm}`,
+                        background: match.result === 'win' ? '#d1fae5' : match.result === 'loss' ? '#fee2e2' : '#fef3c7',
+                        color: match.result === 'win' ? '#059669' : match.result === 'loss' ? '#dc2626' : '#d97706',
+                        borderRadius: borderRadius.md,
+                        fontWeight: 'bold',
+                        fontSize: '0.8rem',
+                        textTransform: 'uppercase'
+                    }}>
+                        {match.result}
+                    </div>
+                    <div style={{
+                        fontSize: '0.9rem',
+                        fontWeight: 'bold',
+                        color: match.eloChange >= 0 ? '#10b981' : '#ef4444'
+                    }}>
+                        {match.eloChange >= 0 ? '+' : ''}{match.eloChange}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+});
+
+export default function ArenaHub({ onStartBattle, onBack }) {
+    const [activeTab, setActiveTab] = useState('battle');
+    const [selectedTypes, setSelectedTypes] = useState(new Set(['vocab-mcq']));
+
+    const toggleQuestionType = (typeId) => {
+        setSelectedTypes(prev => {
+            const next = new Set(prev);
+            if (next.has(typeId)) {
+                if (next.size > 1) next.delete(typeId);
+            } else {
+                next.add(typeId);
+            }
+            return next;
+        });
+    };
+
+    const handleStartBattle = () => {
+        onStartBattle(Array.from(selectedTypes));
+    };
+
+    const arenaStats = useMemo(() => {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) return JSON.parse(saved);
+        } catch (e) { /* ignore */ }
+        return { elo: 1000, wins: 0, losses: 0, draws: 0, streak: 0, bestStreak: 0, history: [] };
+    }, []);
+
+    const currentLeague = LEAGUES.find(l => arenaStats.elo >= l.minElo && arenaStats.elo <= l.maxElo) || LEAGUES[0];
+    const nextLeague = LEAGUES.find(l => l.minElo > arenaStats.elo) || null;
+    const progressToNext = nextLeague
+        ? Math.round(((arenaStats.elo - currentLeague.minElo) / (nextLeague.minElo - currentLeague.minElo)) * 100)
+        : 100;
+
+    const tabs = [
+        { id: 'battle', label: 'Battle', icon: '⚔️' },
+        { id: 'ranking', label: 'Ranking', icon: '🏆' },
+        { id: 'history', label: 'History', icon: '📜' }
+    ];
+
+    return (
+        <PageLayout title="Arena" showBack={true} onBack={onBack} maxWidth="700px">
             {/* Tab Navigation */}
             <div style={{
                 display: 'flex',
@@ -387,11 +380,13 @@ export default function ArenaHub({
                 background: colors.light,
                 padding: spacing.xs,
                 borderRadius: borderRadius.lg
-            }}>
+            }} role="tablist">
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
+                        role="tab"
+                        aria-selected={activeTab === tab.id}
                         style={{
                             flex: 1,
                             padding: spacing.sm,
@@ -411,39 +406,20 @@ export default function ArenaHub({
                 ))}
             </div>
 
-            {/* Tab Content */}
-            {activeTab === 'battle' && renderBattle()}
-            {activeTab === 'ranking' && renderRanking()}
-            {activeTab === 'history' && renderHistory()}
+            {/* Tab Content - Memoized Components */}
+            {activeTab === 'battle' && (
+                <BattleTab
+                    arenaStats={arenaStats}
+                    currentLeague={currentLeague}
+                    nextLeague={nextLeague}
+                    progressToNext={progressToNext}
+                    selectedTypes={selectedTypes}
+                    toggleQuestionType={toggleQuestionType}
+                    handleStartBattle={handleStartBattle}
+                />
+            )}
+            {activeTab === 'ranking' && <RankingTab arenaStats={arenaStats} currentLeague={currentLeague} />}
+            {activeTab === 'history' && <HistoryTab history={arenaStats.history} />}
         </PageLayout>
     );
 }
-
-function QuickStat({ label, value, color, icon }) {
-    return (
-        <div style={{
-            background: `linear-gradient(135deg, ${colors.white} 0%, ${colors.light} 100%)`,
-            borderRadius: borderRadius.lg,
-            padding: spacing.md,
-            textAlign: 'center',
-            boxShadow: shadows.md,
-            border: `2px solid ${colors.border}`,
-            transition: 'transform 0.2s, box-shadow 0.2s'
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = shadows.lg;
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = shadows.md;
-            }}
-        >
-            <div style={{ fontSize: '1rem', marginBottom: spacing.xs }}>{icon}</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color }}>{value}</div>
-            <div style={{ fontSize: '0.75rem', color: colors.textMuted }}>{label}</div>
-        </div>
-    );
-}
-
-

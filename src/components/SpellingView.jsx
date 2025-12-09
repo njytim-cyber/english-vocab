@@ -4,16 +4,15 @@ import PageLayout from './common/PageLayout';
 import { triggerConfetti } from '../utils/effects';
 
 /**
- * SpellingView - Spelling practice for younger students
- * Shows definition + example, student types the word
- * Tracks spelling progress separately from vocab mastery
+ * SpellingView - MD3 Expressive Focus Layout
+ * Clean, minimal interface with clear hierarchy
  */
 export default function SpellingView({
-    words,  // Array of {word, definition, example, difficulty}
+    words,
     onComplete,
     onBack,
     economy,
-    spellingProgress  // Separate from vocab spaced rep
+    spellingProgress
 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userInput, setUserInput] = useState('');
@@ -25,10 +24,10 @@ export default function SpellingView({
     const inputRef = useRef(null);
 
     const currentWord = words[currentIndex];
-    const totalWords = Math.min(words.length, 10); // 10 words per session
+    const totalWords = Math.min(words.length, 10);
+    const progress = ((currentIndex) / totalWords) * 100;
 
     useEffect(() => {
-        // Auto-focus input on new word
         if (inputRef.current && !showResult) {
             inputRef.current.focus();
         }
@@ -47,20 +46,16 @@ export default function SpellingView({
 
         if (correct) {
             setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
-
-            // Award XP based on attempts
+            triggerConfetti();
             if (economy) {
                 const xp = attempts === 0 ? 20 : attempts === 1 ? 10 : 5;
                 economy.addXP(xp);
                 economy.addCoins(1);
             }
-
-            // Update spelling progress (separate from vocab)
             if (spellingProgress && currentWord.wordId) {
                 spellingProgress.recordSpelling(currentWord.wordId, true);
             }
         } else {
-            // Record failed attempt
             if (spellingProgress && currentWord.wordId) {
                 spellingProgress.recordSpelling(currentWord.wordId, false);
             }
@@ -76,7 +71,6 @@ export default function SpellingView({
             setAttempts(0);
             setIsCorrect(false);
         } else {
-            // Session complete
             if (score.correct === totalWords) {
                 triggerConfetti();
             }
@@ -92,8 +86,11 @@ export default function SpellingView({
     const getHint = () => {
         const word = currentWord.word;
         const hintLength = Math.ceil(word.length / 3);
-        return word.substring(0, hintLength) + '_'.repeat(word.length - hintLength);
+        return word.substring(0, hintLength) + '●'.repeat(word.length - hintLength);
     };
+
+    // Generate blank line matching word length
+    const getBlankLine = () => '_'.repeat(Math.min(currentWord.word.length, 12));
 
     if (!currentWord) {
         return <PageLayout title="Spelling" showBack={true} onBack={onBack}>Loading...</PageLayout>;
@@ -101,219 +98,236 @@ export default function SpellingView({
 
     return (
         <PageLayout
-            title="Spelling Practice"
+            title="Spelling"
             showBack={true}
             onBack={onBack}
-            maxWidth="600px"
+            maxWidth="500px"
         >
-            {/* Progress */}
+            {/* Linear Progress Bar - MD3 Style */}
             <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: spacing.lg
+                width: '100%',
+                height: '4px',
+                background: colors.border,
+                borderRadius: '2px',
+                marginBottom: spacing.xl,
+                overflow: 'hidden'
             }}>
-                <span style={{
-                    padding: `${spacing.xs} ${spacing.sm}`,
-                    background: '#dbeafe',
-                    borderRadius: borderRadius.md,
-                    fontSize: '0.85rem',
-                    color: '#1e40af'
-                }}>
-                    🔤 Difficulty {currentWord.difficulty}
-                </span>
-                <span style={{
-                    padding: `${spacing.xs} ${spacing.sm}`,
-                    background: colors.light,
-                    borderRadius: borderRadius.md,
-                    fontSize: '0.85rem',
-                    color: colors.textMuted
-                }}>
-                    Word {currentIndex + 1} / {totalWords}
-                </span>
+                <div style={{
+                    width: `${progress}%`,
+                    height: '100%',
+                    background: colors.primaryGradient,
+                    transition: 'width 0.3s ease',
+                    borderRadius: '2px'
+                }} />
             </div>
 
-            {/* Word Card */}
+            {/* Main Content - No Card Container */}
             <div style={{
-                background: colors.white,
-                borderRadius: borderRadius.xl,
-                padding: spacing.xl,
-                boxShadow: shadows.md,
-                marginBottom: spacing.lg,
-                textAlign: 'center'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: spacing.lg,
+                padding: `${spacing.md} 0`
             }}>
-                {/* Definition */}
-                <div style={{
-                    fontSize: '1.3rem',
-                    color: colors.dark,
-                    marginBottom: spacing.lg,
-                    lineHeight: '1.6'
-                }}>
-                    <strong>Definition:</strong> {currentWord.definition}
-                </div>
 
-                {/* Example Sentence (with blank) */}
+                {/* Definition - Secondary, smaller */}
                 <div style={{
-                    fontSize: '1.1rem',
+                    fontSize: '0.95rem',
                     color: colors.textMuted,
-                    marginBottom: spacing.xl,
-                    fontStyle: 'italic',
-                    background: colors.light,
-                    padding: spacing.md,
-                    borderRadius: borderRadius.lg
+                    textAlign: 'center',
+                    maxWidth: '400px',
+                    lineHeight: 1.5
                 }}>
-                    "{currentWord.example}"
+                    {currentWord.definition}
                 </div>
 
-                {/* Hint Button */}
-                {!showResult && (
-                    <button
-                        onClick={() => setShowHint(true)}
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            color: colors.primary,
-                            cursor: 'pointer',
-                            marginBottom: spacing.md,
-                            fontSize: '0.9rem'
-                        }}
-                    >
-                        💡 Show hint
-                    </button>
-                )}
+                {/* Example Sentence - Primary Hero */}
+                <div style={{
+                    fontSize: '1.4rem',
+                    fontWeight: '500',
+                    color: colors.dark,
+                    textAlign: 'center',
+                    lineHeight: 1.6,
+                    padding: `${spacing.md} 0`
+                }}>
+                    "{currentWord.example?.replace(
+                        new RegExp(`\\b${currentWord.word}\\b`, 'gi'),
+                        getBlankLine()
+                    ) || currentWord.example}"
+                </div>
 
+                {/* Hint - Inline, monospace */}
                 {showHint && !showResult && (
                     <div style={{
-                        fontSize: '1.5rem',
+                        fontSize: '1.2rem',
                         fontFamily: 'monospace',
-                        letterSpacing: '0.3em',
-                        marginBottom: spacing.lg,
-                        color: colors.textMuted
+                        letterSpacing: '0.2em',
+                        color: colors.primary,
+                        fontWeight: '600'
                     }}>
                         {getHint()}
                     </div>
                 )}
 
-                {/* Input Form */}
+                {/* Input Area */}
                 {!showResult ? (
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={userInput}
-                            onChange={(e) => setUserInput(e.target.value)}
-                            placeholder="Type the word..."
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
-                            style={{
-                                width: '100%',
-                                padding: spacing.md,
-                                fontSize: '1.5rem',
-                                textAlign: 'center',
-                                border: `2px solid ${colors.border}`,
-                                borderRadius: borderRadius.lg,
-                                outline: 'none',
-                                fontFamily: typography.fontFamily,
-                                marginBottom: spacing.md
-                            }}
-                        />
+                    <form onSubmit={handleSubmit} style={{
+                        width: '100%',
+                        maxWidth: '320px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: spacing.md
+                    }}>
+                        {/* Filled Text Field - MD3 Style */}
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)}
+                                placeholder="Type the word..."
+                                autoComplete="off"
+                                autoCapitalize="off"
+                                spellCheck="false"
+                                style={{
+                                    width: '100%',
+                                    padding: `${spacing.md} ${spacing.lg}`,
+                                    paddingRight: '50px',
+                                    fontSize: '1.3rem',
+                                    textAlign: 'center',
+                                    background: colors.light,
+                                    border: 'none',
+                                    borderBottom: `2px solid ${userInput ? colors.primary : colors.border}`,
+                                    borderRadius: `${borderRadius.lg} ${borderRadius.lg} 0 0`,
+                                    outline: 'none',
+                                    fontFamily: typography.fontFamily,
+                                    transition: 'border-color 0.2s'
+                                }}
+                            />
+                            {/* Hint Icon - Trailing */}
+                            {!showHint && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowHint(true)}
+                                    style={{
+                                        position: 'absolute',
+                                        right: '12px',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        background: 'none',
+                                        border: 'none',
+                                        fontSize: '1.2rem',
+                                        cursor: 'pointer',
+                                        padding: '4px'
+                                    }}
+                                    title="Show hint"
+                                >
+                                    💡
+                                </button>
+                            )}
+                        </div>
+
+                        {/* FAB-style Check Button */}
                         <button
                             type="submit"
                             disabled={!userInput.trim()}
                             style={{
-                                padding: `${spacing.md} ${spacing.xl}`,
-                                background: userInput.trim() ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' : colors.light,
+                                padding: spacing.md,
+                                background: userInput.trim() ? colors.primaryGradient : colors.border,
                                 color: userInput.trim() ? 'white' : colors.textMuted,
                                 border: 'none',
-                                borderRadius: borderRadius.lg,
+                                borderRadius: borderRadius.pill,
                                 fontSize: '1.1rem',
                                 fontWeight: '600',
                                 cursor: userInput.trim() ? 'pointer' : 'not-allowed',
-                                boxShadow: userInput.trim() ? shadows.md : 'none'
+                                boxShadow: userInput.trim() ? shadows.md : 'none',
+                                transition: 'all 0.2s'
                             }}
                         >
-                            Check Spelling
+                            Check ✓
                         </button>
                     </form>
                 ) : (
-                    <div>
-                        {/* Result Display */}
+                    /* Result State */
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: spacing.lg,
+                        width: '100%',
+                        maxWidth: '320px'
+                    }}>
+                        {/* Result Icon */}
                         <div style={{
-                            padding: spacing.lg,
-                            borderRadius: borderRadius.lg,
-                            background: isCorrect ? '#d4edda' : '#f8d7da',
-                            marginBottom: spacing.lg
+                            fontSize: '3rem',
+                            lineHeight: 1
                         }}>
-                            <div style={{ fontSize: '2rem', marginBottom: spacing.sm }}>
-                                {isCorrect ? '✓ Correct!' : '✗ Not quite'}
-                            </div>
-                            <div style={{
-                                fontSize: '1.8rem',
-                                fontWeight: 'bold',
-                                color: isCorrect ? '#155724' : '#721c24',
-                                letterSpacing: '0.1em'
-                            }}>
-                                {currentWord.word}
-                            </div>
-                            {!isCorrect && (
-                                <div style={{
-                                    fontSize: '1rem',
-                                    color: '#856404',
-                                    marginTop: spacing.sm
-                                }}>
-                                    You typed: <strike>{userInput}</strike>
-                                </div>
-                            )}
+                            {isCorrect ? '✓' : '✗'}
                         </div>
 
+                        {/* Correct Word Display */}
+                        <div style={{
+                            fontSize: '2rem',
+                            fontWeight: 'bold',
+                            color: isCorrect ? colors.success : colors.error,
+                            letterSpacing: '0.05em'
+                        }}>
+                            {currentWord.word}
+                        </div>
+
+                        {/* User's Answer (if wrong) */}
+                        {!isCorrect && (
+                            <div style={{
+                                fontSize: '0.9rem',
+                                color: colors.textMuted
+                            }}>
+                                You typed: <span style={{ textDecoration: 'line-through' }}>{userInput}</span>
+                            </div>
+                        )}
+
                         {/* Action Buttons */}
-                        <div style={{ display: 'flex', gap: spacing.md, justifyContent: 'center' }}>
+                        <div style={{
+                            display: 'flex',
+                            gap: spacing.md,
+                            width: '100%',
+                            justifyContent: 'center'
+                        }}>
                             {!isCorrect && attempts < 3 && (
                                 <button
                                     onClick={handleTryAgain}
                                     style={{
-                                        padding: `${spacing.md} ${spacing.xl}`,
-                                        background: colors.white,
-                                        color: colors.dark,
-                                        border: `2px solid ${colors.border}`,
-                                        borderRadius: borderRadius.lg,
-                                        fontSize: '1rem',
+                                        padding: `${spacing.sm} ${spacing.lg}`,
+                                        background: 'transparent',
+                                        color: colors.primary,
+                                        border: `2px solid ${colors.primary}`,
+                                        borderRadius: borderRadius.pill,
+                                        fontSize: '0.95rem',
                                         fontWeight: '600',
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    Try Again ({3 - attempts} left)
+                                    Retry ({3 - attempts})
                                 </button>
                             )}
                             <button
                                 onClick={handleNext}
                                 style={{
-                                    padding: `${spacing.md} ${spacing.xl}`,
-                                    background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                                    padding: `${spacing.sm} ${spacing.lg}`,
+                                    background: colors.primaryGradient,
                                     color: 'white',
                                     border: 'none',
-                                    borderRadius: borderRadius.lg,
-                                    fontSize: '1rem',
+                                    borderRadius: borderRadius.pill,
+                                    fontSize: '0.95rem',
                                     fontWeight: '600',
                                     cursor: 'pointer',
-                                    boxShadow: shadows.md
+                                    boxShadow: shadows.sm
                                 }}
                             >
-                                {currentIndex < totalWords - 1 ? 'Next Word' : 'Finish'}
+                                {currentIndex < totalWords - 1 ? 'Next →' : 'Done'}
                             </button>
                         </div>
                     </div>
                 )}
-            </div>
-
-            {/* Score Display */}
-            <div style={{
-                textAlign: 'center',
-                color: colors.textMuted,
-                fontSize: '0.9rem'
-            }}>
-                Score: {score.correct} / {score.total}
             </div>
         </PageLayout>
     );
